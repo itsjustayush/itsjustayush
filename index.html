@@ -387,7 +387,7 @@
                 
                 <!-- Form Side -->
                 <div class="p-10 md:p-20">
-                    <form action="https://formspree.io/f/maqrnbow" method="POST" class="space-y-10">
+                    <form id="contact-form" action="https://formspree.io/f/maqrnbow" method="POST" class="space-y-10">
                         <div class="relative group">
                             <label class="font-label-mono-sm text-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-2 block">FULL NAME</label>
                             <input name="name" required class="w-full bg-surface-container-low/50 border-b border-white/10 focus:border-primary outline-none py-4 text-on-surface transition-all focus:bg-surface-container-high/50 px-4 rounded-t-lg cursor-pointer" type="text" placeholder="Your name"/>
@@ -400,10 +400,24 @@
                             <label class="font-label-mono-sm text-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-2 block">YOUR MESSAGE</label>
                             <textarea name="message" required class="w-full bg-surface-container-low/50 border-b border-white/10 focus:border-primary outline-none py-4 text-on-surface transition-all focus:bg-surface-container-high/50 px-4 rounded-t-lg resize-none cursor-pointer" rows="4" placeholder="Tell me about the opportunity..."></textarea>
                         </div>
-                        <button class="w-full bg-primary-container text-on-primary-container py-5 rounded-full font-label-mono-lg text-label-mono-lg tracking-widest uppercase purple-glow hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" type="submit">
+                        <button id="submit-button" class="w-full bg-primary-container text-on-primary-container py-5 rounded-full font-label-mono-lg text-label-mono-lg tracking-widest uppercase purple-glow hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" type="submit">
                             SEND INQUIRY
                         </button>
                     </form>
+
+                    <!-- Success Message (Hidden by default) -->
+                    <div id="form-success" class="hidden flex-col items-center justify-center h-full text-center space-y-6 py-10">
+                        <div class="w-20 h-20 rounded-full glass-card flex items-center justify-center border-primary/30 purple-glow bg-background mb-4">
+                            <span class="material-symbols-outlined text-primary text-4xl">check_circle</span>
+                        </div>
+                        <h3 class="font-headline-lg text-3xl text-on-background">Message Sent!</h3>
+                        <p class="font-body-lg text-on-surface-variant opacity-80 max-w-sm mx-auto">
+                            Thank you for reaching out. I'll get back to you as soon as possible.
+                        </p>
+                        <button id="reset-form-btn" class="mt-8 px-8 py-3 rounded-full border border-white/10 hover:border-primary text-on-surface hover:text-primary font-label-mono-sm tracking-widest uppercase transition-all cursor-pointer glass-card">
+                            Send Another Message
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -649,6 +663,71 @@
                 applyCursorHoverEffects(); // re-apply for fallback button
             }
         });
+
+        const contactForm = document.getElementById('contact-form');
+        const formSuccess = document.getElementById('form-success');
+        const submitBtn = document.getElementById('submit-button');
+        const resetFormBtn = document.getElementById('reset-form-btn');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Prevents the redirect
+                
+                // Loading state
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'SENDING...';
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'pointer-events-none');
+
+                const formData = new FormData(contactForm);
+                
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: contactForm.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json' // Forces Formspree to return JSON instead of a webpage
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        // Success! Hide form, show success state
+                        contactForm.reset();
+                        contactForm.classList.add('hidden');
+                        formSuccess.classList.remove('hidden');
+                        formSuccess.classList.add('flex');
+                    } else {
+                        // Handle server errors
+                        submitBtn.innerHTML = 'ERROR! TRY AGAIN';
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalBtnText;
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+                        }, 3000);
+                    }
+                } catch (error) {
+                    // Handle network errors
+                    submitBtn.innerHTML = 'ERROR! TRY AGAIN';
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+                    }, 3000);
+                }
+            });
+        }
+
+        // Reset the form if they want to send another message
+        if (resetFormBtn) {
+            resetFormBtn.addEventListener('click', () => {
+                formSuccess.classList.add('hidden');
+                formSuccess.classList.remove('flex');
+                contactForm.classList.remove('hidden');
+                submitBtn.innerHTML = 'SEND INQUIRY';
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'pointer-events-none');
+            });
+        }
     </script>
 </body>
 </html>
