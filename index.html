@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,wght@0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
+    <!-- Swiper CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
     <!-- Tailwind CSS CDN with plugins -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
@@ -295,6 +298,58 @@
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        /* Swiper Carousel 005 Creative Effect Styles - Landscape Expansive */
+        .Carousal_005 {
+            width: 100%;
+            height: 520px;
+            padding-bottom: 50px !important;
+        }
+
+        .Carousal_005 .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            border-radius: 25px;
+            width: 820px;
+            height: 450px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 1024px) {
+            .Carousal_005 {
+                height: 420px;
+            }
+            .Carousal_005 .swiper-slide {
+                width: 640px;
+                height: 360px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .Carousal_005 {
+                height: 300px;
+            }
+            .Carousal_005 .swiper-slide {
+                width: 88vw;
+                height: 240px;
+                border-radius: 18px;
+            }
+        }
+
+        .Carousal_005 .swiper-pagination-bullet {
+            background-color: #b58ad7 !important;
+            opacity: 0.4;
+            width: 10px;
+            height: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .Carousal_005 .swiper-pagination-bullet-active {
+            opacity: 1;
+            width: 24px;
+            border-radius: 5px;
         }
 
         /* Mobile Music Player Specific */
@@ -663,14 +718,19 @@
     <!-- SECTION: VISUAL WORK SHOWCASE -->
     <section id="showcase" class="py-28 px-6 relative z-20 overflow-hidden">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 reveal-element">
+            <div class="text-center mb-12 reveal-element">
                 <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-3">// VISUAL SHOWCASE</span>
                 <h2 class="text-4xl md:text-6xl font-fustat font-bold text-white tracking-tight">Design & Works Showcase</h2>
             </div>
 
-            <div class="w-full flex items-center justify-center overflow-x-auto py-6 no-scrollbar reveal-element">
-                <div id="hover-expand-gallery" class="relative w-full max-w-6xl px-2 sm:px-5 flex items-center justify-center gap-1 sm:gap-2 min-w-[700px] sm:min-w-0">
-                    <!-- Cards populated via Vanilla JS -->
+            <div class="flex h-full w-full items-center justify-center overflow-hidden bg-transparent reveal-element">
+                <div class="relative w-full max-w-6xl lg:max-w-7xl px-2 sm:px-5">
+                    <div class="swiper Carousal_005">
+                        <div class="swiper-wrapper" id="swiper-showcase-wrapper">
+                            <!-- Populated dynamically via Vanilla JS -->
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1379,114 +1439,95 @@
         }
 
         // ==========================================
-        // 8. HOVER EXPAND GALLERY (VANILLA JS WITH USER ASSETS)
+        // 8. SWIPER CREATIVE CAROUSEL 005 (VANILLA JS WITH USER ASSETS)
         // ==========================================
-        function initHoverExpandGallery() {
-            const galleryContainer = document.getElementById('hover-expand-gallery');
-            if (!galleryContainer) return;
+        function initSwiperShowcase() {
+            const wrapper = document.getElementById('swiper-showcase-wrapper');
+            if (!wrapper) return;
 
             const images = [
                 {
-                    src: "https://github.com/user-attachments/assets/6e4690b7-51c3-4c8e-ac83-61a4887f93d5",
-                    alt: "ItsjustAyush",
+                    src: "/images/showcase/oblivion.png",
+                    alt: "Oblivion",
                     code: "# 01"
                 },
                 {
-                    src: "https://github.com/user-attachments/assets/3bff5a54-27f3-4156-82b0-62b25ab8d7f2",
-                    alt: "CyberEscape",
+                    src: "/images/showcase/quakesafe.png",
+                    alt: "Quakesafe",
                     code: "# 02"
                 },
                 {
-                    src: "https://github.com/user-attachments/assets/e1480c19-9fd2-42af-96cf-b1c2b8b6cc47",
-                    alt: "Vex",
+                    src: "/images/showcase/back_in_past.png",
+                    alt: "Back In Past",
                     code: "# 03"
                 },
                 {
-                    src: "https://github.com/user-attachments/assets/53177528-0f5a-45b5-9b31-327b6e63190d",
+                    src: "/images/showcase/ayuvibee.png",
                     alt: "AyuVibee",
                     code: "# 04"
                 },
                 {
-                    src: "https://github.com/user-attachments/assets/6afd3797-79ef-469f-ba6c-0d9198b9406d",
-                    alt: "Back In Past",
+                    src: "/images/showcase/vex.png",
+                    alt: "Vex",
                     code: "# 05"
                 },
                 {
-                    src: "https://github.com/user-attachments/assets/5aa91191-70cf-46c2-b75d-35c12352670d",
-                    alt: "Quakesafe",
+                    src: "/images/showcase/cyberescape.png",
+                    alt: "CyberEscape",
                     code: "# 06"
                 },
                 {
-                    src: "https://github.com/user-attachments/assets/f11977e3-444c-480a-b1b0-866e4b2d079c",
-                    alt: "Sword Of Sikhs",
+                    src: "/images/showcase/itsjustayush.png",
+                    alt: "ItsjustAyush",
                     code: "# 07"
-                },
-                {
-                    src: "https://github.com/user-attachments/assets/eae31f60-fb96-4313-970f-4f75b2a7b805",
-                    alt: "Oblivion",
-                    code: "# 08"
                 }
             ];
 
-            let activeIndex = 1; // Default active card
-
-            galleryContainer.innerHTML = '';
-
-            images.forEach((img, idx) => {
-                const card = document.createElement('div');
-                card.className = `gallery-card relative cursor-pointer overflow-hidden rounded-3xl transition-all duration-300 ease-in-out h-80 sm:h-96 flex-shrink-0 ${idx === activeIndex ? 'w-[14rem] sm:w-[20rem] md:w-[24rem]' : 'w-[2.5rem] sm:w-[4rem] md:w-[5rem]'}`;
-                card.setAttribute('data-index', idx);
-
-                card.innerHTML = `
-                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 pointer-events-none ${idx === activeIndex ? 'opacity-100' : 'opacity-0'}"></div>
-                    <div class="gallery-caption absolute bottom-0 inset-x-0 flex flex-col items-start justify-end p-4 transition-all duration-300 pointer-events-none ${idx === activeIndex ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}">
-                        <p class="font-mono text-sm text-white font-semibold truncate">${img.alt}</p>
-                        <p class="font-mono text-xs text-white/50">${img.code}</p>
+            wrapper.innerHTML = images.map(img => `
+                <div class="swiper-slide liquid-glass border border-white/10 rounded-[25px] group">
+                    <img class="h-full w-full scale-105 rounded-3xl object-cover transition-transform duration-500 group-hover:scale-110" src="${img.src}" alt="${img.alt}" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-5 flex flex-col justify-end pointer-events-none">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-sm text-white font-semibold">${img.alt}</span>
+                            <span class="font-mono text-xs text-primary bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-primary/30">${img.code}</span>
+                        </div>
                     </div>
-                    <img src="${img.src}" class="w-full h-full object-cover" alt="${img.alt}" />
-                `;
+                </div>
+            `).join('');
 
-                function setActive() {
-                    if (activeIndex === idx) return;
-                    activeIndex = idx;
-                    updateGalleryState();
-                }
-
-                card.addEventListener('mouseenter', setActive);
-                card.addEventListener('click', setActive);
-
-                galleryContainer.appendChild(card);
-            });
-
-            function updateGalleryState() {
-                const cards = galleryContainer.querySelectorAll('.gallery-card');
-                cards.forEach((card, idx) => {
-                    const overlay = card.querySelector('.gallery-overlay');
-                    const caption = card.querySelector('.gallery-caption');
-
-                    if (idx === activeIndex) {
-                        card.classList.remove('w-[2.5rem]', 'sm:w-[4rem]', 'md:w-[5rem]');
-                        card.classList.add('w-[14rem]', 'sm:w-[20rem]', 'md:w-[24rem]');
-                        if (overlay) overlay.classList.replace('opacity-0', 'opacity-100');
-                        if (caption) {
-                            caption.classList.replace('opacity-0', 'opacity-100');
-                            caption.classList.replace('translate-y-2', 'translate-y-0');
-                        }
-                    } else {
-                        card.classList.remove('w-[14rem]', 'sm:w-[20rem]', 'md:w-[24rem]');
-                        card.classList.add('w-[2.5rem]', 'sm:w-[4rem]', 'md:w-[5rem]');
-                        if (overlay) overlay.classList.replace('opacity-100', 'opacity-0');
-                        if (caption) {
-                            caption.classList.replace('opacity-100', 'opacity-0');
-                            caption.classList.replace('translate-y-0', 'translate-y-2');
-                        }
-                    }
+            if (typeof Swiper !== 'undefined') {
+                new Swiper('.Carousal_005', {
+                    spaceBetween: 0,
+                    autoplay: {
+                        delay: 1500,
+                        disableOnInteraction: true,
+                    },
+                    effect: 'creative',
+                    grabCursor: true,
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                    loop: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    creativeEffect: {
+                        prev: {
+                            shadow: true,
+                            translate: [0, 0, -400],
+                        },
+                        next: {
+                            translate: ['100%', 0, 0],
+                        },
+                    },
                 });
             }
         }
 
-        document.addEventListener('DOMContentLoaded', initHoverExpandGallery);
-        initHoverExpandGallery();
+        document.addEventListener('DOMContentLoaded', initSwiperShowcase);
+        initSwiperShowcase();
     </script>
+    <!-- Swiper JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>
