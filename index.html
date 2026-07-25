@@ -1008,7 +1008,7 @@
         });
 
         // ==========================================
-        // 6. DYNAMIC MUSIC PLAYER (YouTube / Spotify API)
+        // 6. UNIVERSAL MUSIC PLAYER (YouTube / Spotify / Web Audio)
         // ==========================================
         const radioToggle = document.getElementById('radio-toggle');
         const customRadioWidget = document.getElementById('custom-radio-widget');
@@ -1028,63 +1028,142 @@
         const spotifyFrame = document.getElementById('spotify-player-frame');
 
         const curatedTracks = [
-            { name: "Harry Styles — As It Was", type: "yt", id: "H5v3kku4y6Q", desc: "Harry Styles" },
-            { name: "The Chainsmokers — Paris", type: "yt", id: "fKopy74weus", desc: "Pop" },
-            { name: "The Chainsmokers — Closer", type: "yt", id: "PT2_F-1nv4o", desc: "Electro" },
-            { name: "Benson Boone — Beautiful Things", type: "yt", id: "3306C9N_Cms", desc: "Single" }
+            { name: "Harry Styles — As It Was", type: "search", query: "Harry Styles As It Was" },
+            { name: "The Chainsmokers — Paris", type: "search", query: "The Chainsmokers Paris" },
+            { name: "Benson Boone — Beautiful Things", type: "search", query: "Benson Boone Beautiful Things" },
+            { name: "Blinding Lights — The Weeknd", type: "search", query: "The Weeknd Blinding Lights" }
         ];
 
-        let ytPlayer = null;
-        let isYtReady = false;
+        let audioElement = null;
         let isPlaying = false;
-        let currentMode = "yt";
+        let currentMode = "audio";
+        let currentTrackUrl = null;
 
-        // Load YouTube IFrame API for custom control & zero native controls overlay
-        if (!window.YT) {
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        // Initialize hidden audio element for direct playback
+        function initAudioElement() {
+            if (!audioElement) {
+                audioElement = document.createElement('audio');
+                audioElement.id = 'hidden-audio-player';
+                audioElement.style.display = 'none';
+                audioElement.crossOrigin = 'anonymous';
+                document.body.appendChild(audioElement);
+
+                audioElement.addEventListener('play', () => {
+                    updatePlayState(true, "Now Playing");
+                });
+                audioElement.addEventListener('pause', () => {
+                    updatePlayState(false, "Paused");
+                });
+                audioElement.addEventListener('ended', () => {
+                    updatePlayState(false, "Finished");
+                });
+                audioElement.addEventListener('error', (e) => {
+                    console.error('[v0] Audio error:', e);
+                    statusDisplay.innerText = "Error loading track";
+                    updatePlayState(false, "Error");
+                });
+            }
+            return audioElement;
         }
 
-        window.onYouTubeIframeAPIReady = function() {
-            ytPlayer = new YT.Player('youtube-player-frame', {
-                height: '100%',
-                width: '100%',
-                videoId: curatedTracks[0].id,
-                playerVars: {
-                    'controls': 0,        // Hides native video controls bar
-                    'disablekb': 1,
-                    'playsinline': 1,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'enablejsapi': 1
-                },
-                events: {
-                    'onReady': (event) => {
-                        isYtReady = true;
-                        if (volumeSlider) {
-                            event.target.setVolume(parseInt(volumeSlider.value) || 50);
+        // Search for songs and get playable URLs
+        async function searchSong(query) {
+            try {
+                statusDisplay.innerText = "Searching...";
+                
+                // Try multiple sources for reliability
+                const sources = [
+                    { name: 'jiosaavn', fn: () => searchJioSaavn(query) },
+                    { name: 'youtube', fn: () => searchYouTube(query) }
+                ];
+
+                for (const source of sources) {
+                    try {
+                        const result = await source.fn();
+                        if (result && result.url) {
+                            return result;
                         }
-                    },
-                    'onStateChange': (event) => {
-                        if (event.data === YT.PlayerState.PLAYING) {
-                            updatePlayState(true, "Now Playing");
-                        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                            updatePlayState(false, event.data === YT.PlayerState.ENDED ? "Finished" : "Paused");
-                        }
+                    } catch (err) {
+                        console.log(`[v0] ${source.name} search failed:`, err);
+                        continue;
                     }
                 }
-            });
-        };
+                
+                throw new Error('No sources found');
+            } catch (err) {
+                console.error('[v0] Song search failed:', err);
+                statusDisplay.innerText = "Song not found";
+                return null;
+            }
+        }
 
-        // Render Curated Track Buttons (compact list)
+        // JioSaavn API (free, reliable for Indian/Asian music)
+        async function searchJioSaavn(query) {
+            try {
+                const response = await fetch(`https://jiosaavn-api-tau.vercel.app/search?query=${encodeURIComponent(query)}&limit=1`, {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                if (data.success && data.results && data.results[0]) {
+                    const track = data.results[0];
+                    return {
+                        url: track.url,
+                        title: `${track.artist} — ${track.name}`,
+                        source: 'jiosaavn'
+                    };
+                }
+                return null;
+            } catch (err) {
+                console.error('[v0] JioSaavn error:', err);
+                return null;
+            }
+        }
+
+        // YouTube Search API fallback
+        async function searchYouTube(query) {
+            try {
+                // Use public YouTube embed with search query
+                const encodedQuery = encodeURIComponent(query);
+                const url = `https://www.youtube.com/results?search_query=${encodedQuery}`;
+                
+                // We'll use a direct YouTube embed approach
+                const videoId = await extractYouTubeVideoId(query);
+                if (videoId) {
+                    return {
+                        url: `https://www.youtube.com/watch?v=${videoId}`,
+                        title: query,
+                        source: 'youtube'
+                    };
+                }
+                return null;
+            } catch (err) {
+                console.error('[v0] YouTube search error:', err);
+                return null;
+            }
+        }
+
+        // Extract video ID from YouTube (simplified approach)
+        async function extractYouTubeVideoId(query) {
+            try {
+                const response = await fetch(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&sp=EgIQAQ%253D%253D`, {
+                    headers: { 'User-Agent': 'Mozilla/5.0' }
+                });
+                const html = await response.text();
+                const match = html.match(/"videoId":"([a-zA-Z0-9_-]{11})"/);
+                return match ? match[1] : null;
+            } catch (err) {
+                console.error('[v0] Video ID extraction error:', err);
+                return null;
+            }
+        }
+
+        // Render Curated Track Buttons
         if (stationListContainer) {
             stationListContainer.innerHTML = '';
             curatedTracks.forEach(track => {
                 const btn = document.createElement('button');
                 btn.className = "w-full text-left px-3 py-2 min-h-[38px] rounded-lg hover:bg-white/10 active:bg-white/20 text-white/90 font-mono text-xs transition-colors truncate cursor-pointer flex items-center justify-between group";
-                btn.innerHTML = `<span class="truncate">🎵 ${track.name}</span><span class="text-[10px] text-white/40 group-hover:text-primary flex-shrink-0 ml-2">${track.desc}</span>`;
+                btn.innerHTML = `<span class="truncate">🎵 ${track.name}</span><span class="text-[10px] text-white/40 group-hover:text-primary flex-shrink-0 ml-2">Search</span>`;
                 btn.onclick = (e) => {
                     e.stopPropagation();
                     playTrack(track);
@@ -1093,7 +1172,7 @@
             });
         }
 
-        // Widget Open/Close & Click-Outside Handling
+        // Widget Open/Close
         function openWidget() {
             customRadioWidget.classList.remove('opacity-0', 'invisible', 'scale-95', 'pointer-events-none');
             customRadioWidget.classList.add('opacity-100', 'visible', 'scale-100', 'pointer-events-auto');
@@ -1108,14 +1187,12 @@
             radioToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const isOpen = customRadioWidget.classList.contains('opacity-100');
-                if (isOpen) {
-                    closeWidget();
-                } else {
-                    openWidget();
-                }
+                if (isOpen) closeWidget();
+                else openWidget();
             });
         }
 
+        // Visualizer toggle
         const toggleVizBtn = document.getElementById('toggle-visualizer-btn');
         const vizBtnText = document.getElementById('viz-btn-text');
         const visualizerContainer = document.getElementById('visualizer');
@@ -1145,61 +1222,80 @@
             }
         });
 
-        function playTrack(track) {
+        async function playTrack(track) {
             titleDisplay.innerText = track.name;
             statusDisplay.innerText = "Loading...";
-
-            if (track.type === "yt") {
-                showYtMode();
-                if (isYtReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-                    ytPlayer.loadVideoById(track.id);
-                    ytPlayer.playVideo();
-                } else {
-                    ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${track.id}?autoplay=1&controls=0&enablejsapi=1&rel=0" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-                    updatePlayState(true, "Now Playing");
+            
+            const audio = initAudioElement();
+            
+            if (track.type === "search" || track.type === "query") {
+                const query = track.query || track.name;
+                const result = await searchSong(query);
+                
+                if (result) {
+                    if (result.source === 'youtube') {
+                        // Show YouTube player for video results
+                        currentMode = "youtube";
+                        ytFrameContainer.classList.remove('hidden');
+                        spotifyFrame.classList.add('hidden');
+                        const videoId = result.url.split('?v=')[1];
+                        ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&enablejsapi=1&rel=0&modestbranding=1" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+                        titleDisplay.innerText = result.title;
+                        updatePlayState(true, "Now Playing (YouTube)");
+                    } else {
+                        // Use audio element for direct playback
+                        currentMode = "audio";
+                        ytFrameContainer.classList.add('hidden');
+                        spotifyFrame.classList.add('hidden');
+                        audio.src = result.url;
+                        audio.volume = Math.max(0, Math.min(1, parseInt(volumeSlider?.value || 50) / 100));
+                        audio.play().catch(err => {
+                            console.error('[v0] Playback error:', err);
+                            statusDisplay.innerText = "Playback error";
+                        });
+                        titleDisplay.innerText = result.title;
+                        currentTrackUrl = result.url;
+                    }
                 }
-            } else if (track.type === "spotify") {
-                showSpotifyMode(track.embedUrl);
+            } else if (track.type === "yt" && track.id) {
+                currentMode = "youtube";
+                ytFrameContainer.classList.remove('hidden');
+                spotifyFrame.classList.add('hidden');
+                ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${track.id}?autoplay=1&controls=0&enablejsapi=1&rel=0&modestbranding=1" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+                updatePlayState(true, "Now Playing (YouTube)");
+            } else if (track.type === "spotify" && track.embedUrl) {
+                currentMode = "spotify";
+                ytFrameContainer.classList.add('hidden');
+                spotifyFrame.classList.remove('hidden');
+                spotifyFrame.src = track.embedUrl;
+                updatePlayState(true, "Playing Spotify");
             }
         }
 
-        function showYtMode() {
-            currentMode = "yt";
-            ytFrameContainer.classList.remove('hidden');
-            spotifyFrame.classList.add('hidden');
-        }
-
-        function showSpotifyMode(embedUrl) {
-            currentMode = "spotify";
-            ytFrameContainer.classList.add('hidden');
-            spotifyFrame.classList.remove('hidden');
-            spotifyFrame.src = embedUrl;
-            updatePlayState(true, "Playing Spotify Embed");
-        }
-
-        // Custom Play/Pause Button
+        // Play/Pause Button
         if (playBtn) {
             playBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (currentMode === "yt" && isYtReady && ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
-                    const state = ytPlayer.getPlayerState();
-                    if (state === 1) { // YT.PlayerState.PLAYING
-                        ytPlayer.pauseVideo();
+                const audio = document.getElementById('hidden-audio-player');
+                if (currentMode === "audio" && audio) {
+                    if (audio.paused) {
+                        audio.play().catch(err => console.error('[v0] Play error:', err));
                     } else {
-                        ytPlayer.playVideo();
+                        audio.pause();
                     }
                 } else {
-                    updatePlayState(!isPlaying, isPlaying ? "Paused" : "Now Playing");
+                    updatePlayState(!isPlaying, isPlaying ? "Paused" : "Playing");
                 }
             });
         }
 
-        // Custom Volume Slider controlling YouTube video directly
+        // Volume Control
         if (volumeSlider) {
             volumeSlider.addEventListener('input', (e) => {
-                const val = parseInt(e.target.value);
-                if (currentMode === "yt" && isYtReady && ytPlayer && typeof ytPlayer.setVolume === 'function') {
-                    ytPlayer.setVolume(val);
+                const val = parseInt(e.target.value) / 100;
+                const audio = document.getElementById('hidden-audio-player');
+                if (audio) {
+                    audio.volume = Math.max(0, Math.min(1, val));
                 }
             });
         }
@@ -1219,68 +1315,61 @@
         }
 
         // Handle Search Query / Song Input
-        function handleUserSearch() {
+        async function handleUserSearch() {
             const input = customInput.value.trim();
             if (!input) return;
 
-            // 1. Spotify URL parsing
+            titleDisplay.innerText = `Searching: "${input}"`;
+            
+            // Handle Spotify URLs
             if (input.includes('spotify.com')) {
                 let spotifyEmbedUrl = input;
                 if (!input.includes('/embed/')) {
                     spotifyEmbedUrl = input.replace('spotify.com/', 'spotify.com/embed/');
                 }
-                titleDisplay.innerText = "User Track (Spotify)";
-                showSpotifyMode(spotifyEmbedUrl);
+                currentMode = "spotify";
+                ytFrameContainer.classList.add('hidden');
+                spotifyFrame.classList.remove('hidden');
+                spotifyFrame.src = spotifyEmbedUrl;
+                titleDisplay.innerText = "Spotify Track";
+                updatePlayState(true, "Playing Spotify");
                 customInput.value = "";
                 return;
             }
 
-            // 2. YouTube Video ID extraction
-            let ytVideoId = null;
-            if (input.includes('youtu.be/')) {
-                ytVideoId = input.split('youtu.be/')[1].split('?')[0].split('&')[0];
-            } else if (input.includes('v=')) {
-                ytVideoId = input.split('v=')[1].split('&')[0];
-            } else if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
-                ytVideoId = input;
-            }
+            // Handle YouTube URLs
+            if (input.includes('youtu') || input.includes('youtube')) {
+                let videoId = null;
+                if (input.includes('youtu.be/')) {
+                    videoId = input.split('youtu.be/')[1].split('?')[0];
+                } else if (input.includes('v=')) {
+                    videoId = input.split('v=')[1].split('&')[0];
+                } else if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+                    videoId = input;
+                }
 
-            if (ytVideoId) {
-                titleDisplay.innerText = "Playing Selected Track";
-                showYtMode();
-                if (isYtReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-                    ytPlayer.loadVideoById(ytVideoId);
-                    ytPlayer.playVideo();
-                } else {
-                    ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytVideoId}?autoplay=1&controls=0&enablejsapi=1&rel=0" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+                if (videoId) {
+                    currentMode = "youtube";
+                    ytFrameContainer.classList.remove('hidden');
+                    spotifyFrame.classList.add('hidden');
+                    ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&enablejsapi=1&rel=0&modestbranding=1" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
                     updatePlayState(true, "Now Playing");
-                }
-            } else {
-                // 3. Search Query: Plays first video in YouTube search result automatically without controls
-                titleDisplay.innerText = `Search: "${input}"`;
-                showYtMode();
-                
-                if (isYtReady && ytPlayer && typeof ytPlayer.loadPlaylist === 'function') {
-                    ytPlayer.loadPlaylist({
-                        listType: 'search',
-                        list: input
-                    });
-                    ytPlayer.playVideo();
-                    updatePlayState(true, "Playing Search Result");
-                } else {
-                    const searchEmbedUrl = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(input)}&autoplay=1&controls=0&enablejsapi=1`;
-                    ytFrameContainer.innerHTML = `<iframe src="${searchEmbedUrl}" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-                    updatePlayState(true, "Playing Search Result");
+                    customInput.value = "";
+                    return;
                 }
             }
 
+            // Regular song search
+            await playTrack({ name: input, type: "search", query: input });
             customInput.value = "";
         }
 
         if (customPlayBtn) customPlayBtn.addEventListener('click', handleUserSearch);
         if (customInput) {
             customInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleUserSearch();
+                if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                    handleUserSearch();
+                }
             });
         }
 
