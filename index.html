@@ -1,223 +1,263 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="dark scroll-smooth" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Ayush Bhattacharya — Student & Coder</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,wght@0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS CDN with plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
-            "colors": {
-                    "primary-container": "#d7c0eb",
-                    "tertiary": "#cbb7e9",
-                    "on-error-container": "#ffdad6",
-                    "outline": "#937e9a",
-                    "surface-muted": "#1A1A1D",
-                    "surface-variant": "#353437",
-                    "surface-container-low": "#1c1b1d",
-                    "surface-container-highest": "#353437",
-                    "on-background": "#e5e1e4",
-                    "surface-container-high": "#2a2a2c",
-                    "on-primary": "#2d1639",
-                    "tertiary-fixed-dim": "#c6b1e8",
-                    "on-surface-variant": "#d0c5b5",
-                    "on-tertiary": "#312448",
-                    "border-subtle": "#27272A",
-                    "error": "#ffb4ab",
-                    "inverse-surface": "#e5e1e4",
-                    "on-secondary": "#2f3131",
-                    "tertiary-container": "#b8a2d8",
-                    "surface-container-lowest": "#0e0e10",
-                    "surface-tint": "#b78ad5",
-                    "on-primary-fixed": "#220f2c",
-                    "surface-container": "#201f22",
-                    "on-primary-container": "#3f2852",
-                    "surface-dim": "#131315",
-                    "tertiary-fixed": "#dae2ff",
-                    "surface-bright": "#39393b",
-                    "primary-fixed": "#f0dcff",
-                    "inverse-on-surface": "#313032",
-                    "on-tertiary-fixed": "#1a1030",
-                    "background": "#131315",
-                    "error-container": "#93000a",
-                    "on-error": "#690005",
-                    "surface": "#131315",
-                    "on-surface": "#e5e1e4",
-                    "primary": "#b58ad7",
-                    "secondary-fixed-dim": "#c6c6c7",
-                    "on-secondary-fixed": "#1a1c1c",
-                    "outline-variant": "#4d463a",
-                    "on-primary-fixed-variant": "#5b3d6f",
-                    "gold-dimmed": "#7f5f93",
-                    "inverse-primary": "#76508f",
-                    "primary-fixed-dim": "#d1b1e8",
-                    "on-tertiary-container": "#4a3a62",
-                    "secondary": "#c6c6c7",
-                    "on-secondary-container": "#b4b5b5",
-                    "secondary-container": "#454747",
-                    "on-secondary-fixed-variant": "#454747",
-                    "secondary-fixed": "#e2e2e2",
-                    "on-tertiary-fixed-variant": "#4a3a62"
+            colors: {
+              "primary-container": "#d7c0eb",
+              "tertiary": "#cbb7e9",
+              "outline": "#937e9a",
+              "surface-muted": "#1A1A1D",
+              "surface-variant": "#353437",
+              "surface-container-low": "#1c1b1d",
+              "surface-container-highest": "#353437",
+              "on-background": "#e5e1e4",
+              "surface-container-high": "#2a2a2c",
+              "on-primary": "#2d1639",
+              "on-surface-variant": "#d0c5b5",
+              "on-tertiary": "#312448",
+              "border-subtle": "#27272A",
+              "background": "#0c0c0e",
+              "surface": "#131315",
+              "on-surface": "#e5e1e4",
+              "primary": "#b58ad7",
+              "primary-glow": "#c084fc",
+              "cyan-glow": "#38bdf8",
+              "secondary": "#c6c6c7"
             },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "2xl": "1rem",
-                    "full": "9999px"
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "1rem",
+              "3xl": "1.5rem",
+              "full": "9999px"
             },
-            "spacing": {
-                    "unit": "4px",
-                    "gutter": "24px",
-                    "container-max-width": "1280px",
-                    "margin-mobile": "20px",
-                    "margin-desktop": "64px"
-            },
-            "fontFamily": {
-                    "label-mono-sm": ["JetBrains Mono"],
-                    "label-mono-lg": ["JetBrains Mono"],
-                    "headline-lg": ["Literata"],
-                    "body-lg": ["Plus Jakarta Sans"],
-                    "body-md": ["Plus Jakarta Sans"],
-                    "display-lg-mobile": ["Literata"],
-                    "headline-md": ["Literata"],
-                    "display-lg": ["Literata"]
-            },
-            "fontSize": {
-                    "label-mono-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
-                    "label-mono-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "display-lg-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
-                    "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            fontFamily: {
+              "mono": ["JetBrains Mono", "monospace"],
+              "serif-title": ["Literata", "serif"],
+              "playfair": ["Playfair Display", "serif"],
+              "sans": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+              "fustat": ["Fustat", "sans-serif"],
+              "schibsted": ["Schibsted Grotesk", "sans-serif"]
             }
-          },
-        },
+          }
+        }
       }
     </script>
     
     <style>
-        body {
-            background-color: #131315;
-            cursor: none;
-            overflow-x: hidden;
+        :root {
+            --bg-color: #0c0c0e;
         }
 
+        body {
+            background-color: var(--bg-color);
+            color: #e5e1e4;
+            cursor: none;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Noise filter overlay */
         .grid-overlay {
             background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 80px 80px;
+                radial-gradient(circle at 50% 50%, rgba(181, 138, 215, 0.04) 0%, transparent 70%),
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 60px 60px, 60px 60px;
             pointer-events: none;
         }
 
-        /* Combined Glassmorphism + Original Theme styling */
-        .glass-card {
+        /* Liquid Glass Design System */
+        .liquid-glass {
             background: rgba(255, 255, 255, 0.02);
+            background-blend-mode: luminosity;
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.03);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(181, 138, 215, 0.25); /* Purple theme border glow */
-            transform: translateY(-4px);
+            -webkit-backdrop-filter: blur(16px);
+            border: none;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.08), 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .purple-glow {
-            filter: drop-shadow(0 0 15px rgba(181, 138, 215, 0.3));
+        .liquid-glass::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.2px;
+            background: linear-gradient(180deg,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0.1) 25%,
+                rgba(181,138,215,0.15) 50%,
+                rgba(255,255,255,0.05) 75%,
+                rgba(255,255,255,0.25) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .liquid-glass:hover {
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 20px 40px -15px rgba(181, 138, 215, 0.2);
+            transform: translateY(-4px) scale(1.005);
+        }
+
+        .liquid-glass-strong {
+            background: rgba(20, 18, 24, 0.75);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-glass-strong::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.4px;
+            background: linear-gradient(180deg,
+                rgba(181,138,215,0.5) 0%,
+                rgba(255,255,255,0.2) 30%,
+                rgba(255,255,255,0.05) 70%,
+                rgba(181,138,215,0.4) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Shiny text animation */
+        .animate-shiny {
+            background-image: linear-gradient(
+                90deg, 
+                #ffffff 0%, 
+                #b58ad7 25%, 
+                #38bdf8 50%, 
+                #f472b6 75%, 
+                #ffffff 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shinyText 6s linear infinite;
+        }
+
+        @keyframes shinyText {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
 
         .text-glow {
-            text-shadow: 0 0 30px rgba(181, 138, 215, 0.2);
+            text-shadow: 0 0 35px rgba(181, 138, 215, 0.4);
         }
 
-        .obsidian-gradient {
-            background: radial-gradient(circle at 50% 50%, #1a1a1d 0%, #131315 100%);
+        .purple-glow-box {
+            box-shadow: 0 0 30px rgba(181, 138, 215, 0.25);
         }
 
         /* Custom Cursor */
         .custom-cursor {
-            width: 12px;
-            height: 12px;
-            background-color: #b48ad7;
+            width: 10px;
+            height: 10px;
+            background-color: #b58ad7;
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, width 0.3s ease, height 0.3s ease;
+            transition: transform 0.08s ease-out, opacity 0.2s ease;
+            box-shadow: 0 0 10px #b58ad7;
         }
 
         .custom-cursor-follower {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(181, 138, 215, 0.3);
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(181, 138, 215, 0.4);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out, border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Reveal on scroll animations */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Card Tilt Support */
+        .tilt-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .tilt-card-inner {
             transition: transform 0.15s ease-out;
+            transform-style: preserve-3d;
         }
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0e0e10;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2a2a2c;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b58ad7;
-        }
-
+        /* Audio Visualizer */
         .visualizer-container {
             display: flex;
             align-items: flex-end;
             gap: 3px;
-            height: 24px;
+            height: 20px;
         }
         .visualizer-bar {
-            width: 4px;
+            width: 3px;
             background-color: #b58ad7;
             border-radius: 2px;
             transform-origin: bottom;
             transition: height 0.1s ease;
-            height: 4px; 
+            height: 4px;
         }
         .visualizer-bar.active {
-            animation: bounce 1s infinite ease-in-out alternate;
+            animation: bounce 0.8s infinite ease-in-out alternate;
         }
         .visualizer-bar.active:nth-child(1) { animation-delay: 0.1s; }
-        .visualizer-bar.active:nth-child(2) { animation-delay: 0.4s; }
-        .visualizer-bar.active:nth-child(3) { animation-delay: 0.2s; }
-        .visualizer-bar.active:nth-child(4) { animation-delay: 0.5s; }
-        .visualizer-bar.active:nth-child(5) { animation-delay: 0.3s; }
+        .visualizer-bar.active:nth-child(2) { animation-delay: 0.3s; }
+        .visualizer-bar.active:nth-child(3) { animation-delay: 0.15s; }
+        .visualizer-bar.active:nth-child(4) { animation-delay: 0.4s; }
+        .visualizer-bar.active:nth-child(5) { animation-delay: 0.25s; }
 
         @keyframes bounce {
             0% { height: 4px; }
-            100% { height: 24px; }
+            100% { height: 20px; }
         }
 
+        /* Volume Slider */
         input[type=range].volume-slider {
             -webkit-appearance: none;
             width: 100%;
@@ -229,7 +269,7 @@
         input[type=range].volume-slider::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             border-radius: 2px;
         }
         input[type=range].volume-slider::-webkit-slider-thumb {
@@ -240,562 +280,797 @@
             background: #b58ad7;
             margin-top: -4px;
             cursor: pointer;
+            box-shadow: 0 0 8px #b58ad7;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c0c0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b58ad7;
+        }
+
+        /* Spotlight mask styling */
+        .spotlight-mask {
+            mask-repeat: no-repeat;
+            -webkit-mask-repeat: no-repeat;
         }
     </style>
 </head>
 
-<body class="bg-background text-on-surface obsidian-gradient selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<body class="bg-background text-on-surface min-h-screen selection:bg-primary/30 selection:text-white">
 
+    <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
     <div class="custom-cursor-follower" id="cursor-follower"></div>
-    <div class="fixed inset-0 grid-overlay z-0"></div>
 
-    <nav class="fixed top-0 w-full bg-background/60 backdrop-blur-xl border-b border-white/10 z-50 transition-all duration-500" id="navbar">
-        <div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-6 flex justify-between items-center">
+    <!-- Background Layer 1: Looping Video with Custom JS Crossfade -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <video 
+            id="bg-video" 
+            playsinline 
+            muted 
+            preload="auto"
+            class="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top w-[120%] h-[120%] opacity-0 transition-none"
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
+        ></video>
+        <!-- Dark Gradient Overlay for contrast -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0c0c0e]/80 via-[#0c0c0e]/60 to-[#0c0c0e] pointer-events-none z-10"></div>
+    </div>
+
+    <!-- Background Layer 2: Interactive Spotlight Canvas Mask (Reveals Cyber Texture) -->
+    <div id="spotlight-layer" class="fixed inset-0 z-10 pointer-events-none overflow-hidden opacity-40">
+        <canvas id="spotlight-canvas" class="hidden"></canvas>
+        <div 
+            id="reveal-div" 
+            class="absolute inset-0 bg-cover bg-center pointer-events-none spotlight-mask"
+            style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');"
+        ></div>
+    </div>
+
+    <!-- Grid Overlay -->
+    <div class="fixed inset-0 grid-overlay z-10"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-4 left-0 right-0 z-50 px-4 md:px-8 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto liquid-glass-strong rounded-full px-6 py-3 flex justify-between items-center">
             
-            <span class="font-label-mono-lg text-label-mono-lg tracking-widest text-primary uppercase">AYUSH BHATTACHARYA</span>
-            
-            <!-- Right Side Navigation Group -->
-            <div class="hidden md:flex items-center">
-                <!-- Text Links -->
-                <div class="flex gap-8 items-center mr-8">
-                    <a class="font-label-mono-lg text-label-mono-lg text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer" href="#work">Work</a>
-                    <a class="font-label-mono-lg text-label-mono-lg text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer" href="#experience">Experience</a>
-                    <a class="font-label-mono-lg text-label-mono-lg text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer" href="#expertise">Expertise</a>
-                    <a class="font-label-mono-lg text-label-mono-lg text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer" href="#contact">Contact</a>
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-xs font-bold text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary transition-all">
+                    AB
                 </div>
-                
-                <!-- Action Buttons (Hire Me & Radio) -->
-                <div class="flex items-center gap-4 pl-8 border-l border-white/10">
-                    <button class="bg-primary text-on-primary-container px-6 py-2 rounded-full font-label-mono-lg text-label-mono-lg hover:brightness-110 active:scale-95 transition-all duration-300 purple-glow cursor-pointer">
-                Hire Me
-            </button>
-            <!-- Radio Station Widget -->
-            <div class="relative ml-2">
-                <!-- Toggle Button -->
-                <button id="radio-toggle" class="w-10 h-10 border border-border-subtle flex items-center justify-center text-on-surface-variant hover:border-primary hover:text-primary transition-all duration-300 cursor-pointer bg-transparent">
-                    <span class="material-symbols-outlined text-[20px]">radio</span>
-                </button>
-                
-                <!-- Glassmorphic Dropdown Player -->
-                <div id="custom-radio-widget" class="absolute right-0 top-14 w-80 opacity-0 invisible transition-all duration-300 transform origin-top-right scale-95 z-50 pointer-events-none">
-                    <div class="p-5 border border-border-subtle bg-surface-container-high/90 backdrop-blur-xl shadow-2xl rounded-xl">
-                        
-                        <!-- Header & Visualizer -->
-                        <div class="flex items-center justify-between mb-6">
-                            <div class="flex items-center gap-3">
-                                <span class="relative flex h-2 w-2">
-                                    <span id="radio-ping" class="absolute inline-flex h-full w-full rounded-full bg-primary opacity-0 transition-opacity duration-300"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                                </span>
-                                <span class="font-label-mono-sm text-primary uppercase tracking-[0.2em] opacity-80">COMET_RADIO</span>
-                            </div>
-                            <div class="visualizer-container" id="visualizer">
-                                <div class="visualizer-bar"></div>
-                                <div class="visualizer-bar"></div>
-                                <div class="visualizer-bar"></div>
-                                <div class="visualizer-bar"></div>
-                                <div class="visualizer-bar"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Now Playing -->
-                        <div class="mb-6 text-center">
-                            <div id="now-playing-title" class="font-headline-md text-on-background text-lg truncate mb-1">Select a Station</div>
-                            <div id="now-playing-status" class="font-label-mono-sm text-on-surface-variant opacity-60">Ready to tune in</div>
-                        </div>
+                <span class="font-mono text-xs tracking-widest text-white uppercase font-semibold group-hover:text-primary transition-colors">
+                    AYUSH.DEV
+                </span>
+            </a>
+            
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-3 py-1 border border-white/10">
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#hero">Home</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#experience">Journey</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#expertise">Expertise</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#work">Projects</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#interests">Beyond Screen</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#contact">Contact</a>
+            </div>
+            
+            <!-- Action Controls -->
+            <div class="flex items-center gap-3">
+                <!-- Hire Me CTA -->
+                <a href="#contact" class="hidden sm:inline-flex bg-white text-black font-mono text-xs font-semibold px-5 py-2 rounded-full hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10">
+                    Hire Me ↗
+                </a>
 
-                        <!-- Controls -->
-                        <div class="flex items-center justify-center gap-6 mb-6">
-                            <button id="radio-play-btn" class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer">
-                                <span class="material-symbols-outlined text-[24px]" id="play-icon">play_arrow</span>
-                            </button>
-                        </div>
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="material-symbols-outlined text-on-surface-variant text-[16px]">volume_down</span>
-                            <input type="range" id="radio-volume" min="0" max="1" step="0.01" value="0.5" class="volume-slider cursor-pointer">
-                            <span class="material-symbols-outlined text-on-surface-variant text-[16px]">volume_up</span>
-                        </div>
-
-                        <!-- Station Selector -->
-                        <div class="border-t border-white/10 pt-4">
-                            <div class="font-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-3">Curated Frequencies</div>
-                            <div class="space-y-2 max-h-32 overflow-y-auto pr-2" id="station-list">
-                                <!-- Stations injected via JS -->
+                <!-- Radio Widget Toggle Button -->
+                <div class="relative">
+                    <button id="radio-toggle" aria-label="Open Radio Player" class="w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-[18px]">radio</span>
+                    </button>
+                    
+                    <!-- Glassmorphic Radio Player Dropdown -->
+                    <div id="custom-radio-widget" class="absolute right-0 top-12 w-80 opacity-0 invisible transition-all duration-300 transform origin-top-right scale-95 z-50 pointer-events-none">
+                        <div class="p-5 liquid-glass-strong rounded-2xl shadow-2xl border border-white/15">
+                            
+                            <!-- Header & Visualizer -->
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                                <div class="flex items-center gap-2">
+                                    <span class="relative flex h-2 w-2">
+                                        <span id="radio-ping" class="absolute inline-flex h-full w-full rounded-full bg-primary opacity-0 transition-opacity"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                    </span>
+                                    <span class="font-mono text-[11px] text-primary uppercase tracking-widest font-semibold">LOFI_RADIO</span>
+                                </div>
+                                <div class="visualizer-container" id="visualizer">
+                                    <div class="visualizer-bar"></div>
+                                    <div class="visualizer-bar"></div>
+                                    <div class="visualizer-bar"></div>
+                                    <div class="visualizer-bar"></div>
+                                    <div class="visualizer-bar"></div>
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- Custom URL Input -->
-                        <div class="border-t border-white/10 pt-4 mt-4">
-                            <div class="font-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-3">Custom Stream</div>
-                            <div class="flex gap-2">
-                                <input type="text" id="custom-stream-url" placeholder="Paste MP3/Stream URL" class="w-full bg-surface-container-low border border-white/10 text-on-surface font-label-mono-sm px-3 py-2 rounded outline-none focus:border-primary transition-colors cursor-pointer">
-                                <button id="load-custom-stream" class="bg-primary/20 text-primary px-3 py-2 rounded font-label-mono-sm hover:bg-primary hover:text-on-primary-container transition-colors cursor-pointer">Play</button>
+                            
+                            <!-- Now Playing Info -->
+                            <div class="mb-5 text-center">
+                                <div id="now-playing-title" class="font-sans text-sm font-semibold text-white truncate mb-0.5">Select a Station</div>
+                                <div id="now-playing-status" class="font-mono text-[11px] text-white/50">Ready to tune in</div>
                             </div>
+
+                            <!-- Play Controls -->
+                            <div class="flex items-center justify-center gap-4 mb-5">
+                                <button id="radio-play-btn" class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-lg shadow-primary/30">
+                                    <span class="material-symbols-outlined text-[22px]" id="play-icon">play_arrow</span>
+                                </button>
+                            </div>
+
+                            <!-- Volume Slider -->
+                            <div class="flex items-center gap-2 mb-5 px-2">
+                                <span class="material-symbols-outlined text-white/40 text-[14px]">volume_down</span>
+                                <input type="range" id="radio-volume" min="0" max="1" step="0.01" value="0.5" class="volume-slider cursor-pointer">
+                                <span class="material-symbols-outlined text-white/40 text-[14px]">volume_up</span>
+                            </div>
+
+                            <!-- Curated Station Selector -->
+                            <div class="pt-3 border-t border-white/10">
+                                <div class="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-2">Curated Frequencies</div>
+                                <div class="space-y-1 max-h-32 overflow-y-auto pr-1" id="station-list">
+                                    <!-- Injected via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Custom Stream Input -->
+                            <div class="pt-3 border-t border-white/10 mt-3">
+                                <div class="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-2">Custom Stream URL</div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="custom-stream-url" placeholder="Paste MP3/Stream URL" class="w-full bg-black/40 border border-white/10 text-white font-mono text-xs px-3 py-1.5 rounded outline-none focus:border-primary transition-colors">
+                                    <button id="load-custom-stream" class="bg-primary/20 text-primary px-3 py-1.5 rounded font-mono text-xs hover:bg-primary hover:text-on-primary transition-colors cursor-pointer">Play</button>
+                                </div>
+                            </div>
+
                         </div>
-                        
                     </div>
                 </div>
+
+                <!-- Mobile Menu Icon -->
+                <a href="#contact" class="md:hidden w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-[18px]">send</span>
+                </a>
             </div>
-        <div class="md:hidden">
-                <span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
-            </div>
+
         </div>
     </nav>
 
-    <section class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden z-10">
-        <div class="relative z-10 text-center px-margin-mobile">
-            <div class="inline-block glass-card px-4 py-1 rounded-full mb-8">
-                <span class="font-label-mono-sm text-label-mono-sm text-primary uppercase tracking-[0.2em]">CODING · WEB DESIGN · GRAPHIC DESIGN</span>
+    <!-- SECTION 1: HERO SECTION -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 z-20">
+        <div class="max-w-5xl mx-auto text-center">
+            
+            <!-- Badge Pill -->
+            <div class="inline-flex items-center gap-2 liquid-glass rounded-full px-4 py-1.5 mb-8 reveal-element">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-mono text-xs tracking-wider text-white/90">Student & Coder · Class 12 Boards · 6+ Yrs Experience</span>
             </div>
-            <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-6 text-glow leading-none text-on-background">
-                Ayush Bhattacharya
+
+            <!-- Headline -->
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-fustat font-bold tracking-tight text-white leading-[0.95] mb-6 reveal-element">
+                Bridging Design & <br/>
+                <span class="animate-shiny italic font-serif-title">Logic into Reality</span>
             </h1>
-            <p class="max-w-2xl mx-auto font-body-lg text-body-lg text-on-surface-variant mb-12 opacity-80">
-                6+ years of experience integrating HTML, CSS, Python, and design principles. Extensive practice using AI, ML, and modern LLMs (Claude, Gemini, Copilot, ChatGPT) into daily development workflows.
+
+            <!-- Subtitle -->
+            <p class="max-w-2xl mx-auto font-sans text-base sm:text-lg text-white/70 leading-relaxed mb-10 reveal-element">
+                Hey! I'm <strong class="text-white">Ayush Bhattacharya</strong> — a student, programmer, and UI/UX developer. I combine Python, frontend tech, and AI co-pilots (Claude, Gemini, ChatGPT) to engineer high-contrast digital experiences.
             </p>
-            <div class="flex flex-col md:flex-row gap-6 justify-center">
-                <a class="bg-primary text-on-primary-container px-8 py-4 rounded-full font-label-mono-lg text-label-mono-lg purple-glow hover:scale-105 transition-transform cursor-pointer flex justify-center items-center gap-2" href="#work">
-                    Explore Portfolio <span class="material-symbols-outlined text-[18px]">south</span>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 reveal-element">
+                <a href="#work" class="w-full sm:w-auto bg-white text-black font-mono text-sm font-semibold px-8 py-4 rounded-full hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-xl shadow-white/10 flex items-center justify-center gap-2">
+                    Explore Projects <span class="material-symbols-outlined text-lg">arrow_downward</span>
                 </a>
-                <a class="glass-card px-8 py-4 rounded-full font-label-mono-lg text-label-mono-lg text-on-surface hover:text-primary cursor-pointer flex justify-center items-center" href="#contact">
-                    Get in Touch
+                <a href="#contact" class="w-full sm:w-auto liquid-glass px-8 py-4 rounded-full font-mono text-sm text-white hover:text-primary hover:border-primary/50 transition-all cursor-pointer flex items-center justify-center gap-2">
+                    Let's Connect <span class="material-symbols-outlined text-lg">mail</span>
                 </a>
             </div>
-        </div>
-        
-        <!-- Stats Section -->
-        <div class="absolute bottom-12 w-full max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop flex justify-center md:justify-between items-center gap-12 opacity-70">
-            <div class="text-center md:text-left glass-card px-6 py-3 rounded-xl border-none bg-transparent">
-                <div class="font-headline-lg text-primary">6+</div>
-                <div class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-widest">Years Experience</div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto reveal-element">
+                <div class="liquid-glass p-5 rounded-2xl text-center">
+                    <div class="text-3xl font-fustat font-bold text-primary mb-1">6+ Years</div>
+                    <div class="font-mono text-[11px] uppercase tracking-wider text-white/50">Coding Journey</div>
+                </div>
+                <div class="liquid-glass p-5 rounded-2xl text-center">
+                    <div class="text-3xl font-fustat font-bold text-cyan-400 mb-1">Class 12</div>
+                    <div class="font-mono text-[11px] uppercase tracking-wider text-white/50">Current Academics</div>
+                </div>
+                <div class="liquid-glass p-5 rounded-2xl text-center">
+                    <div class="text-3xl font-fustat font-bold text-purple-300 mb-1">10+ Tech</div>
+                    <div class="font-mono text-[11px] uppercase tracking-wider text-white/50">Stack Tools</div>
+                </div>
+                <div class="liquid-glass p-5 rounded-2xl text-center">
+                    <div class="text-3xl font-fustat font-bold text-emerald-400 mb-1">4+ AI</div>
+                    <div class="font-mono text-[11px] uppercase tracking-wider text-white/50">Co-Pilot Workflows</div>
+                </div>
             </div>
-            <div class="text-center md:text-left glass-card px-6 py-3 rounded-xl border-none bg-transparent">
-                <div class="font-headline-lg text-primary">4+</div>
-                <div class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-widest">AI Tools Mastered</div>
-            </div>
-            <div class="hidden md:block text-right glass-card px-6 py-3 rounded-xl border-none bg-transparent">
-                <div class="font-headline-lg text-primary">10+</div>
-                <div class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-widest">Tech Stack Skills</div>
-            </div>
+
         </div>
     </section>
 
-    <section class="py-32 max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop z-10 relative" id="experience">
-        <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-20 text-center text-on-background">Journey</h2>
-        <div class="relative space-y-16">
-            <!-- Timeline Spine -->
-            <div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/10 -translate-x-1/2 hidden md:block"></div>
+    <!-- SECTION 2: EXPERTISE & SKILLS (BENTO GRID WITH 3D TILT) -->
+    <section id="expertise" class="py-28 px-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
             
-            <!-- Item 1 -->
-            <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-element">
-                <div class="glass-card p-10 md:text-right md:order-1 rounded-2xl">
-                    <span class="font-label-mono-sm text-label-mono-sm text-primary mb-2 block tracking-widest uppercase">May 2024 — Present</span>
-                    <h3 class="font-headline-lg text-headline-lg mb-4 text-on-background">Leegality</h3>
-                    <div class="font-label-mono-lg text-primary mb-4">Product Design Manager</div>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-80">Owning UX strategy and design system direction for complex B2B document workflow and e-signature products — balancing enterprise client needs against engineering velocity.</p>
-                </div>
-                <div class="flex justify-center md:order-2 z-10">
-                    <div class="w-14 h-14 rounded-full glass-card flex items-center justify-center border-primary/20 purple-glow bg-background">
-                        <span class="material-symbols-outlined text-primary text-2xl">work</span>
-                    </div>
-                </div>
+            <div class="text-center mb-16 reveal-element">
+                <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-3">// TOOLKIT & CAPABILITIES</span>
+                <h2 class="text-4xl md:text-6xl font-fustat font-bold text-white tracking-tight">Technical Mastery</h2>
             </div>
 
-            <!-- Item 2 -->
-            <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-element">
-                <div class="flex justify-center md:order-1 z-10">
-                    <div class="w-14 h-14 rounded-full glass-card flex items-center justify-center border-primary/20 purple-glow bg-background">
-                        <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
-                    </div>
-                </div>
-                <div class="glass-card p-10 md:order-2 rounded-2xl">
-                    <span class="font-label-mono-sm text-label-mono-sm text-primary mb-2 block tracking-widest uppercase">Dec 2021 — May 2024</span>
-                    <h3 class="font-headline-lg text-headline-lg mb-4 text-on-background">JIO Platforms</h3>
-                    <div class="font-label-mono-lg text-primary mb-4">UX Designer (Artificial Intelligence)</div>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-80">Owned design decisions across 5+ AI-powered initiatives in fintech, media, and sports intelligence — translating complex ML outputs into interfaces coaching staff and consumers could trust.</p>
-                </div>
-            </div>
-            
-            <!-- Item 3 -->
-            <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-element">
-                <div class="glass-card p-10 md:text-right md:order-1 rounded-2xl">
-                    <span class="font-label-mono-sm text-label-mono-sm text-primary mb-2 block tracking-widest uppercase">2012 — 2027</span>
-                    <h3 class="font-headline-lg text-headline-lg mb-4 text-on-background">Central Model School</h3>
-                    <div class="font-label-mono-lg text-primary mb-4">Student</div>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-80">Balancing intensive academics with 6+ years of active coding, graphic design, and web development. Applying theoretical knowledge to modern tech stacks and AI workflows.</p>
-                </div>
-                <div class="flex justify-center md:order-2 z-10">
-                    <div class="w-14 h-14 rounded-full glass-card flex items-center justify-center border-primary/20 purple-glow bg-background">
-                        <span class="material-symbols-outlined text-primary text-2xl">school</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-32 relative z-10 bg-white/[0.01] border-y border-white/5" id="expertise">
-        <div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop">
-            <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-16 text-center text-on-background">Expertise</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Skill 1 -->
-                <div class="glass-card p-10 group overflow-hidden relative rounded-2xl reveal-element">
-                    <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <span class="material-symbols-outlined text-9xl">code</span>
-                    </div>
-                    <span class="material-symbols-outlined text-primary text-4xl mb-6 block">code</span>
-                    <h4 class="font-headline-md text-headline-md mb-3 text-on-background">Web Development</h4>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-70 group-hover:opacity-100 transition-opacity">Extensive use of HTML, CSS, Python, and frontend frameworks to build responsive web applications.</p>
-                </div>
-                <!-- Skill 2 -->
-                <div class="glass-card p-10 group overflow-hidden relative rounded-2xl reveal-element">
-                    <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <span class="material-symbols-outlined text-9xl">brush</span>
-                    </div>
-                    <span class="material-symbols-outlined text-primary text-4xl mb-6 block">brush</span>
-                    <h4 class="font-headline-md text-headline-md mb-3 text-on-background">Graphic Design</h4>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-70 group-hover:opacity-100 transition-opacity">Pixel-perfect execution of graphic elements and user interfaces, prioritizing visual hierarchy.</p>
-                </div>
-                <!-- Skill 3 -->
-                <div class="glass-card p-10 group overflow-hidden relative rounded-2xl reveal-element">
-                    <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <span class="material-symbols-outlined text-9xl">layers</span>
-                    </div>
-                    <span class="material-symbols-outlined text-primary text-4xl mb-6 block">layers</span>
-                    <h4 class="font-headline-md text-headline-md mb-3 text-on-background">Design Systems</h4>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-70 group-hover:opacity-100 transition-opacity">Component libraries, tokens, and documentation standards built once and reused to reduce duplicate work.</p>
-                </div>
-                <!-- Skill 4 -->
-                <div class="glass-card p-10 group overflow-hidden relative rounded-2xl reveal-element">
-                    <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <span class="material-symbols-outlined text-9xl">robot_2</span>
-                    </div>
-                    <span class="material-symbols-outlined text-primary text-4xl mb-6 block">robot_2</span>
-                    <h4 class="font-headline-md text-headline-md mb-3 text-on-background">AI Workflows</h4>
-                    <p class="font-body-md text-body-md text-on-surface-variant opacity-70 group-hover:opacity-100 transition-opacity">Integration of Claude, Gemini, Copilot, and ChatGPT into daily practice — accelerating ideas to code.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-32 max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop z-10 relative" id="work">
-        <div class="flex justify-between items-end mb-16 reveal-element">
-            <div>
-                <span class="font-label-mono-sm text-label-mono-sm text-primary tracking-[0.3em] uppercase block mb-4">SELECTED WORKS</span>
-                <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background">Case Studies</h2>
-            </div>
-            <a href="https://github.com/itsjustayush" target="_blank" class="hidden md:flex font-label-mono-sm text-label-mono-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer items-center gap-2 tracking-widest uppercase">
-                VIEW GITHUB ARCHIVE <span class="material-symbols-outlined text-sm">north_east</span>
-            </a>
-        </div>
-        
-        <div id="github-projects-container" class="space-y-8 min-h-[400px]">
-            <div class="py-16 text-center text-on-surface-variant opacity-50 font-label-mono-sm tracking-widest uppercase animate-pulse">
-                Fetching GitHub Repositories...
-            </div>
-        </div>
-    </section>
-
-    <section class="py-32 z-10 relative" id="contact">
-        <div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop">
-            <div class="glass-card grid grid-cols-1 lg:grid-cols-2 p-1 md:p-2 overflow-hidden rounded-[2rem] reveal-element">
-                <!-- Info Side -->
-                <div class="p-10 md:p-20 flex flex-col justify-center bg-primary/5 relative overflow-hidden rounded-t-[1.8rem] lg:rounded-tr-none lg:rounded-l-[1.8rem]">
-                    <div class="relative z-10">
-                        <span class="material-symbols-outlined text-primary text-6xl mb-8 opacity-40">mail</span>
-                        <h2 class="font-headline-lg text-[48px] leading-tight text-on-background mb-8">Let's build something remarkable.</h2>
-                        <p class="font-body-lg text-on-surface-variant mb-12 opacity-80">
-                            I am open to collaborations, design projects, and development engagements. If you are building something ambitious, I want to hear about it.
-                        </p>
-                        <div class="font-label-mono-lg text-label-mono-lg text-primary uppercase tracking-widest mb-2">AYUSH BHATTACHARYA</div>
-                        <a href="mailto:info.cometlabs@gmail.com" class="font-label-mono-sm text-label-mono-sm text-on-surface-variant opacity-60 hover:text-primary hover:opacity-100 transition-colors cursor-pointer inline-block">
-                            info.cometlabs@gmail.com
-                        </a>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <!-- Form Side -->
-                <div class="p-10 md:p-20">
-                    <form id="contact-form" action="https://formspree.io/f/maqrnbow" method="POST" class="space-y-10">
-                        <div class="relative group">
-                            <label class="font-label-mono-sm text-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-2 block">FULL NAME</label>
-                            <input name="name" required class="w-full bg-surface-container-low/50 border-b border-white/10 focus:border-primary outline-none py-4 text-on-surface transition-all focus:bg-surface-container-high/50 px-4 rounded-t-lg cursor-pointer" type="text" placeholder="Your name"/>
+                <!-- Card 1: Coding Stack -->
+                <div class="liquid-glass p-8 rounded-3xl tilt-card reveal-element group">
+                    <div class="tilt-card-inner">
+                        <div class="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-2xl">code</span>
                         </div>
-                        <div class="relative group">
-                            <label class="font-label-mono-sm text-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-2 block">EMAIL ADDRESS</label>
-                            <input name="email" required class="w-full bg-surface-container-low/50 border-b border-white/10 focus:border-primary outline-none py-4 text-on-surface transition-all focus:bg-surface-container-high/50 px-4 rounded-t-lg cursor-pointer" type="email" placeholder="your@email.com"/>
-                        </div>
-                        <div class="relative group">
-                            <label class="font-label-mono-sm text-label-mono-sm text-on-surface-variant opacity-50 uppercase tracking-widest mb-2 block">YOUR MESSAGE</label>
-                            <textarea name="message" required class="w-full bg-surface-container-low/50 border-b border-white/10 focus:border-primary outline-none py-4 text-on-surface transition-all focus:bg-surface-container-high/50 px-4 rounded-t-lg resize-none cursor-pointer" rows="4" placeholder="Tell me about the opportunity..."></textarea>
-                        </div>
-                        <button id="submit-button" class="w-full bg-primary-container text-on-primary-container py-5 rounded-full font-label-mono-lg text-label-mono-lg tracking-widest uppercase purple-glow hover:scale-[1.02] active:scale-95 transition-all cursor-pointer" type="submit">
-                            SEND INQUIRY
-                        </button>
-                    </form>
-
-                    <!-- Success Message (Hidden by default) -->
-                    <div id="form-success" class="hidden flex-col items-center justify-center h-full text-center space-y-6 py-10">
-                        <div class="w-20 h-20 rounded-full glass-card flex items-center justify-center border-primary/30 purple-glow bg-background mb-4">
-                            <span class="material-symbols-outlined text-primary text-4xl">check_circle</span>
-                        </div>
-                        <h3 class="font-headline-lg text-3xl text-on-background">Message Sent!</h3>
-                        <p class="font-body-lg text-on-surface-variant opacity-80 max-w-sm mx-auto">
-                            Thank you for reaching out. I'll get back to you as soon as possible.
+                        <h3 class="text-2xl font-fustat font-bold text-white mb-3">Languages & Web</h3>
+                        <p class="text-sm text-white/70 leading-relaxed mb-6">
+                            Building responsive, pixel-perfect frontend layouts and Python scripts engineered for performance and clean architecture.
                         </p>
-                        <button id="reset-form-btn" class="mt-8 px-8 py-3 rounded-full border border-white/10 hover:border-primary text-on-surface hover:text-primary font-label-mono-sm tracking-widest uppercase transition-all cursor-pointer glass-card">
-                            Send Another Message
-                        </button>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Python</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">HTML5</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">CSS3</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">JavaScript</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Flexbox & Grid</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Card 2: Design Philosophy -->
+                <div class="liquid-glass p-8 rounded-3xl tilt-card reveal-element group">
+                    <div class="tilt-card-inner">
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-2xl">brush</span>
+                        </div>
+                        <h3 class="text-2xl font-fustat font-bold text-white mb-3">Architectural UI/UX</h3>
+                        <p class="text-sm text-white/70 leading-relaxed mb-6">
+                            Architectural minimalism, glassmorphism, and brutalism-lite aesthetics focused on clarity, structure, and high readability.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Design Tokens</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Glassmorphism</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Component Libraries</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Typography</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: AI Workflows -->
+                <div class="liquid-glass p-8 rounded-3xl tilt-card reveal-element group">
+                    <div class="tilt-card-inner">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-400/10 border border-purple-400/30 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-2xl">smart_toy</span>
+                        </div>
+                        <h3 class="text-2xl font-fustat font-bold text-white mb-3">AI Co-Pilot Integration</h3>
+                        <p class="text-sm text-white/70 leading-relaxed mb-6">
+                            Leveraging modern AI platforms to brainstorm architecture, debug complex logic, and accelerate full-stack product iteration.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Claude 3.5</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">Gemini 1.5</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">ChatGPT</span>
+                            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-white/80">GitHub Copilot</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <footer class="relative z-10 w-full py-20 px-margin-mobile md:px-margin-desktop border-t border-white/10 bg-background/50 backdrop-blur-md">
-        <div class="max-w-container-max-width mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-            <div class="max-w-md">
-                <span class="font-headline-lg text-headline-lg text-on-surface block mb-6">AYUSH.</span>
-                <p class="font-body-md text-body-md text-on-surface-variant opacity-70 mb-8">
-                    Crafting intentional digital interfaces combining design intelligence with robust code engineering.
-                </p>
-                <div class="flex gap-4">
-                    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:text-primary transition-all duration-300 cursor-pointer" href="https://github.com/itsjustayush" target="_blank">
-                        <span class="material-symbols-outlined text-sm">code</span>
-                    </a>
-                    <a class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:text-primary transition-all duration-300 cursor-pointer" href="mailto:info.cometlabs@gmail.com">
-                        <span class="material-symbols-outlined text-sm">alternate_email</span>
-                    </a>
-                </div>
-            </div>
+    <!-- SECTION 3: JOURNEY & EXPERIENCE -->
+    <section id="experience" class="py-28 px-6 relative z-20">
+        <div class="max-w-5xl mx-auto">
             
-            <div class="grid grid-cols-2 gap-16 md:gap-24">
-                <div>
-                    <h5 class="font-label-mono-sm text-label-mono-sm text-primary mb-6 tracking-widest uppercase">Socials</h5>
-                    <ul class="space-y-4 font-body-md text-body-md text-on-surface-variant opacity-80">
-                        <li class="hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer"><a href="https://github.com/itsjustayush" target="_blank">GitHub</a></li>
-                        <li class="hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer"><a href="#">LinkedIn</a></li>
-                        <li class="hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer"><a href="#">Twitter</a></li>
-                    </ul>
+            <div class="text-center mb-20 reveal-element">
+                <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-3">// TIMELINE & ROLES</span>
+                <h2 class="text-4xl md:text-6xl font-fustat font-bold text-white tracking-tight">Journey & Education</h2>
+            </div>
+
+            <div class="relative space-y-12">
+                <!-- Spine line -->
+                <div class="absolute left-1/2 top-4 bottom-4 w-[1px] bg-gradient-to-b from-primary via-cyan-400 to-transparent -translate-x-1/2 hidden md:block opacity-30"></div>
+
+                <!-- Item 1: Leegality -->
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-element">
+                    <div class="liquid-glass p-8 rounded-3xl md:text-right">
+                        <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-2">May 2024 — Present</span>
+                        <h3 class="text-2xl font-fustat font-bold text-white mb-1">Leegality</h3>
+                        <div class="font-mono text-xs text-purple-300 mb-4">Product Design Manager</div>
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            Owning UX strategy and design system direction for complex B2B document workflow and e-signature products — balancing enterprise client needs against engineering velocity.
+                        </p>
+                    </div>
+                    <div class="hidden md:flex justify-center z-10">
+                        <div class="w-12 h-12 rounded-full liquid-glass flex items-center justify-center border-primary/40 text-primary shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined text-xl">work</span>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Item 2: JIO Platforms -->
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-element">
+                    <div class="hidden md:flex justify-center z-10">
+                        <div class="w-12 h-12 rounded-full liquid-glass flex items-center justify-center border-cyan-400/40 text-cyan-400 shadow-lg shadow-cyan-400/20">
+                            <span class="material-symbols-outlined text-xl">psychology</span>
+                        </div>
+                    </div>
+                    <div class="liquid-glass p-8 rounded-3xl">
+                        <span class="font-mono text-xs text-cyan-400 uppercase tracking-widest block mb-2">Dec 2021 — May 2024</span>
+                        <h3 class="text-2xl font-fustat font-bold text-white mb-1">JIO Platforms</h3>
+                        <div class="font-mono text-xs text-cyan-300 mb-4">UX Designer (Artificial Intelligence)</div>
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            Owned design decisions across 5+ AI-powered initiatives in fintech, media, and sports intelligence — translating complex ML outputs into intuitive interface patterns.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 3: Central Model School & Class 12 -->
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-element">
+                    <div class="liquid-glass p-8 rounded-3xl md:text-right">
+                        <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest block mb-2">2012 — 2027</span>
+                        <h3 class="text-2xl font-fustat font-bold text-white mb-1">Central Model School</h3>
+                        <div class="font-mono text-xs text-emerald-300 mb-4">Student (Class 12 Boards)</div>
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            Balancing intensive Class 12 board preparation with 6+ years of active coding, graphic design, and web development. Applying theoretical knowledge to modern tech stacks.
+                        </p>
+                    </div>
+                    <div class="hidden md:flex justify-center z-10">
+                        <div class="w-12 h-12 rounded-full liquid-glass flex items-center justify-center border-emerald-400/40 text-emerald-400 shadow-lg shadow-emerald-400/20">
+                            <span class="material-symbols-outlined text-xl">school</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 4: PROJECTS CAROUSEL & GITHUB CASE STUDIES -->
+    <section id="work" class="py-28 px-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 reveal-element">
                 <div>
-                    <h5 class="font-label-mono-sm text-label-mono-sm text-primary mb-6 tracking-widest uppercase">Explore</h5>
-                    <ul class="space-y-4 font-body-md text-body-md text-on-surface-variant opacity-80">
-                        <li class="hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer"><a href="#work">Work</a></li>
-                        <li class="hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer"><a href="#experience">Experience</a></li>
-                        <li class="hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer"><a href="#contact">Contact</a></li>
-                    </ul>
+                    <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-3">// FEATURED ARCHIVE</span>
+                    <h2 class="text-4xl md:text-6xl font-fustat font-bold text-white tracking-tight">Case Studies & Repos</h2>
+                </div>
+                <a href="https://github.com/itsjustayush" target="_blank" class="mt-4 md:mt-0 font-mono text-xs text-white/70 hover:text-primary flex items-center gap-2 uppercase tracking-widest cursor-pointer">
+                    View GitHub Profile <span class="material-symbols-outlined text-sm">open_in_new</span>
+                </a>
+            </div>
+
+            <!-- GitHub Dynamic Repos Grid -->
+            <div id="github-projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[300px]">
+                <div class="col-span-full liquid-glass p-12 text-center text-white/50 font-mono text-sm tracking-widest uppercase animate-pulse rounded-3xl">
+                    Fetching GitHub Repositories for @itsjustayush...
                 </div>
             </div>
+
         </div>
-        
-        <div class="max-w-container-max-width mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="font-body-md text-body-md text-on-surface-variant opacity-50">© 2026 Ayush Bhattacharya. Developer & Designer.</p>
+    </section>
+
+    <!-- SECTION 5: BEYOND THE SCREEN (INTERESTS CAROUSEL) -->
+    <section id="interests" class="py-28 px-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center mb-16 reveal-element">
+                <span class="font-mono text-xs text-cyan-400 uppercase tracking-widest block mb-3">// OFFLINE HOBBIES & CREATIVITY</span>
+                <h2 class="text-4xl md:text-6xl font-fustat font-bold text-white tracking-tight">Beyond The Screen</h2>
+            </div>
+
+            <!-- Interests Carousel -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Interest 1: Coin Vault -->
+                <div class="liquid-glass p-6 rounded-3xl group reveal-element">
+                    <div class="relative h-48 rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=800&auto=format&fit=crop" alt="Coins Collection" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <span class="absolute bottom-4 left-4 font-mono text-xs text-amber-300 uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-amber-300/30">
+                            🪙 Numismatics
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-fustat font-bold text-white mb-2">The Coin Vault</h3>
+                    <p class="text-xs text-white/70 leading-relaxed">
+                        A massive coin nerd hunting down rare, limited-edition, or discontinued Indian and foreign historical currency stamped with art and history.
+                    </p>
+                </div>
+
+                <!-- Interest 2: Action Camera Photography -->
+                <div class="liquid-glass p-6 rounded-3xl group reveal-element">
+                    <div class="relative h-48 rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop" alt="Photography" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <span class="absolute bottom-4 left-4 font-mono text-xs text-cyan-300 uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-cyan-300/30">
+                            📸 @ayu.vibee
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-fustat font-bold text-white mb-2">Framing The World</h3>
+                    <p class="text-xs text-white/70 leading-relaxed">
+                        Shooting with a Cason CS6 4K action camera — experimenting with dramatic lighting, street perspectives, and framing raw moments on the go.
+                    </p>
+                </div>
+
+                <!-- Interest 3: Music 24/7 -->
+                <div class="liquid-glass p-6 rounded-3xl group reveal-element">
+                    <div class="relative h-48 rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" alt="Music Headset" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <span class="absolute bottom-4 left-4 font-mono text-xs text-purple-300 uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-purple-300/30">
+                            🎧 Music 24/7
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-fustat font-bold text-white mb-2">Sonic Workflows</h3>
+                    <p class="text-xs text-white/70 leading-relaxed">
+                        Debugging Python or studying with constant music: Harry Styles, Benson Boone, Chainsmokers & ambient lofi frequencies keeping focus high.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 6: CONTACT FORM -->
+    <section id="contact" class="py-28 px-6 relative z-20">
+        <div class="max-w-5xl mx-auto">
+            
+            <div class="liquid-glass p-8 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden reveal-element">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Left Info -->
+                    <div>
+                        <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-4">// LET'S CONNECT</span>
+                        <h2 class="text-4xl sm:text-5xl font-fustat font-bold text-white mb-6 leading-tight">
+                            Build Something <br/><span class="italic font-serif-title text-primary">Remarkable.</span>
+                        </h2>
+                        <p class="text-sm text-white/70 leading-relaxed mb-8">
+                            Open to collaborations, web projects, design consulting, and technical development engagements. Feel free to reach out directly!
+                        </p>
+                        
+                        <div class="space-y-4 font-mono text-xs">
+                            <div class="flex items-center gap-3 text-white/80">
+                                <span class="material-symbols-outlined text-primary text-lg">mail</span>
+                                <a href="mailto:info.cometlabs@gmail.com" class="hover:text-primary transition-colors">info.cometlabs@gmail.com</a>
+                            </div>
+                            <div class="flex items-center gap-3 text-white/80">
+                                <span class="material-symbols-outlined text-cyan-400 text-lg">location_on</span>
+                                <span>Kolkata, India</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Form -->
+                    <div>
+                        <form id="contact-form" action="https://formspree.io/f/maqrnbow" method="POST" class="space-y-5">
+                            <div>
+                                <label class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NAME</label>
+                                <input name="name" required type="text" placeholder="e.g. Alex Mercer" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR EMAIL</label>
+                                <input name="email" required type="email" placeholder="alex@example.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">MESSAGE</label>
+                                <textarea name="message" required rows="4" placeholder="Tell me about your project or opportunity..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors resize-none"></textarea>
+                            </div>
+                            <button id="submit-button" type="submit" class="w-full bg-white text-black font-mono text-xs font-semibold uppercase tracking-widest py-4 rounded-xl hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10">
+                                Send Inquiry 🚀
+                            </button>
+                        </form>
+
+                        <!-- Success State -->
+                        <div id="form-success" class="hidden flex-col items-center justify-center text-center py-8 space-y-4">
+                            <div class="w-16 h-16 rounded-full bg-primary/20 border border-primary text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined text-3xl">check_circle</span>
+                            </div>
+                            <h3 class="text-2xl font-fustat font-bold text-white">Message Delivered!</h3>
+                            <p class="text-xs text-white/70 max-w-xs">
+                                Thank you for getting in touch. I will respond to your message shortly.
+                            </p>
+                            <button id="reset-form-btn" class="font-mono text-xs text-primary hover:underline cursor-pointer pt-2">
+                                Send another message
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-white/10 px-6 relative z-20 bg-black/60 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-xs font-bold text-primary">
+                    AB
+                </div>
+                <span class="font-mono text-xs text-white/60 uppercase tracking-widest">
+                    © 2026 Ayush Bhattacharya. Developer & Designer.
+                </span>
+            </div>
+
+            <div class="flex items-center gap-6 font-mono text-xs text-white/60">
+                <a href="https://github.com/itsjustayush" target="_blank" class="hover:text-primary transition-colors cursor-pointer">GitHub</a>
+                <a href="mailto:info.cometlabs@gmail.com" class="hover:text-primary transition-colors cursor-pointer">Email</a>
+                <a href="#hero" class="hover:text-primary transition-colors cursor-pointer">Back to Top ↑</a>
+            </div>
         </div>
     </footer>
 
+    <!-- SCRIPT LOGIC -->
     <script>
-        // --- Custom Cursor Logic ---
+        // ==========================================
+        // 1. VIDEO BACKGROUND CROSSFADE SYSTEM (rAF)
+        // ==========================================
+        const bgVideo = document.getElementById('bg-video');
+        let fadingOut = false;
+        let fadeRafId = null;
+
+        function fadeVideoTo(targetOpacity, durationMs = 250, onComplete) {
+            if (fadeRafId) cancelAnimationFrame(fadeRafId);
+            const startOpacity = parseFloat(bgVideo.style.opacity || "0");
+            const startTime = performance.now();
+
+            function step(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / durationMs, 1);
+                const currentOpacity = startOpacity + (targetOpacity - startOpacity) * progress;
+                bgVideo.style.opacity = currentOpacity.toFixed(3);
+
+                if (progress < 1) {
+                    fadeRafId = requestAnimationFrame(step);
+                } else {
+                    if (onComplete) onComplete();
+                }
+            }
+            fadeRafId = requestAnimationFrame(step);
+        }
+
+        bgVideo.addEventListener('loadeddata', () => {
+            bgVideo.style.opacity = '0';
+            bgVideo.play().then(() => {
+                fadeVideoTo(1, 300);
+            }).catch(e => console.log('Autoplay prevented:', e));
+        });
+
+        bgVideo.addEventListener('timeupdate', () => {
+            if (!bgVideo.duration) return;
+            const remaining = bgVideo.duration - bgVideo.currentTime;
+            if (!fadingOut && remaining <= 0.55 && remaining > 0) {
+                fadingOut = true;
+                fadeVideoTo(0, 250);
+            }
+        });
+
+        bgVideo.addEventListener('ended', () => {
+            bgVideo.style.opacity = '0';
+            setTimeout(() => {
+                bgVideo.currentTime = 0;
+                fadingOut = false;
+                bgVideo.play().then(() => {
+                    fadeVideoTo(1, 250);
+                }).catch(e => console.log('Loop play failed:', e));
+            }, 100);
+        });
+
+        // ==========================================
+        // 2. CURSOR SPOTLIGHT MASK SYSTEM
+        // ==========================================
+        const SPOTLIGHT_R = 220;
+        const mouse = { x: -999, y: -999 };
+        const smoothMouse = { x: -999, y: -999 };
+        const canvas = document.getElementById('spotlight-canvas');
+        const ctx = canvas.getContext('2d');
+        const revealDiv = document.getElementById('reveal-div');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function renderSpotlight() {
+            smoothMouse.x += (mouse.x - smoothMouse.x) * 0.12;
+            smoothMouse.y += (mouse.y - smoothMouse.y) * 0.12;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const grad = ctx.createRadialGradient(
+                smoothMouse.x, smoothMouse.y, 0,
+                smoothMouse.x, smoothMouse.y, SPOTLIGHT_R
+            );
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(0.4, 'rgba(255,255,255,0.9)');
+            grad.addColorStop(0.7, 'rgba(255,255,255,0.4)');
+            grad.addColorStop(1, 'rgba(255,255,255,0)');
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(smoothMouse.x, smoothMouse.y, SPOTLIGHT_R, 0, Math.PI * 2);
+            ctx.fill();
+
+            const maskData = canvas.toDataURL();
+            revealDiv.style.maskImage = `url(${maskData})`;
+            revealDiv.style.webkitMaskImage = `url(${maskData})`;
+            revealDiv.style.maskSize = '100% 100%';
+
+            requestAnimationFrame(renderSpotlight);
+        }
+        requestAnimationFrame(renderSpotlight);
+
+        // ==========================================
+        // 3. CUSTOM CURSOR & TILT EFFECTS
+        // ==========================================
         const cursor = document.getElementById('cursor');
         const follower = document.getElementById('cursor-follower');
 
         document.addEventListener('mousemove', (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-
-            cursor.style.left = `${x}px`;
-            cursor.style.top = `${y}px`;
-
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+            
             setTimeout(() => {
-                follower.style.left = `${x}px`;
-                follower.style.top = `${y}px`;
-            }, 50);
+                follower.style.left = `${e.clientX}px`;
+                follower.style.top = `${e.clientY}px`;
+            }, 40);
         });
 
-        function applyCursorHoverEffects() {
-            // Only select elements that haven't had the cursor logic applied yet
-            const interactiveElements = document.querySelectorAll('a:not(.cursor-applied), button:not(.cursor-applied), input:not(.cursor-applied), textarea:not(.cursor-applied), .cursor-pointer:not(.cursor-applied)');
-            
-            interactiveElements.forEach(el => {
-                el.classList.add('cursor-applied'); // Mark as applied
+        function applyHoverEffects() {
+            const interactables = document.querySelectorAll('a, button, input, textarea, .tilt-card');
+            interactables.forEach(el => {
                 el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
-                    cursor.style.opacity = '0.3';
+                    cursor.style.transform = 'translate(-50%, -50%) scale(2.2)';
                     follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                    follower.style.borderColor = '#b58ad7'; 
+                    follower.style.borderColor = '#b58ad7';
+                    follower.style.backgroundColor = 'rgba(181, 138, 215, 0.1)';
                 });
                 el.addEventListener('mouseleave', () => {
                     cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                    cursor.style.opacity = '1';
                     follower.style.transform = 'translate(-50%, -50%) scale(1)';
-                    follower.style.borderColor = 'rgba(181, 138, 215, 0.3)'; 
-                });
-            });
-
-            // Smooth scroll links - only apply to un-applied anchor links
-            document.querySelectorAll('a[href^="#"]:not(.scroll-applied)').forEach(anchor => {
-                anchor.classList.add('scroll-applied');
-                anchor.addEventListener('click', function (e) {
-                    const href = this.getAttribute('href');
-                    if (href !== '#') {
-                        e.preventDefault();
-                        const target = document.querySelector(href);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
+                    follower.style.borderColor = 'rgba(181, 138, 215, 0.4)';
+                    follower.style.backgroundColor = 'transparent';
                 });
             });
         }
-        
-        // Initial application
-        applyCursorHoverEffects();
+        applyHoverEffects();
 
-        // --- Intersection Observer (Smooth Reveal) ---
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
-                    entry.target.classList.remove('opacity-0', 'translate-y-12');
-                }
+        // 3D Tilt Card Interaction
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            const inner = card.querySelector('.tilt-card-inner') || card;
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotX = (-y / rect.height) * 15;
+                const rotY = (x / rect.width) * 15;
+                inner.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
             });
-        }, observerOptions);
-
-        function initializeReveals() {
-            document.querySelectorAll('.reveal-element').forEach(el => {
-                el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-12');
-                observer.observe(el);
+            card.addEventListener('mouseleave', () => {
+                inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
             });
-        }
-        
-        initializeReveals();
-
-        // --- Navbar Scroll Interaction ---
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            const nav = document.getElementById('navbar');
-            
-            if (currentScroll <= 0) {
-                nav.classList.remove('-translate-y-full', 'bg-background/80', 'shadow-lg');
-                nav.classList.add('bg-background/60');
-                return;
-            }
-            
-            if (currentScroll > lastScroll && currentScroll > 80) {
-                // Scrolling down -> hide nav
-                nav.classList.add('-translate-y-full');
-            } else {
-                // Scrolling up -> show nav
-                nav.classList.remove('-translate-y-full', 'bg-background/60');
-                nav.classList.add('bg-background/80', 'shadow-lg');
-            }
-            lastScroll = currentScroll;
         });
 
-        // --- Dynamic GitHub Fetch Logic ---
+        // ==========================================
+        // 4. REVEAL ON SCROLL INTERSECTION OBSERVER
+        // ==========================================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-element').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // ==========================================
+        // 5. GITHUB REPOSITORIES DYNAMIC FETCHING
+        // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
-            const githubUsername = 'itsjustayush'; 
+            const githubUsername = 'itsjustayush';
             const container = document.getElementById('github-projects-container');
 
             try {
-                // Fetch public repos, sort by updated date
-                const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=6`);
-                if (!response.ok) throw new Error("Network response was not ok");
-                
-                const repos = await response.json();
-                const originalRepos = repos.filter(repo => !repo.fork); // exclude forks
+                const res = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=6`);
+                if (!res.ok) throw new Error('Failed to fetch');
+                const repos = await res.json();
+                const filtered = repos.filter(r => !r.fork);
 
-                container.innerHTML = ''; // Clear loading text
+                container.innerHTML = '';
 
-                originalRepos.forEach((repo, index) => {
-                    const num = String(index + 1).padStart(2, '0');
+                filtered.forEach((repo, idx) => {
                     const year = new Date(repo.created_at).getFullYear();
-                    const homepage = repo.homepage && repo.homepage.trim() !== "" ? repo.homepage : null;
+                    const homepage = repo.homepage && repo.homepage.trim() !== '' ? repo.homepage : null;
                     const mainLink = homepage || repo.html_url;
 
-                    // Building the HTML using the new glass-card styling layout
-                    const html = `
-                        <div class="glass-card rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-12 items-center gap-8 group relative reveal-element">
-                            <div class="md:col-span-1 font-label-mono-sm text-on-surface-variant opacity-50 font-bold">${num}</div>
-                            
-                            <div class="md:col-span-2">
-                                <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center overflow-hidden border-white/10 group-hover:border-primary/50 transition-colors bg-background">
-                                    <span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+                    const cardHtml = `
+                        <div class="liquid-glass p-6 md:p-8 rounded-3xl relative group tilt-card reveal-element flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="font-mono text-xs text-primary uppercase tracking-widest">${year} · GITHUB REPO</span>
+                                    <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 group-hover:border-primary group-hover:text-primary transition-colors">
+                                        <span class="material-symbols-outlined text-sm">terminal</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="md:col-span-6 text-center md:text-left">
-                                <div class="flex items-center justify-center md:justify-start gap-3 mb-2 font-label-mono-sm text-xs uppercase tracking-widest text-on-surface-variant opacity-60">
-                                    <span>${year}</span>
-                                    <span>•</span>
-                                    <span>GitHub Repository</span>
-                                </div>
-                                <h3 class="font-headline-md text-[32px] text-on-background group-hover:text-primary transition-colors capitalize">
+                                <h3 class="text-2xl font-fustat font-bold text-white group-hover:text-primary transition-colors capitalize mb-2">
                                     ${repo.name.replace(/-/g, ' ')}
                                 </h3>
-                                <p class="font-body-md text-on-surface-variant mt-3 opacity-70 line-clamp-2 max-w-md mx-auto md:mx-0">
-                                    ${repo.description || 'No description provided.'}
+                                <p class="text-xs text-white/70 leading-relaxed line-clamp-3 mb-6">
+                                    ${repo.description || 'Custom open-source project and codebase.'}
                                 </p>
                             </div>
-                            
-                            <div class="md:col-span-3 flex flex-row items-center justify-center md:justify-end gap-6 w-full relative z-20">
-                                <a href="${repo.html_url}" target="_blank" class="font-label-mono-sm text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all flex items-center gap-2 cursor-pointer uppercase tracking-widest">
-                                    <span class="material-symbols-outlined text-[18px]">code</span> Code
+
+                            <div class="flex items-center gap-4 pt-4 border-t border-white/10 z-20">
+                                <a href="${repo.html_url}" target="_blank" class="font-mono text-xs text-white/80 hover:text-primary flex items-center gap-1 uppercase tracking-wider">
+                                    <span class="material-symbols-outlined text-sm">code</span> Code
                                 </a>
                                 ${homepage ? `
-                                <a href="${homepage}" target="_blank" class="font-label-mono-sm text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all flex items-center gap-2 cursor-pointer uppercase tracking-widest">
-                                    <span class="material-symbols-outlined text-[18px]">public</span> Live
+                                <a href="${homepage}" target="_blank" class="font-mono text-xs text-cyan-400 hover:underline flex items-center gap-1 uppercase tracking-wider">
+                                    <span class="material-symbols-outlined text-sm">open_in_new</span> Live Demo
                                 </a>
                                 ` : ''}
                             </div>
-                            
-                            <a href="${mainLink}" target="_blank" class="absolute inset-0 z-10 cursor-pointer"></a>
                         </div>
                     `;
-                    container.insertAdjacentHTML('beforeend', html);
+                    container.insertAdjacentHTML('beforeend', cardHtml);
                 });
 
-                // Apply rules to newly generated dynamic elements
-                applyCursorHoverEffects();
-                
-                // We need to re-initialize reveals for the new elements loaded from API
-                const newReveals = container.querySelectorAll('.reveal-element');
-                newReveals.forEach(el => {
-                    el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-12');
-                    observer.observe(el);
-                });
+                applyHoverEffects();
+                container.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
 
-            } catch (error) {
-                console.error('Error fetching GitHub repos:', error);
+            } catch (err) {
+                console.error(err);
                 container.innerHTML = `
-                    <div class="glass-card p-12 text-center rounded-2xl">
-                        <div class="text-on-surface-variant opacity-70 font-label-mono-sm tracking-widest uppercase mb-4">
-                            Unable to load projects dynamically at this time. 
-                        </div>
-                        <a href="https://github.com/${githubUsername}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-on-primary-container transition-colors cursor-pointer relative z-20" target="_blank">
-                            View GitHub Profile <span class="material-symbols-outlined text-sm">north_east</span>
+                    <div class="col-span-full liquid-glass p-8 rounded-3xl text-center">
+                        <p class="text-sm text-white/70 font-mono mb-4">View public projects on GitHub</p>
+                        <a href="https://github.com/itsjustayush" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-on-primary font-mono text-xs rounded-full">
+                            Explore @itsjustayush <span class="material-symbols-outlined text-sm">open_in_new</span>
                         </a>
                     </div>
                 `;
-                applyCursorHoverEffects(); // re-apply for fallback button
             }
         });
 
-        // --- Custom Radio Station Logic ---
+        // ==========================================
+        // 6. CUSTOM LOFI RADIO PLAYER LOGIC
+        // ==========================================
         const radioToggle = document.getElementById('radio-toggle');
         const customRadioWidget = document.getElementById('custom-radio-widget');
-        
-        // Audio Elements
         const audioPlayer = new Audio();
-        audioPlayer.volume = 0.5; // Default volume
-        
-        // UI Elements
+        audioPlayer.volume = 0.5;
+
         const playBtn = document.getElementById('radio-play-btn');
         const playIcon = document.getElementById('play-icon');
         const volumeSlider = document.getElementById('radio-volume');
@@ -807,7 +1082,6 @@
         const customInput = document.getElementById('custom-stream-url');
         const customPlayBtn = document.getElementById('load-custom-stream');
 
-        // High-Quality, Ad-Free 24/7 Internet Radio Streams (SomaFM & Zeno)
         const curatedStations = [
             { name: "Groove Salad (Ambient/Chill)", url: "https://ice1.somafm.com/groovesalad-128-mp3" },
             { name: "Space Station (Synth/Space)", url: "https://ice1.somafm.com/spacestation-128-mp3" },
@@ -816,173 +1090,120 @@
         ];
 
         let isPlaying = false;
-        let currentStationName = "No Station Selected";
 
-        // Build Curated Station List UI
         curatedStations.forEach(station => {
             const btn = document.createElement('button');
-            btn.className = "w-full text-left px-3 py-2 rounded hover:bg-white/5 text-on-surface font-body-md text-sm transition-colors cursor-pointer truncate";
+            btn.className = "w-full text-left px-3 py-1.5 rounded hover:bg-white/10 text-white/90 font-mono text-xs transition-colors truncate cursor-pointer";
             btn.innerText = `📻 ${station.name}`;
             btn.onclick = () => loadAndPlay(station.name, station.url);
             stationListContainer.appendChild(btn);
         });
 
-        // Widget Toggle
         radioToggle.addEventListener('click', () => {
             if (customRadioWidget.classList.contains('opacity-0')) {
                 customRadioWidget.classList.remove('opacity-0', 'invisible', 'scale-95', 'pointer-events-none');
                 customRadioWidget.classList.add('opacity-100', 'visible', 'scale-100', 'pointer-events-auto');
-                radioToggle.classList.add('text-primary', 'border-primary');
             } else {
                 customRadioWidget.classList.add('opacity-0', 'invisible', 'scale-95', 'pointer-events-none');
                 customRadioWidget.classList.remove('opacity-100', 'visible', 'scale-100', 'pointer-events-auto');
-                radioToggle.classList.remove('text-primary', 'border-primary');
             }
         });
 
-        // Core Playback Function
         function loadAndPlay(name, url) {
-            currentStationName = name;
             titleDisplay.innerText = name;
-            statusDisplay.innerText = "Buffering stream...";
-            
+            statusDisplay.innerText = "Connecting stream...";
             audioPlayer.src = url;
-            audioPlayer.play()
-                .then(() => {
-                    updatePlayState(true);
-                })
-                .catch(error => {
-                    console.error("Playback failed", error);
-                    statusDisplay.innerText = "Error: Cannot play stream";
-                    updatePlayState(false);
-                });
+            audioPlayer.play().then(() => updatePlayState(true)).catch(() => {
+                statusDisplay.innerText = "Error playing stream";
+                updatePlayState(false);
+            });
         }
 
-        // Toggle Play/Pause Button
         playBtn.addEventListener('click', () => {
             if (!audioPlayer.src) {
-                // If nothing is loaded, play the first station by default
                 loadAndPlay(curatedStations[0].name, curatedStations[0].url);
                 return;
             }
-            
             if (isPlaying) {
                 audioPlayer.pause();
                 updatePlayState(false);
             } else {
-                statusDisplay.innerText = "Reconnecting...";
-                audioPlayer.play()
-                    .then(() => updatePlayState(true))
-                    .catch(() => statusDisplay.innerText = "Error: Cannot resume");
+                audioPlayer.play().then(() => updatePlayState(true)).catch(() => updatePlayState(false));
             }
         });
 
-        // Update UI State based on Audio Status
         function updatePlayState(playing) {
             isPlaying = playing;
             if (playing) {
                 playIcon.innerText = "pause";
                 statusDisplay.innerText = "Live Broadcast";
                 radioPing.classList.add('animate-ping', 'opacity-75');
-                visualizerBars.forEach(bar => bar.classList.add('active'));
+                visualizerBars.forEach(b => b.classList.add('active'));
             } else {
                 playIcon.innerText = "play_arrow";
                 statusDisplay.innerText = "Paused";
                 radioPing.classList.remove('animate-ping', 'opacity-75');
-                visualizerBars.forEach(bar => bar.classList.remove('active'));
+                visualizerBars.forEach(b => b.classList.remove('active'));
             }
         }
 
-        // Volume Control
-        volumeSlider.addEventListener('input', (e) => {
-            audioPlayer.volume = e.target.value;
-        });
+        volumeSlider.addEventListener('input', (e) => audioPlayer.volume = e.target.value);
 
-        // Handle Custom Stream Input
         customPlayBtn.addEventListener('click', () => {
             const url = customInput.value.trim();
             if (url) {
-                loadAndPlay("Custom Direct Stream", url);
-                customInput.value = ""; // Clear input after loading
+                loadAndPlay("Custom Stream", url);
+                customInput.value = "";
             }
         });
 
-        // Handle Audio Events to catch buffering/disconnects automatically
-        audioPlayer.addEventListener('playing', () => updatePlayState(true));
-        audioPlayer.addEventListener('pause', () => updatePlayState(false));
-        audioPlayer.addEventListener('waiting', () => statusDisplay.innerText = "Buffering...");
-        audioPlayer.addEventListener('error', () => {
-            statusDisplay.innerText = "Stream offline or invalid format";
-            updatePlayState(false);
-        });
-
-        // Re-apply cursor hover effects for the new toggle button and UI
-        applyCursorHoverEffects();
-
+        // ==========================================
+        // 7. CONTACT FORM FORMSPREE AJAX SUBMISSION
+        // ==========================================
         const contactForm = document.getElementById('contact-form');
         const formSuccess = document.getElementById('form-success');
         const submitBtn = document.getElementById('submit-button');
-        const resetFormBtn = document.getElementById('reset-form-btn');
+        const resetBtn = document.getElementById('reset-form-btn');
 
         if (contactForm) {
             contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault(); // Prevents the redirect
-                
-                // Loading state
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = 'SENDING...';
+                e.preventDefault();
+                submitBtn.innerText = 'SENDING...';
                 submitBtn.disabled = true;
-                submitBtn.classList.add('opacity-50', 'pointer-events-none');
 
-                const formData = new FormData(contactForm);
-                
                 try {
-                    const response = await fetch(contactForm.action, {
-                        method: contactForm.method,
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json' // Forces Formspree to return JSON instead of a webpage
-                        }
+                    const res = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: new FormData(contactForm),
+                        headers: { 'Accept': 'application/json' }
                     });
-                    
-                    if (response.ok) {
-                        // Success! Hide form, show success state
+
+                    if (res.ok) {
                         contactForm.reset();
                         contactForm.classList.add('hidden');
                         formSuccess.classList.remove('hidden');
                         formSuccess.classList.add('flex');
                     } else {
-                        // Handle server errors
-                        submitBtn.innerHTML = 'ERROR! TRY AGAIN';
-                        setTimeout(() => {
-                            submitBtn.innerHTML = originalBtnText;
-                            submitBtn.disabled = false;
-                            submitBtn.classList.remove('opacity-50', 'pointer-events-none');
-                        }, 3000);
+                        submitBtn.innerText = 'ERROR! TRY AGAIN';
+                        setTimeout(() => { submitBtn.innerText = 'SEND INQUIRY 🚀'; submitBtn.disabled = false; }, 3000);
                     }
-                } catch (error) {
-                    // Handle network errors
-                    submitBtn.innerHTML = 'ERROR! TRY AGAIN';
-                    setTimeout(() => {
-                        submitBtn.innerHTML = originalBtnText;
-                        submitBtn.disabled = false;
-                        submitBtn.classList.remove('opacity-50', 'pointer-events-none');
-                    }, 3000);
+                } catch (err) {
+                    submitBtn.innerText = 'ERROR! TRY AGAIN';
+                    setTimeout(() => { submitBtn.innerText = 'SEND INQUIRY 🚀'; submitBtn.disabled = false; }, 3000);
                 }
             });
         }
 
-        // Reset the form if they want to send another message
-        if (resetFormBtn) {
-            resetFormBtn.addEventListener('click', () => {
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
                 formSuccess.classList.add('hidden');
                 formSuccess.classList.remove('flex');
                 contactForm.classList.remove('hidden');
-                submitBtn.innerHTML = 'SEND INQUIRY';
+                submitBtn.innerText = 'SEND INQUIRY 🚀';
                 submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'pointer-events-none');
             });
         }
     </script>
+
 </body>
 </html>
