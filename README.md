@@ -1,8 +1,9 @@
 # Hi there, I'm Ayush Bhattacharya 👋
 
 I'm a 17-year-old student, developer, designer and photographer based in Barrackpore. When I'm not deep into books, I'm usually crafting sleek web interfaces, exploring AI-augmented workflows, or working on graphic design. 
+<!--Before UI: <img width="1918" height="967" alt="Screenshot 2026-07-18 135223" src="https://github.com/user-attachments/assets/f7b4a789-7eb5-423b-849a-79687096855a" /> -->
 
-<img width="1918" height="967" alt="Screenshot 2026-07-18 135223" src="https://github.com/user-attachments/assets/f7b4a789-7eb5-423b-849a-79687096855a" />
+<img width="1918" height="967" alt="image" src="https://github.com/user-attachments/assets/61863a68-3233-4859-9695-c84780c6cdc2" />
 
 ### 👨‍💻 What I do
 * 🔭 **Currently working on:** Refining my personal portfolio website and building modern glassmorphic UIs.
