@@ -1,0 +1,12 @@
+{
+  "name": "itsjustayush",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal portfolio website of Ayush Bhattacharya — static single-page site built with HTML, CDN Tailwind, and vanilla JS.",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server ${PORT:-8080} --bind 0.0.0.0",
+    "preview": "npm run dev",
+    "build": "mkdir -p dist && cp index.html AB.png dist/ && cp -r images dist/"
+  }
+}
