@@ -289,10 +289,47 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0c0c0e; }
-        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #b58ad7; }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #27272a #0c0c0e;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c0c0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(39, 39, 42, 0.95);
+            border-radius: 9999px;
+            border: 2px solid #0c0c0e;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b58ad7;
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        .custom-heatmap-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(181,138,215,0.35) rgba(255,255,255,0.05);
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 9999px;
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar-thumb {
+            background: rgba(181,138,215,0.35);
+            border-radius: 9999px;
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(181,138,215,0.75);
+        }
 
         .spotlight-mask {
             mask-repeat: no-repeat;
@@ -717,6 +754,75 @@
                 </a>
             </div>
 
+            <div class="grid grid-cols-1 xl:grid-cols-[1.5fr_1fr] gap-6 mb-10 reveal-element">
+                <div class="liquid-glass p-8 rounded-3xl border border-white/10">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <span class="font-mono text-xs text-primary uppercase tracking-[0.3em] block mb-2">GitHub Contributions</span>
+                            <h3 class="text-3xl md:text-4xl font-fustat font-bold text-white tracking-tight">Yearly heatmap & activity</h3>
+                            <span id="github-total-num" class="mt-3 inline-block text-sm font-mono text-white/70">0 contributions</span>
+                        </div>
+                        <a href="https://github.com/itsjustayush" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 text-xs font-mono text-white/80 hover:bg-white/5 hover:text-primary transition">
+                            View profile <span class="material-symbols-outlined text-sm">open_in_new</span>
+                        </a>
+                    </div>
+
+                    <div class="mt-6 overflow-x-auto custom-heatmap-scroll rounded-3xl border border-white/5 p-4 bg-white/5">
+                        <div class="min-w-[680px]">
+                            <div id="heatmap-month-headers" class="grid grid-cols-12 text-center font-mono text-[10px] text-white/50 mb-3">
+                                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+                            </div>
+                            <div id="heatmap-matrix" class="flex gap-1.5"></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] text-white/60 font-mono">
+                        <span id="github-last-year-text">Loading contributions from GitHub...</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-white/40">Less</span>
+                            <div class="flex gap-1">
+                                <span class="w-3 h-3 rounded-[3px] bg-[#121526]"></span>
+                                <span class="w-3 h-3 rounded-[3px] bg-[#3b488e]"></span>
+                                <span class="w-3 h-3 rounded-[3px] bg-[#5c52d6]"></span>
+                                <span class="w-3 h-3 rounded-[3px] bg-[#8262ff]"></span>
+                                <span class="w-3 h-3 rounded-[3px] bg-[#c4b5fd]"></span>
+                            </div>
+                            <span class="text-white/40">More</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="liquid-glass p-6 rounded-3xl border border-white/10 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="font-mono text-xs text-white/70 uppercase tracking-[0.3em]">Public repos</span>
+                            <span class="material-symbols-outlined text-primary text-lg">folder_open</span>
+                        </div>
+                        <div>
+                            <span id="stat-repos" class="text-4xl font-fustat font-black text-white">0</span>
+                        </div>
+                    </div>
+                    <div class="liquid-glass p-6 rounded-3xl border border-white/10 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="font-mono text-xs text-white/70 uppercase tracking-[0.3em]">GitHub stars</span>
+                            <span class="material-symbols-outlined text-amber-300 text-lg">star</span>
+                        </div>
+                        <div>
+                            <span id="stat-stars" class="text-4xl font-fustat font-black text-amber-300">0</span>
+                        </div>
+                    </div>
+                    <div class="liquid-glass p-6 rounded-3xl border border-white/10 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="font-mono text-xs text-white/70 uppercase tracking-[0.3em]">Forks</span>
+                            <span class="material-symbols-outlined text-emerald-300 text-lg">call_split</span>
+                        </div>
+                        <div>
+                            <span id="stat-forks" class="text-4xl font-fustat font-black text-emerald-300">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="github-projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[300px]">
                 <div class="col-span-full liquid-glass p-12 text-center text-white/50 font-mono text-sm tracking-widest uppercase animate-pulse rounded-3xl">
                     Fetching GitHub Repositories for @itsjustayush...
@@ -1120,6 +1226,129 @@
                 `;
             }
         });
+
+        async function initGitHubContributionHeatmap() {
+            const username = 'itsjustayush';
+            const matrix = document.getElementById('heatmap-matrix');
+            const monthHeaders = document.getElementById('heatmap-month-headers');
+            const totalNumEl = document.getElementById('github-total-num');
+            const lastYearTextEl = document.getElementById('github-last-year-text');
+            const statReposEl = document.getElementById('stat-repos');
+            const statStarsEl = document.getElementById('stat-stars');
+            const statForksEl = document.getElementById('stat-forks');
+            const colors = ['#121526', '#3b488e', '#5c52d6', '#8262ff', '#c4b5fd'];
+
+            if (!matrix || !monthHeaders) return;
+
+            function renderFallback(matrixEl) {
+                const weeks = 52;
+                let html = '';
+                let seed = 42;
+                function rnd() {
+                    const x = Math.sin(seed++) * 10000;
+                    return x - Math.floor(x);
+                }
+
+                for (let w = 0; w < weeks; w++) {
+                    html += '<div class="flex flex-col gap-1.5 flex-1">';
+                    for (let d = 0; d < 7; d++) {
+                        const r = rnd();
+                        let level = 0;
+                        if (r > 0.65 && r <= 0.85) level = 1;
+                        else if (r > 0.85 && r <= 0.94) level = 2;
+                        else if (r > 0.94 && r <= 0.98) level = 3;
+                        else if (r > 0.98) level = 4;
+                        const count = level === 0 ? 0 : level * 3;
+                        html += `<div class="w-full aspect-square rounded-[3px] transition-all duration-300 hover:scale-110 hover:z-10 cursor-default" style="background-color: ${colors[level]};" title="${count} contributions"></div>`;
+                    }
+                    html += '</div>';
+                }
+                matrixEl.innerHTML = html;
+                lastYearTextEl.textContent = 'Contributions not available right now';
+            }
+
+            try {
+                const [userRes, reposRes, contribRes] = await Promise.all([
+                    fetch(`https://api.github.com/users/${username}`),
+                    fetch(`https://api.github.com/users/${username}/repos?per_page=100`),
+                    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
+                ]);
+
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    if (statReposEl) statReposEl.textContent = userData.public_repos ?? '0';
+                }
+
+                if (reposRes.ok) {
+                    const repos = await reposRes.json();
+                    let totalStars = 0;
+                    let totalForks = 0;
+                    repos.forEach(repo => {
+                        totalStars += repo.stargazers_count || 0;
+                        totalForks += repo.forks_count || 0;
+                    });
+                    if (statStarsEl) statStarsEl.textContent = totalStars;
+                    if (statForksEl) statForksEl.textContent = totalForks;
+                }
+
+                let contributions = [];
+                let totalCount = 0;
+
+                if (contribRes.ok) {
+                    const contribData = await contribRes.json();
+                    contributions = contribData.contributions || [];
+                    totalCount = contribData.total?.lastYear ?? contributions.reduce((sum, day) => sum + (day.count || 0), 0);
+                }
+
+                if (totalNumEl) totalNumEl.textContent = totalCount || 0;
+                if (lastYearTextEl) lastYearTextEl.textContent = `${totalCount || 0} contributions in the last year`;
+
+                if (!contributions.length) {
+                    renderFallback(matrix);
+                    return;
+                }
+
+                const weeks = [];
+                for (let i = 0; i < contributions.length; i += 7) {
+                    weeks.push(contributions.slice(i, i + 7));
+                }
+
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const monthLabels = [];
+                let lastMonth = -1;
+                weeks.forEach(week => {
+                    const day = week[0];
+                    if (day && day.date) {
+                        const month = new Date(day.date).getMonth();
+                        if (month !== lastMonth) {
+                            monthLabels.push(monthNames[month]);
+                            lastMonth = month;
+                        }
+                    }
+                });
+                while (monthLabels.length < 12) monthLabels.push('');
+                monthHeaders.innerHTML = monthLabels.slice(0, 12).map(label => `<span>${label}</span>`).join('');
+
+                let html = '';
+                weeks.forEach(week => {
+                    html += '<div class="flex flex-col gap-1.5 flex-1">';
+                    week.forEach(day => {
+                        const level = Math.min(4, day.level || 0);
+                        const color = colors[level];
+                        const dateLabel = day.date ? new Date(day.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+                        html += `<div class="w-full aspect-square rounded-[3px] transition-all duration-300 hover:scale-110 hover:z-10 cursor-default" style="background-color: ${color};" title="${day.count || 0} contribution${(day.count || 0) === 1 ? '' : 's'} on ${dateLabel}"></div>`;
+                    });
+                    html += '</div>';
+                });
+
+                matrix.innerHTML = html;
+            } catch (error) {
+                console.error('[GitHub contributions] Unable to load heatmap:', error);
+                renderFallback(matrix);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initGitHubContributionHeatmap);
 
         // ==========================================
         // 6. UNIVERSAL MUSIC PLAYER
