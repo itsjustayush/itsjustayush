@@ -404,9 +404,46 @@
                 max-height: 90vh;
             }
         }
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-height: 2.35rem;
+            padding: 0.42rem 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 0.75rem;
+            background: rgba(10, 10, 14, 0.58);
+            color: rgba(255, 255, 255, 0.82);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: transform 180ms ease-out, border-color 180ms ease-out, background 180ms ease-out;
+        }
+        .tech-badge:hover {
+            transform: translateY(-2px);
+            border-color: rgba(181, 138, 215, 0.7);
+            background: rgba(181, 138, 215, 0.12);
+        }
+        .tech-badge-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.35rem;
+            height: 1.35rem;
+            padding: 0 0.2rem;
+            border: 1px solid rgba(181, 138, 215, 0.5);
+            border-radius: 0.35rem;
+            color: #b58ad7;
+            font-size: 0.58rem;
+            letter-spacing: 0.02em;
+        }
+        [data-parallax] { will-change: transform; }
+        @media (prefers-reduced-motion: reduce) {
+            [data-parallax] { transform: none !important; }
+        }
     </style>
-
-    <meta name="google-site-verification" content="5YplbIHTjpY4dMwuznrZJULx_e7JViStNkSkCVECQi4" />
 </head>
 
 <body class="bg-background text-on-surface min-h-screen selection:bg-primary/30 selection:text-white">
@@ -433,6 +470,7 @@
         <canvas id="spotlight-canvas" class="hidden"></canvas>
         <div 
             id="reveal-div" 
+            data-parallax="-0.08"
             class="absolute inset-0 bg-cover bg-center pointer-events-none spotlight-mask"
             style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');"
         ></div>
@@ -455,17 +493,22 @@
             </a>
             
             <!-- Navigation Links -->
-            <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-3 py-1 border border-white/10">
+            <div class="hidden xl:flex items-center gap-1 bg-white/5 rounded-full px-3 py-1 border border-white/10">
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#hero">Home</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#experience">Journey</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#expertise">Expertise</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#work">Projects</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#showcase">Gallery</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#interests">Beyond Screen</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#stack">Stack</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#guestbook">Guestbook</a>
             </div>
             
             <!-- Action Controls -->
             <div class="flex items-center gap-3">
+                <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open navigation menu" class="xl:hidden w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary/50 transition-all cursor-pointer">
+                    <span id="mobile-menu-icon" class="material-symbols-outlined text-[19px]">menu</span>
+                </button>
                 <a href="#contact" class="hidden sm:inline-flex bg-white text-black font-mono text-xs font-semibold px-5 py-2 rounded-full hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10">
                     Hire Me ↗
                 </a>
@@ -547,17 +590,30 @@
                     </div>
                 </div>
 
-                <a href="#contact" class="md:hidden w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white">
+                <a href="#contact" class="xl:hidden w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white">
                     <span class="material-symbols-outlined text-[18px]">send</span>
                 </a>
             </div>
 
         </div>
+        <div id="mobile-nav-menu" aria-label="Mobile navigation" class="hidden xl:hidden fixed left-4 right-4 top-20 liquid-glass-strong rounded-3xl p-3 shadow-2xl border border-white/15">
+            <div class="grid grid-cols-2 gap-1.5">
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#hero">Home</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#experience">Journey</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#expertise">Expertise</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#stack">Stack</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#work">Projects</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#showcase">Gallery</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#interests">Beyond Screen</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#guestbook">Guestbook</a>
+                <a class="col-span-2 px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-primary hover:text-white hover:bg-white/10 transition-all" href="#contact">Contact ↗</a>
+            </div>
+        </div>
     </nav>
 
     <!-- SECTION 1: HERO SECTION -->
     <section id="hero" class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 z-20">
-        <div class="max-w-5xl mx-auto text-center">
+        <div class="max-w-5xl mx-auto text-center" data-parallax="0.12">
             
             <div class="inline-flex items-center gap-2 liquid-glass rounded-full px-4 py-1.5 mb-8 reveal-element">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -667,7 +723,46 @@
         </div>
     </section>
 
-    <!-- SECTION 3: JOURNEY & EXPERIENCE -->
+    <!-- SECTION 3: STACK & TOOLS -->
+    <section id="stack" class="py-28 px-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 reveal-element">
+                <span class="font-mono text-xs text-cyan-400 uppercase tracking-widest block mb-3">// USES & TOOLKIT</span>
+                <h2 class="text-4xl md:text-6xl font-fustat font-bold text-white tracking-tight">The Stack I Reach For</h2>
+                <p class="max-w-2xl mx-auto mt-5 text-sm text-white/65 leading-relaxed">A compact map of the languages, frameworks, platforms, and creative tools that shape my everyday workflows.</p>
+            </div>
+
+            <div class="liquid-glass-strong rounded-3xl p-5 sm:p-7 md:p-9 reveal-element">
+                <div class="flex flex-wrap justify-center md:justify-start gap-2.5">
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">H5</span>HTML</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">#</span>CSS</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">JS</span>Javascript</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">TW</span>Tailwind</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">PY</span>Python</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">TS</span>Typescript</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">R</span>React</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">N</span>Next</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">SQL</span>SQL</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">SB</span>Supabase</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">FB</span>Firebase</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">CL</span>Claude</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">GPT</span>Chatgpt</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">GM</span>Gemini</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">M</span>Manus</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">CA</span>Canva</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">VC</span>Vercel</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">RE</span>Render</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">NL</span>Netlify</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">G</span>Git</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">GH</span>Github</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">VS</span>VsCode</span>
+                    <span class="tech-badge"><span class="tech-badge-mark" aria-hidden="true">SP</span>Spotify</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: JOURNEY & EXPERIENCE -->
     <section id="experience" class="py-28 px-6 relative z-20">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-20 reveal-element">
@@ -732,7 +827,7 @@
         </div>
     </section>
 
-    <!-- SECTION 4: PROJECTS GITHUB -->
+    <!-- SECTION 5: PROJECTS GITHUB -->
     <section id="work" class="py-28 px-6 relative z-20">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 reveal-element">
@@ -822,7 +917,7 @@
         </div>
     </section>
 
-    <!-- SECTION: VISUAL WORK SHOWCASE -->
+    <!-- SECTION 6: VISUAL WORK SHOWCASE -->
     <section id="showcase" class="py-28 px-6 relative z-20 overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12 reveal-element">
@@ -843,7 +938,7 @@
         </div>
     </section>
 
-    <!-- SECTION 5: BEYOND THE SCREEN -->
+    <!-- SECTION 7: BEYOND THE SCREEN -->
     <section id="interests" class="py-28 px-6 relative z-20">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal-element">
@@ -900,7 +995,45 @@
         </div>
     </section>
 
-    <!-- SECTION 6: CONTACT FORM -->
+    <!-- SECTION 8: GUESTBOOK -->
+    <section id="guestbook" class="py-28 px-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8 items-start">
+                <div class="liquid-glass-strong rounded-3xl p-7 md:p-10 reveal-element">
+                    <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-4">// THE WALL REMEMBERS</span>
+                    <h2 class="text-4xl sm:text-5xl font-fustat font-bold text-white leading-tight mb-5">Words That <span class="italic font-serif-title text-primary">Echo.</span></h2>
+                    <p class="text-sm text-white/70 leading-relaxed mb-8">Leave a small note for the next person who wanders through. Your message stays in this browser, so the wall remains personal and private.</p>
+                    <div class="flex items-center gap-3 font-mono text-[11px] text-white/45 uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        Join the wall...
+                    </div>
+                </div>
+
+                <div class="space-y-5">
+                    <form id="guestbook-form" class="liquid-glass p-6 md:p-8 rounded-3xl reveal-element">
+                        <div class="grid grid-cols-1 sm:grid-cols-[0.7fr_1.3fr] gap-4">
+                            <div>
+                                <label for="guestbook-name" class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NAME</label>
+                                <input id="guestbook-name" name="guestbook-name" required maxlength="32" type="text" placeholder="e.g. Alex" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label for="guestbook-message" class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NOTE</label>
+                                <textarea id="guestbook-message" name="guestbook-message" required maxlength="220" rows="3" placeholder="Write a message..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors resize-none"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <p id="guestbook-status" class="font-mono text-[10px] text-white/45" role="status" aria-live="polite">Your note will appear at the top of the wall.</p>
+                            <button type="submit" class="bg-white text-black font-mono text-xs font-semibold uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10 whitespace-nowrap">Sign Guestbook ↗</button>
+                        </div>
+                    </form>
+
+                    <div id="guestbook-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: CONTACT FORM -->
     <section id="contact" class="py-28 px-6 relative z-20">
         <div class="max-w-5xl mx-auto">
             <div class="liquid-glass p-8 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden reveal-element">
@@ -1668,7 +1801,149 @@
             playProfileSfx('hover');
         }, { passive: true });
 
-        // 7. CONTACT FORM FORMSPREE
+        // ==========================================
+        // 7. LOCAL GUESTBOOK
+        // ==========================================
+        const guestbookForm = document.getElementById('guestbook-form');
+        const guestbookList = document.getElementById('guestbook-list');
+        const guestbookStatus = document.getElementById('guestbook-status');
+        const guestbookStorageKey = 'itsjustayush-guestbook';
+
+        function getGuestbookEntries() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(guestbookStorageKey) || '[]');
+                return Array.isArray(saved) ? saved.slice(0, 24) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function guestbookInitials(name) {
+            return name.trim().split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase() || 'G';
+        }
+
+        function renderGuestbook() {
+            if (!guestbookList) return;
+            const entries = getGuestbookEntries();
+            guestbookList.replaceChildren();
+            if (!entries.length) {
+                const empty = document.createElement('div');
+                empty.className = 'sm:col-span-2 liquid-glass p-6 rounded-3xl text-center font-mono text-xs text-white/50';
+                empty.textContent = 'The wall is waiting for its first note.';
+                guestbookList.appendChild(empty);
+                return;
+            }
+
+            entries.forEach(entry => {
+                const card = document.createElement('article');
+                card.className = 'liquid-glass p-5 rounded-3xl reveal-element';
+                const meta = document.createElement('div');
+                meta.className = 'flex items-center justify-between gap-3 mb-4';
+                const identity = document.createElement('div');
+                identity.className = 'flex items-center gap-2.5 min-w-0';
+                const avatar = document.createElement('span');
+                avatar.className = 'w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-[10px] font-bold text-primary flex-shrink-0';
+                avatar.textContent = guestbookInitials(entry.name);
+                const name = document.createElement('span');
+                name.className = 'font-mono text-xs text-white/85 truncate';
+                name.textContent = entry.name;
+                identity.append(avatar, name);
+                const date = document.createElement('time');
+                date.className = 'font-mono text-[10px] text-white/40 flex-shrink-0';
+                date.dateTime = entry.createdAt;
+                date.textContent = new Date(entry.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+                meta.append(identity, date);
+                const message = document.createElement('p');
+                message.className = 'text-sm text-white/70 leading-relaxed break-words';
+                message.textContent = entry.message;
+                card.append(meta, message);
+                guestbookList.appendChild(card);
+            });
+        }
+
+        if (guestbookForm) {
+            guestbookForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const nameInput = document.getElementById('guestbook-name');
+                const messageInput = document.getElementById('guestbook-message');
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+                if (!name || !message) return;
+                const entries = getGuestbookEntries();
+                entries.unshift({ name, message, createdAt: new Date().toISOString() });
+                try { localStorage.setItem(guestbookStorageKey, JSON.stringify(entries.slice(0, 24))); } catch (error) { /* private fallback */ }
+                guestbookForm.reset();
+                guestbookStatus.textContent = 'Note added to the wall.';
+                renderGuestbook();
+            });
+            renderGuestbook();
+        }
+
+        // ==========================================
+        // 8. RESPONSIVE NAVIGATION & PARALLAX
+        // ==========================================
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+
+        function closeMobileMenu() {
+            if (!mobileNavMenu || !mobileMenuToggle) return;
+            mobileNavMenu.classList.add('hidden');
+            mobileNavMenu.classList.remove('flex');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.setAttribute('aria-label', 'Open navigation menu');
+            if (mobileMenuIcon) mobileMenuIcon.textContent = 'menu';
+        }
+
+        if (mobileMenuToggle && mobileNavMenu) {
+            mobileMenuToggle.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const isOpen = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                if (isOpen) {
+                    closeMobileMenu();
+                } else {
+                    mobileNavMenu.classList.remove('hidden');
+                    mobileNavMenu.classList.add('flex');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                    mobileMenuToggle.setAttribute('aria-label', 'Close navigation menu');
+                    if (mobileMenuIcon) mobileMenuIcon.textContent = 'close';
+                }
+            });
+            mobileNavMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
+            document.addEventListener('click', (event) => {
+                if (!mobileNavMenu.contains(event.target) && !mobileMenuToggle.contains(event.target)) closeMobileMenu();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') closeMobileMenu();
+            });
+        }
+
+        const parallaxTargets = Array.from(document.querySelectorAll('[data-parallax]'));
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let parallaxFrame = null;
+        function updateParallax() {
+            parallaxFrame = null;
+            const reduced = prefersReducedMotion.matches;
+            const scrollY = window.scrollY || 0;
+            parallaxTargets.forEach(target => {
+                if (reduced) {
+                    target.style.transform = '';
+                    return;
+                }
+                const speed = Number.parseFloat(target.dataset.parallax || '0');
+                const offset = Math.max(-56, Math.min(56, scrollY * speed));
+                target.style.transform = `translate3d(0, ${offset}px, 0)`;
+            });
+        }
+        function requestParallaxUpdate() {
+            if (parallaxFrame === null) parallaxFrame = requestAnimationFrame(updateParallax);
+        }
+        window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
+        window.addEventListener('resize', requestParallaxUpdate, { passive: true });
+        prefersReducedMotion.addEventListener?.('change', requestParallaxUpdate);
+        updateParallax();
+
+        // 9. CONTACT FORM FORMSPREE
         // ==========================================
         const contactForm = document.getElementById('contact-form');
         const formSuccess = document.getElementById('form-success');
@@ -1715,7 +1990,7 @@
         }
 
         // ==========================================
-        // 8. SWIPER CREATIVE CAROUSEL 005 (VANILLA JS WITH USER ASSETS)
+        // 10. SWIPER CREATIVE CAROUSEL 005 (VANILLA JS WITH USER ASSETS)
         // ==========================================
         function initSwiperShowcase() {
             const wrapper = document.getElementById('swiper-showcase-wrapper');
