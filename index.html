@@ -16,14 +16,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,wght@0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- Swiper CSS CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'" />
     
     <!-- Tailwind CSS CDN with plugins -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script defer src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
     <script id="tailwind-config">
       tailwind.config = {
@@ -332,8 +332,24 @@
         }
 
         .spotlight-mask {
+            --spotlight-x: -999px;
+            --spotlight-y: -999px;
+            mask-image: radial-gradient(circle 220px at var(--spotlight-x) var(--spotlight-y), rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.35) 70%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle 220px at var(--spotlight-x) var(--spotlight-y), rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.35) 70%, transparent 100%);
             mask-repeat: no-repeat;
             -webkit-mask-repeat: no-repeat;
+        }
+
+        .custom-cursor.is-hovering { transform: translate(-50%, -50%) scale(2.2); }
+        .custom-cursor-follower.is-hovering { transform: translate(-50%, -50%) scale(1.5); border-color: #b58ad7; background-color: rgba(181, 138, 215, 0.1); }
+
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            .custom-cursor, .custom-cursor-follower { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
         }
 
         /* Hide scrollbars for gallery container */
@@ -421,9 +437,9 @@
             id="bg-video" 
             playsinline 
             muted 
-            preload="auto"
+            preload="none"
+            data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
             class="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top w-[120%] h-[120%] opacity-0 transition-none"
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
         ></video>
         <div class="absolute inset-0 bg-gradient-to-b from-[#0c0c0e]/80 via-[#0c0c0e]/60 to-[#0c0c0e] pointer-events-none z-10"></div>
     </div>
@@ -434,7 +450,7 @@
         <div 
             id="reveal-div" 
             class="absolute inset-0 bg-cover bg-center pointer-events-none spotlight-mask"
-            style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');"
+            data-bg-image="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&auto=format&fit=crop"
         ></div>
     </div>
 
@@ -564,6 +580,14 @@
         </div>
     </nav>
 
+    <div id="sfx-control" class="fixed bottom-4 left-4 z-50 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-2.5 py-1.5 backdrop-blur-md shadow-lg shadow-black/20" aria-live="polite">
+        <button id="sfx-toggle" type="button" aria-pressed="true" aria-label="Mute interface sound effects" class="flex h-7 w-7 items-center justify-center rounded-full text-primary transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <span class="material-symbols-outlined text-[17px]" id="sfx-icon">volume_up</span>
+        </button>
+        <span id="sfx-status" class="hidden pr-1 font-mono text-[9px] uppercase tracking-wider text-white/50 sm:inline">SFX / ON</span>
+    </div>
+
+    <main id="main-content">
     <!-- SECTION 1: HERO SECTION -->
     <section id="hero" class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 z-20">
         <div class="max-w-5xl mx-auto text-center">
@@ -974,6 +998,8 @@
         </div>
     </section>
 
+    </main>
+
     <!-- FOOTER -->
     <footer class="py-12 border-t border-white/10 px-6 relative z-20 bg-black/60 backdrop-blur-md">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1048,106 +1074,94 @@
 
         // ==========================================
         // 2. CURSOR SPOTLIGHT MASK SYSTEM
-        // ==========================================
-        const SPOTLIGHT_R = 220;
-        const mouse = { x: -999, y: -999 };
-        const smoothMouse = { x: -999, y: -999 };
-        const canvas = document.getElementById('spotlight-canvas');
-        const ctx = canvas.getContext('2d');
+        // CSS masks are substantially cheaper than creating a canvas data URL every frame.
         const revealDiv = document.getElementById('reveal-div');
+        const finePointer = window.matchMedia('(pointer: fine)').matches;
+        let spotlightRaf = 0;
+        let spotlightTarget = { x: -999, y: -999 };
+        let spotlightPosition = { x: -999, y: -999 };
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function updateSpotlight() {
+            spotlightRaf = 0;
+            spotlightPosition.x += (spotlightTarget.x - spotlightPosition.x) * 0.16;
+            spotlightPosition.y += (spotlightTarget.y - spotlightPosition.y) * 0.16;
+            revealDiv.style.setProperty('--spotlight-x', `${spotlightPosition.x}px`);
+            revealDiv.style.setProperty('--spotlight-y', `${spotlightPosition.y}px`);
+            if (Math.abs(spotlightTarget.x - spotlightPosition.x) > 0.5 || Math.abs(spotlightTarget.y - spotlightPosition.y) > 0.5) {
+                spotlightRaf = requestAnimationFrame(updateSpotlight);
+            }
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        function renderSpotlight() {
-            smoothMouse.x += (mouse.x - smoothMouse.x) * 0.12;
-            smoothMouse.y += (mouse.y - smoothMouse.y) * 0.12;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            const grad = ctx.createRadialGradient(
-                smoothMouse.x, smoothMouse.y, 0,
-                smoothMouse.x, smoothMouse.y, SPOTLIGHT_R
-            );
-            grad.addColorStop(0, 'rgba(255,255,255,1)');
-            grad.addColorStop(0.4, 'rgba(255,255,255,0.9)');
-            grad.addColorStop(0.7, 'rgba(255,255,255,0.4)');
-            grad.addColorStop(1, 'rgba(255,255,255,0)');
-
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(smoothMouse.x, smoothMouse.y, SPOTLIGHT_R, 0, Math.PI * 2);
-            ctx.fill();
-
-            const maskData = canvas.toDataURL();
-            revealDiv.style.maskImage = `url(${maskData})`;
-            revealDiv.style.webkitMaskImage = `url(${maskData})`;
-            revealDiv.style.maskSize = '100% 100%';
-
-            requestAnimationFrame(renderSpotlight);
+        if (finePointer) {
+            document.addEventListener('mousemove', (event) => {
+                spotlightTarget = { x: event.clientX, y: event.clientY };
+                if (!spotlightRaf) spotlightRaf = requestAnimationFrame(updateSpotlight);
+            }, { passive: true });
         }
-        requestAnimationFrame(renderSpotlight);
 
-        // ==========================================
+        const loadDeferredVisuals = () => {
+            const bgImage = revealDiv?.dataset.bgImage;
+            if (bgImage) revealDiv.style.backgroundImage = `url("${bgImage}")`;
+            if (bgVideo?.dataset.src) {
+                bgVideo.src = bgVideo.dataset.src;
+                bgVideo.load();
+            }
+        };
+        if ('requestIdleCallback' in window) requestIdleCallback(loadDeferredVisuals, { timeout: 2500 });
+        else window.setTimeout(loadDeferredVisuals, 1200);
+
         // 3. CUSTOM CURSOR & TILT EFFECTS
-        // ==========================================
         const cursor = document.getElementById('cursor');
         const follower = document.getElementById('cursor-follower');
+        let followerX = -100;
+        let followerY = -100;
+        let pointerRaf = 0;
+        let pointerTarget = { x: -100, y: -100 };
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-            
-            setTimeout(() => {
-                follower.style.left = `${e.clientX}px`;
-                follower.style.top = `${e.clientY}px`;
-            }, 40);
-        });
+        function renderPointer() {
+            pointerRaf = 0;
+            followerX += (pointerTarget.x - followerX) * 0.24;
+            followerY += (pointerTarget.y - followerY) * 0.24;
+            cursor.style.transform = `translate(${pointerTarget.x}px, ${pointerTarget.y}px) translate(-50%, -50%)`;
+            follower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%)`;
+            if (Math.abs(pointerTarget.x - followerX) > 0.5 || Math.abs(pointerTarget.y - followerY) > 0.5) pointerRaf = requestAnimationFrame(renderPointer);
+        }
 
-        function applyHoverEffects() {
-            const interactables = document.querySelectorAll('a, button, input, textarea, .tilt-card');
+        function applyHoverEffects(scope = document) {
+            if (!finePointer) return;
+            const interactables = scope.querySelectorAll('a, button, input, textarea, .tilt-card');
             interactables.forEach(el => {
+                if (el.dataset.hoverReady) return;
+                el.dataset.hoverReady = 'true';
                 el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(2.2)';
-                    follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                    follower.style.borderColor = '#b58ad7';
-                    follower.style.backgroundColor = 'rgba(181, 138, 215, 0.1)';
-                });
+                    cursor.classList.add('is-hovering');
+                    follower.classList.add('is-hovering');
+                }, { passive: true });
                 el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                    follower.style.transform = 'translate(-50%, -50%) scale(1)';
-                    follower.style.borderColor = 'rgba(181, 138, 215, 0.4)';
-                    follower.style.backgroundColor = 'transparent';
-                });
+                    cursor.classList.remove('is-hovering');
+                    follower.classList.remove('is-hovering');
+                }, { passive: true });
             });
         }
-        applyHoverEffects();
 
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            const inner = card.querySelector('.tilt-card-inner') || card;
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                const rotX = (-y / rect.height) * 15;
-                const rotY = (x / rect.width) * 15;
-                inner.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+        if (finePointer) {
+            document.addEventListener('mousemove', (event) => {
+                pointerTarget = { x: event.clientX, y: event.clientY };
+                if (!pointerRaf) pointerRaf = requestAnimationFrame(renderPointer);
+            }, { passive: true });
+            applyHoverEffects();
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                const inner = card.querySelector('.tilt-card-inner') || card;
+                card.addEventListener('mousemove', (event) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = event.clientX - rect.left - rect.width / 2;
+                    const y = event.clientY - rect.top - rect.height / 2;
+                    inner.style.transform = `rotateX(${(-y / rect.height * 10).toFixed(2)}deg) rotateY(${(x / rect.width * 10).toFixed(2)}deg)`;
+                }, { passive: true });
+                card.addEventListener('mouseleave', () => { inner.style.transform = 'rotateX(0deg) rotateY(0deg)'; }, { passive: true });
             });
-            card.addEventListener('mouseleave', () => {
-                inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
-            });
-        });
+        }
 
-        // ==========================================
         // 4. REVEAL ON SCROLL
         // ==========================================
         const revealObserver = new IntersectionObserver((entries) => {
@@ -1352,10 +1366,8 @@
 
         // ==========================================
         // 6. UNIVERSAL MUSIC PLAYER
-        // ==========================================
         const radioToggle = document.getElementById('radio-toggle');
         const customRadioWidget = document.getElementById('custom-radio-widget');
-
         const playBtn = document.getElementById('radio-play-btn');
         const playIcon = document.getElementById('play-icon');
         const volumeSlider = document.getElementById('radio-volume');
@@ -1366,271 +1378,229 @@
         const stationListContainer = document.getElementById('station-list');
         const customInput = document.getElementById('custom-stream-url');
         const customPlayBtn = document.getElementById('load-custom-stream');
-
         const ytFrameContainer = document.getElementById('youtube-player-frame');
         const spotifyFrame = document.getElementById('spotify-player-frame');
 
         const curatedTracks = [
-            { name: "Harry Styles — As It Was", type: "search", query: "Harry Styles As It Was" },
-            { name: "The Chainsmokers — Paris", type: "search", query: "The Chainsmokers Paris" },
-            { name: "Benson Boone — Beautiful Things", type: "search", query: "Benson Boone Beautiful Things" },
-            { name: "Blinding Lights — The Weeknd", type: "search", query: "The Weeknd Blinding Lights" }
+            { name: 'Harry Styles — As It Was', type: 'search', query: 'Harry Styles As It Was' },
+            { name: 'The Chainsmokers — Paris', type: 'search', query: 'The Chainsmokers Paris' },
+            { name: 'Benson Boone — Beautiful Things', type: 'search', query: 'Benson Boone Beautiful Things' },
+            { name: 'The Weeknd — Blinding Lights', type: 'search', query: 'The Weeknd Blinding Lights' }
         ];
 
         let audioElement = null;
         let isPlaying = false;
-        let currentMode = "audio";
+        let currentMode = 'audio';
+        let searchRequestId = 0;
 
         function initAudioElement() {
-            if (!audioElement) {
-                audioElement = document.createElement('audio');
-                audioElement.id = 'hidden-audio-player';
-                audioElement.style.display = 'none';
-                audioElement.crossOrigin = 'anonymous';
-                document.body.appendChild(audioElement);
-
-                audioElement.addEventListener('play', () => {
-                    updatePlayState(true, "Now Playing");
-                });
-                audioElement.addEventListener('pause', () => {
-                    updatePlayState(false, "Paused");
-                });
-                audioElement.addEventListener('ended', () => {
-                    updatePlayState(false, "Finished");
-                });
-            }
+            if (audioElement) return audioElement;
+            audioElement = document.createElement('audio');
+            audioElement.id = 'hidden-audio-player';
+            audioElement.preload = 'none';
+            audioElement.setAttribute('aria-hidden', 'true');
+            audioElement.addEventListener('play', () => updatePlayState(true, 'Now playing'));
+            audioElement.addEventListener('pause', () => updatePlayState(false, 'Paused'));
+            audioElement.addEventListener('ended', () => updatePlayState(false, 'Finished'));
+            audioElement.addEventListener('error', () => updatePlayState(false, 'This stream is unavailable'));
+            document.body.appendChild(audioElement);
             return audioElement;
         }
 
-        async function searchSong(query) {
-            try {
-                statusDisplay.innerText = "Searching...";
-                const res = await fetch(`https://jiosaavn-api-tau.vercel.app/search?query=${encodeURIComponent(query)}&limit=1`);
-                const data = await res.json();
-                if (data.success && data.results && data.results[0]) {
-                    const track = data.results[0];
-                    return {
-                        url: track.url,
-                        title: `${track.artist} — ${track.name}`,
-                        source: 'jiosaavn'
-                    };
-                }
-            } catch (err) {
-                console.log('[Music] JioSaavn fallback to YT:', err);
-            }
-            return null;
+        function stopEmbeddedPlayers() {
+            ytFrameContainer.innerHTML = '';
+            spotifyFrame.src = '';
+            ytFrameContainer.classList.add('hidden');
+            spotifyFrame.classList.add('hidden');
         }
 
-        // Render Curated Tracks
-        if (stationListContainer) {
-            stationListContainer.innerHTML = '';
-            curatedTracks.forEach(track => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left px-3 py-2 min-h-[38px] rounded-lg hover:bg-white/10 active:bg-white/20 text-white/90 font-mono text-xs transition-colors truncate cursor-pointer flex items-center justify-between group";
-                btn.innerHTML = `<span class="truncate">🎵 ${track.name}</span><span class="text-[10px] text-white/40 group-hover:text-primary flex-shrink-0 ml-2">Search</span>`;
-                btn.onclick = (e) => {
-                    e.stopPropagation();
-                    playTrack(track);
-                };
-                stationListContainer.appendChild(btn);
-            });
+        async function searchSong(query) {
+            const requestId = ++searchRequestId;
+            const response = await fetch(`https://jiosaavn-api-tau.vercel.app/search?query=${encodeURIComponent(query)}&limit=1`, { signal: AbortSignal.timeout(10000) });
+            if (!response.ok) throw new Error(`Search failed with ${response.status}`);
+            const data = await response.json();
+            const result = data.results?.[0];
+            if (requestId !== searchRequestId || !result) return null;
+            const detailUrl = result.api_url?.song;
+            if (!detailUrl) return null;
+            const detailResponse = await fetch(detailUrl, { signal: AbortSignal.timeout(10000) });
+            if (!detailResponse.ok) throw new Error(`Track lookup failed with ${detailResponse.status}`);
+            const detail = await detailResponse.json();
+            if (requestId !== searchRequestId) return null;
+            const directUrl = detail.media_urls?.['160_KBPS'] || detail.media_url || result.more_info?.vlink;
+            if (!directUrl) return null;
+            return { url: directUrl, title: `${detail.primary_artists || result.description || 'Unknown artist'} — ${detail.song || result.title}`, source: 'jiosaavn' };
         }
 
         function openWidget() {
             customRadioWidget.classList.remove('opacity-0', 'invisible', 'scale-95', 'pointer-events-none');
             customRadioWidget.classList.add('opacity-100', 'visible', 'scale-100', 'pointer-events-auto');
         }
-
         function closeWidget() {
             customRadioWidget.classList.add('opacity-0', 'invisible', 'scale-95', 'pointer-events-none');
             customRadioWidget.classList.remove('opacity-100', 'visible', 'scale-100', 'pointer-events-auto');
         }
+        radioToggle?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            customRadioWidget.classList.contains('opacity-100') ? closeWidget() : openWidget();
+        });
+        customRadioWidget?.addEventListener('click', event => event.stopPropagation());
+        document.addEventListener('click', closeWidget, { passive: true });
 
-        if (radioToggle) {
-            radioToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isOpen = customRadioWidget.classList.contains('opacity-100');
-                if (isOpen) closeWidget();
-                else openWidget();
-            });
-        }
-
-        // Visualizer toggle
         const toggleVizBtn = document.getElementById('toggle-visualizer-btn');
         const vizBtnText = document.getElementById('viz-btn-text');
         const visualizerContainer = document.getElementById('visualizer');
-
-        if (toggleVizBtn && visualizerContainer) {
-            toggleVizBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (visualizerContainer.classList.contains('hidden')) {
-                    visualizerContainer.classList.remove('hidden');
-                    if (vizBtnText) vizBtnText.innerText = "HIDE";
-                } else {
-                    visualizerContainer.classList.add('hidden');
-                    if (vizBtnText) vizBtnText.innerText = "SHOW";
-                }
-            });
-        }
-
-        if (customRadioWidget) {
-            customRadioWidget.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        }
-
-        document.addEventListener('click', () => {
-            if (customRadioWidget && customRadioWidget.classList.contains('opacity-100')) {
-                closeWidget();
-            }
+        toggleVizBtn?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const hidden = visualizerContainer.classList.toggle('hidden');
+            vizBtnText.textContent = hidden ? 'SHOW' : 'HIDE';
         });
-
-        async function playTrack(track) {
-            titleDisplay.innerText = track.name;
-            statusDisplay.innerText = "Loading...";
-            
-            const audio = initAudioElement();
-            
-            if (track.type === "search" || track.type === "query") {
-                const query = track.query || track.name;
-                const result = await searchSong(query);
-                
-                if (result) {
-                    currentMode = "audio";
-                    ytFrameContainer.classList.add('hidden');
-                    spotifyFrame.classList.add('hidden');
-                    audio.src = result.url;
-                    audio.volume = Math.max(0, Math.min(1, parseInt(volumeSlider?.value || 50) / 100));
-                    audio.play().catch(err => {
-                        console.error('[Music] Playback error:', err);
-                        statusDisplay.innerText = "Playback error";
-                    });
-                    titleDisplay.innerText = result.title;
-                } else {
-                    // Fallback to YouTube Search Embed
-                    currentMode = "youtube";
-                    ytFrameContainer.classList.remove('hidden');
-                    spotifyFrame.classList.add('hidden');
-                    ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}&autoplay=1&controls=0&enablejsapi=1" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-                    updatePlayState(true, "Playing YouTube");
-                }
-            } else if (track.type === "yt" && track.id) {
-                currentMode = "youtube";
-                ytFrameContainer.classList.remove('hidden');
-                spotifyFrame.classList.add('hidden');
-                ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${track.id}?autoplay=1&controls=0&enablejsapi=1&rel=0&modestbranding=1" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-                updatePlayState(true, "Now Playing (YouTube)");
-            } else if (track.type === "spotify" && track.embedUrl) {
-                currentMode = "spotify";
-                ytFrameContainer.classList.add('hidden');
-                spotifyFrame.classList.remove('hidden');
-                spotifyFrame.src = track.embedUrl;
-                updatePlayState(true, "Playing Spotify");
-            }
-        }
-
-        // Play/Pause Button
-        if (playBtn) {
-            playBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const audio = document.getElementById('hidden-audio-player');
-                if (currentMode === "audio" && audio) {
-                    if (audio.paused) {
-                        audio.play().catch(err => console.error('[Music] Play error:', err));
-                    } else {
-                        audio.pause();
-                    }
-                } else {
-                    updatePlayState(!isPlaying, isPlaying ? "Paused" : "Playing");
-                }
-            });
-        }
-
-        // Volume Control
-        if (volumeSlider) {
-            volumeSlider.addEventListener('input', (e) => {
-                const val = parseInt(e.target.value) / 100;
-                const audio = document.getElementById('hidden-audio-player');
-                if (audio) {
-                    audio.volume = Math.max(0, Math.min(1, val));
-                }
-            });
-        }
 
         function updatePlayState(playing, statusMessage) {
             isPlaying = playing;
-            if (statusMessage) statusDisplay.innerText = statusMessage;
-            if (playing) {
-                playIcon.innerText = "pause";
-                if (radioPing) radioPing.classList.add('animate-ping', 'opacity-75');
-                visualizerBars.forEach(b => b.classList.add('active'));
-            } else {
-                playIcon.innerText = "play_arrow";
-                if (radioPing) radioPing.classList.remove('animate-ping', 'opacity-75');
-                visualizerBars.forEach(b => b.classList.remove('active'));
-            }
+            if (statusMessage) statusDisplay.textContent = statusMessage;
+            playIcon.textContent = playing ? 'pause' : 'play_arrow';
+            radioPing.classList.toggle('animate-ping', playing);
+            radioPing.classList.toggle('opacity-75', playing);
+            visualizerBars.forEach(bar => bar.classList.toggle('active', playing));
+            radioToggle?.classList.toggle('is-playing', playing);
         }
 
-        // Handle Search Query / Song Input
-        async function handleUserSearch() {
-            const input = customInput.value.trim();
-            if (!input) return;
-
-            titleDisplay.innerText = `Searching: "${input}"`;
-            
-            // Handle Spotify URLs
-            if (input.includes('spotify.com')) {
-                let spotifyEmbedUrl = input;
-                if (!input.includes('/embed/')) {
-                    spotifyEmbedUrl = input.replace('spotify.com/', 'spotify.com/embed/');
+        async function playTrack(track) {
+            const audio = initAudioElement();
+            titleDisplay.textContent = track.name;
+            statusDisplay.textContent = 'Loading stream…';
+            searchRequestId++;
+            if (track.type === 'search' || track.type === 'query') {
+                try {
+                    const result = await searchSong(track.query || track.name);
+                    if (!result) throw new Error('No direct stream returned');
+                    currentMode = 'audio';
+                    stopEmbeddedPlayers();
+                    audio.pause();
+                    audio.src = result.url;
+                    audio.volume = Number(volumeSlider?.value || 50) / 100;
+                    titleDisplay.textContent = result.title;
+                    await audio.play();
+                } catch (error) {
+                    console.warn('[Music] Direct stream unavailable:', error);
+                    updatePlayState(false, 'Stream unavailable — try a link');
                 }
-                currentMode = "spotify";
-                ytFrameContainer.classList.add('hidden');
-                spotifyFrame.classList.remove('hidden');
-                spotifyFrame.src = spotifyEmbedUrl;
-                titleDisplay.innerText = "Spotify Track";
-                updatePlayState(true, "Playing Spotify");
-                customInput.value = "";
                 return;
             }
-
-            // Handle YouTube URLs
-            if (input.includes('youtu') || input.includes('youtube')) {
-                let videoId = null;
-                if (input.includes('youtu.be/')) {
-                    videoId = input.split('youtu.be/')[1].split('?')[0];
-                } else if (input.includes('v=')) {
-                    videoId = input.split('v=')[1].split('&')[0];
-                } else if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
-                    videoId = input;
-                }
-
-                if (videoId) {
-                    currentMode = "youtube";
-                    ytFrameContainer.classList.remove('hidden');
-                    spotifyFrame.classList.add('hidden');
-                    ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&enablejsapi=1&rel=0&modestbranding=1" class="w-full h-full border-0 rounded-xl" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-                    updatePlayState(true, "Now Playing");
-                    customInput.value = "";
-                    return;
-                }
+            if (track.type === 'youtube' && track.id) {
+                audio.pause();
+                currentMode = 'youtube';
+                ytFrameContainer.classList.remove('hidden');
+                spotifyFrame.classList.add('hidden');
+                ytFrameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(track.id)}?autoplay=1&controls=0&rel=0&modestbranding=1" class="h-full w-full rounded-xl border-0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="YouTube music player"></iframe>`;
+                updatePlayState(true, 'Playing YouTube');
+                return;
             }
-
-            // Regular song search
-            await playTrack({ name: input, type: "search", query: input });
-            customInput.value = "";
+            if (track.type === 'spotify' && track.embedUrl) {
+                audio.pause();
+                currentMode = 'spotify';
+                ytFrameContainer.classList.add('hidden');
+                spotifyFrame.classList.remove('hidden');
+                spotifyFrame.src = track.embedUrl;
+                updatePlayState(true, 'Playing Spotify');
+            }
         }
 
-        if (customPlayBtn) customPlayBtn.addEventListener('click', handleUserSearch);
-        if (customInput) {
-            customInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    handleUserSearch();
-                }
+        if (stationListContainer) {
+            stationListContainer.innerHTML = curatedTracks.map((track, index) => `<button type="button" data-track-index="${index}" class="w-full truncate rounded-lg px-3 py-2 text-left text-xs font-mono text-white/90 transition-colors hover:bg-white/10 active:bg-white/20 cursor-pointer flex items-center justify-between group"><span class="truncate">${track.name}</span><span class="ml-2 shrink-0 text-[10px] text-white/40 group-hover:text-primary">PLAY</span></button>`).join('');
+            stationListContainer.addEventListener('click', event => {
+                const button = event.target.closest('[data-track-index]');
+                if (button) playTrack(curatedTracks[Number(button.dataset.trackIndex)]);
             });
         }
 
-        // ==========================================
+        playBtn?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const audio = initAudioElement();
+            if (currentMode === 'audio' && audio.src) {
+                audio.paused ? audio.play().catch(() => updatePlayState(false, 'Playback blocked')) : audio.pause();
+            } else {
+                updatePlayState(!isPlaying, isPlaying ? 'Paused' : 'Playing');
+            }
+        });
+        volumeSlider?.addEventListener('input', event => {
+            initAudioElement().volume = Number(event.target.value) / 100;
+        });
+
+        async function handleUserSearch() {
+            const input = customInput.value.trim();
+            if (!input) return;
+            if (input.includes('spotify.com')) {
+                const embedUrl = input.includes('/embed/') ? input : input.replace('spotify.com/', 'spotify.com/embed/');
+                await playTrack({ name: 'Spotify track', type: 'spotify', embedUrl });
+            } else {
+                const youtubeMatch = input.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/))([a-zA-Z0-9_-]{11})/);
+                if (youtubeMatch || /^[a-zA-Z0-9_-]{11}$/.test(input)) {
+                    await playTrack({ name: 'YouTube track', type: 'youtube', id: youtubeMatch?.[1] || input });
+                } else {
+                    await playTrack({ name: input, type: 'search', query: input });
+                }
+            }
+            customInput.value = '';
+        }
+        customPlayBtn?.addEventListener('click', handleUserSearch);
+        customInput?.addEventListener('keydown', event => { if (event.key === 'Enter') handleUserSearch(); });
+
+        // 6.1 PERIPHERAL PROFILE SOUND EFFECTS
+        const sfxToggle = document.getElementById('sfx-toggle');
+        const sfxIcon = document.getElementById('sfx-icon');
+        const sfxStatus = document.getElementById('sfx-status');
+        let sfxEnabled = localStorage.getItem('profile-sfx') !== 'off';
+        let audioContext = null;
+        let lastHoverSound = 0;
+
+        function ensureAudioContext() {
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === 'suspended') audioContext.resume();
+            return audioContext;
+        }
+        function playSfx(kind = 'click') {
+            if (!sfxEnabled) return;
+            const context = ensureAudioContext();
+            const oscillator = context.createOscillator();
+            const gain = context.createGain();
+            const now = context.currentTime;
+            oscillator.type = kind === 'hover' ? 'sine' : 'triangle';
+            oscillator.frequency.setValueAtTime(kind === 'hover' ? 640 : 420, now);
+            oscillator.frequency.exponentialRampToValueAtTime(kind === 'hover' ? 820 : 560, now + 0.07);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(kind === 'hover' ? 0.018 : 0.035, now + 0.008);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+            oscillator.connect(gain).connect(context.destination);
+            oscillator.start(now);
+            oscillator.stop(now + 0.12);
+        }
+        function updateSfxUi() {
+            sfxToggle.setAttribute('aria-pressed', String(sfxEnabled));
+            sfxToggle.setAttribute('aria-label', sfxEnabled ? 'Mute interface sound effects' : 'Enable interface sound effects');
+            sfxIcon.textContent = sfxEnabled ? 'volume_up' : 'volume_off';
+            sfxStatus.textContent = sfxEnabled ? 'SFX / ON' : 'SFX / OFF';
+        }
+        updateSfxUi();
+        sfxToggle?.addEventListener('click', () => {
+            sfxEnabled = !sfxEnabled;
+            localStorage.setItem('profile-sfx', sfxEnabled ? 'on' : 'off');
+            updateSfxUi();
+            if (sfxEnabled) playSfx('click');
+        });
+        if (finePointer) {
+            document.addEventListener('mouseover', event => {
+                const target = event.target.closest('a, button, input, textarea, .tilt-card');
+                if (!target || Date.now() - lastHoverSound < 100) return;
+                lastHoverSound = Date.now();
+                playSfx('hover');
+            }, { passive: true });
+        }
+        document.addEventListener('click', event => {
+            if (event.target.closest('a, button, input, textarea')) playSfx('click');
+        }, { passive: true });
+
         // 7. CONTACT FORM FORMSPREE
         // ==========================================
         const contactForm = document.getElementById('contact-form');
@@ -1686,37 +1656,37 @@
 
             const images = [
                 {
-                    src: "/images/showcase/oblivion.png",
+                    src: "/images/showcase/oblivion.webp",
                     alt: "Oblivion",
                     code: "# 01"
                 },
                 {
-                    src: "/images/showcase/quakesafe.png",
+                    src: "/images/showcase/quakesafe.webp",
                     alt: "Quakesafe",
                     code: "# 02"
                 },
                 {
-                    src: "/images/showcase/back_in_past.png",
+                    src: "/images/showcase/back_in_past.webp",
                     alt: "Back In Past",
                     code: "# 03"
                 },
                 {
-                    src: "/images/showcase/ayuvibee.png",
+                    src: "/images/showcase/ayuvibee.webp",
                     alt: "AyuVibee",
                     code: "# 04"
                 },
                 {
-                    src: "/images/showcase/vex.png",
+                    src: "/images/showcase/vex.webp",
                     alt: "Vex",
                     code: "# 05"
                 },
                 {
-                    src: "/images/showcase/cyberescape.png",
+                    src: "/images/showcase/cyberescape.webp",
                     alt: "CyberEscape",
                     code: "# 06"
                 },
                 {
-                    src: "/images/showcase/itsjustayush.png",
+                    src: "/images/showcase/itsjustayush.webp",
                     alt: "ItsjustAyush",
                     code: "# 07"
                 }
@@ -1724,7 +1694,7 @@
 
             wrapper.innerHTML = images.map(img => `
                 <div class="swiper-slide liquid-glass border border-white/10 rounded-[25px] group">
-                    <img class="h-full w-full scale-105 rounded-3xl object-cover transition-transform duration-500 group-hover:scale-110" src="${img.src}" alt="${img.alt}" />
+                    <img class="h-full w-full scale-105 rounded-3xl object-cover transition-transform duration-500 group-hover:scale-110" src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async" width="1900" height="970" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-5 flex flex-col justify-end pointer-events-none">
                         <div class="flex items-center justify-between">
                             <span class="font-mono text-sm text-white font-semibold">${img.alt}</span>
