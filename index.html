@@ -542,15 +542,6 @@
                                 </div>
                             </div>
 
-                            <!-- Curated Music Presets -->
-                            <div class="pt-3 border-t border-white/10 flex-1 min-h-0 flex flex-col">
-                                <div class="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-2 flex-shrink-0">
-                                    Top Preset Highlights
-                                </div>
-                                <div class="space-y-1 overflow-y-auto flex-1 pr-2 sm:pr-1" id="station-list" style="-webkit-overflow-scrolling: touch; scrollbar-width: thin;">
-                                    <!-- Injected via JS -->
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -1371,19 +1362,17 @@
         const statusDisplay = document.getElementById('now-playing-status');
         const visualizerBars = document.querySelectorAll('.visualizer-bar');
         const radioPing = document.getElementById('radio-ping');
-        const stationListContainer = document.getElementById('station-list');
         const customInput = document.getElementById('custom-stream-url');
         const customPlayBtn = document.getElementById('load-custom-stream');
 
         const ytFrameContainer = document.getElementById('youtube-player-frame');
         const spotifyFrame = document.getElementById('spotify-player-frame');
 
-        const curatedTracks = [
-            { name: "Harry Styles — As It Was", type: "search", query: "Harry Styles As It Was" },
-            { name: "The Chainsmokers — Paris", type: "search", query: "The Chainsmokers Paris" },
-            { name: "Benson Boone — Beautiful Things", type: "search", query: "Benson Boone Beautiful Things" },
-            { name: "Blinding Lights — The Weeknd", type: "search", query: "The Weeknd Blinding Lights" }
-        ];
+        const singleTrack = {
+            name: "Harry Styles — As It Was",
+            type: "search",
+            query: "Harry Styles As It Was"
+        };
 
         let audioElement = null;
         let isPlaying = false;
@@ -1433,21 +1422,6 @@
                 console.log('[Music] JioSaavn fallback to YT:', err);
             }
             return null;
-        }
-
-        // Render Curated Tracks
-        if (stationListContainer) {
-            stationListContainer.innerHTML = '';
-            curatedTracks.forEach(track => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left px-3 py-2 min-h-[38px] rounded-lg hover:bg-white/10 active:bg-white/20 text-white/90 font-mono text-xs transition-colors truncate cursor-pointer flex items-center justify-between group";
-                btn.innerHTML = `<span class="truncate">🎵 ${track.name}</span><span class="text-[10px] text-white/40 group-hover:text-primary flex-shrink-0 ml-2">Search</span>`;
-                btn.onclick = (e) => {
-                    e.stopPropagation();
-                    playTrack(track);
-                };
-                stationListContainer.appendChild(btn);
-            });
         }
 
         function openWidget() {
@@ -1548,9 +1522,11 @@
         if (playBtn) {
             playBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const audio = document.getElementById('hidden-audio-player');
-                if (currentMode === "audio" && audio) {
-                    if (audio.paused) {
+                const audio = initAudioElement();
+                if (currentMode === "audio") {
+                    if (!audio.src) {
+                        playTrack(singleTrack);
+                    } else if (audio.paused) {
                         audio.play().catch(err => console.error('[Music] Play error:', err));
                     } else {
                         audio.pause();
