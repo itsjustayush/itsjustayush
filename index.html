@@ -1719,7 +1719,8 @@
         // ==========================================
         function initSwiperShowcase() {
             const wrapper = document.getElementById('swiper-showcase-wrapper');
-            if (!wrapper) return;
+            const carouselRoot = wrapper?.closest('.Carousal_005');
+            if (!wrapper || !carouselRoot || carouselRoot.dataset.swiperReady === 'true') return;
 
             const images = [
                 {
@@ -1776,8 +1777,21 @@
                     spaceBetween: 0,
                     autoplay: {
                         delay: 1500,
-                        disableOnInteraction: true,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
                     },
+                    keyboard: {
+                        enabled: true,
+                        onlyInViewport: true,
+                    },
+                    a11y: {
+                        enabled: true,
+                        prevSlideMessage: 'Previous project',
+                        nextSlideMessage: 'Next project',
+                        paginationBulletMessage: 'Go to project {{index}}',
+                    },
+                    observer: true,
+                    observeParents: true,
                     effect: 'creative',
                     grabCursor: true,
                     slidesPerView: 'auto',
@@ -1797,6 +1811,7 @@
                         },
                     },
                 });
+                carouselRoot.dataset.swiperReady = 'true';
             }
         }
 
