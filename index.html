@@ -12,19 +12,19 @@
     <title>Ayush Bhattacharya — Developer & Student</title>
     <link rel="icon" type="image/png" href="AB.png" />
     <link rel="canonical" href="https://itsjustayush.vercel.app" />
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,wght@0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
+
     <!-- Swiper CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
+
     <!-- Tailwind CSS CDN with plugins -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
+
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -64,7 +64,7 @@
         }
       }
     </script>
-    
+
     <style>
         :root {
             --bg-color: #0c0c0e;
@@ -81,7 +81,7 @@
 
         /* Noise filter overlay */
         .grid-overlay {
-            background-image: 
+            background-image:
                 radial-gradient(circle at 50% 50%, rgba(181, 138, 215, 0.04) 0%, transparent 70%),
                 linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
@@ -155,11 +155,11 @@
         /* Shiny text animation */
         .animate-shiny {
             background-image: linear-gradient(
-                90deg, 
-                #ffffff 0%, 
-                #b58ad7 25%, 
-                #38bdf8 50%, 
-                #f472b6 75%, 
+                90deg,
+                #ffffff 0%,
+                #b58ad7 25%,
+                #38bdf8 50%,
+                #f472b6 75%,
                 #ffffff 100%
             );
             background-size: 200% auto;
@@ -277,7 +277,7 @@
             cursor: pointer;
             box-shadow: 0 0 8px #b58ad7;
         }
-        
+
         input[type=range].volume-slider::-moz-range-thumb {
             height: 14px;
             width: 14px;
@@ -443,6 +443,49 @@
         @media (prefers-reduced-motion: reduce) {
             [data-parallax] { transform: none !important; }
         }
+
+        /* Scroll-docked navbar and command search */
+        #navbar, #guestbook-navbar {
+            transition: top 240ms cubic-bezier(0.23, 1, 0.32, 1), transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        #navbar.is-docked, #guestbook-navbar.is-docked {
+            top: 0.65rem;
+        }
+        #navbar.is-docked > div, #guestbook-navbar.is-docked > div {
+            background: rgba(18, 15, 23, 0.86);
+            border-color: rgba(181, 138, 215, 0.24);
+            box-shadow: 0 16px 46px rgba(4, 2, 12, 0.28);
+        }
+        #site-search-modal {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 180ms ease-out, visibility 180ms ease-out;
+        }
+        #site-search-modal.is-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #site-search-modal .site-search-panel {
+            transform: translateY(-8px) scale(0.98);
+            transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        #site-search-modal.is-open .site-search-panel {
+            transform: translateY(0) scale(1);
+        }
+        .site-search-result mark {
+            background: rgba(181, 138, 215, 0.22);
+            color: #fff;
+            border-radius: 0.2rem;
+            padding: 0 0.1rem;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #navbar, #guestbook-navbar, #site-search-modal, #site-search-modal .site-search-panel {
+                transition: none !important;
+            }
+        }
+
     </style>
 </head>
 
@@ -454,10 +497,10 @@
 
     <!-- Background Layer 1: Looping Video -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <video 
-            id="bg-video" 
-            playsinline 
-            muted 
+        <video
+            id="bg-video"
+            playsinline
+            muted
             preload="metadata"
             class="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top w-[120%] h-[120%] opacity-0 transition-none"
             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
@@ -468,8 +511,8 @@
     <!-- Background Layer 2: Interactive Spotlight -->
     <div id="spotlight-layer" class="fixed inset-0 z-10 pointer-events-none overflow-hidden opacity-40">
         <canvas id="spotlight-canvas" class="hidden"></canvas>
-        <div 
-            id="reveal-div" 
+        <div
+            id="reveal-div"
             data-parallax="-0.08"
             class="absolute inset-0 bg-cover bg-center pointer-events-none spotlight-mask"
             style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');"
@@ -481,7 +524,7 @@
     <!-- Navigation Bar -->
     <nav class="fixed top-4 left-0 right-0 z-50 px-4 md:px-8 transition-all duration-500" id="navbar">
         <div class="max-w-7xl mx-auto liquid-glass-strong rounded-full px-6 py-3 flex justify-between items-center">
-            
+
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-xs font-bold text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary transition-all">
@@ -491,7 +534,7 @@
                     ITSJUSTAYUSH
                 </span>
             </a>
-            
+
             <!-- Navigation Links -->
             <div class="hidden xl:flex items-center gap-1 bg-white/5 rounded-full px-3 py-1 border border-white/10">
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#hero">Home</a>
@@ -503,7 +546,7 @@
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#stack">Stack</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="/guestbook">Guestbook</a>
             </div>
-            
+
             <!-- Action Controls -->
             <div class="flex items-center gap-3">
                 <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open navigation menu" class="xl:hidden w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary/50 transition-all cursor-pointer">
@@ -513,16 +556,22 @@
                     Hire Me ↗
                 </a>
 
+
+                <button id="site-search-trigger" type="button" aria-haspopup="dialog" aria-controls="site-search-modal" aria-label="Search pages and sections" class="inline-flex items-center gap-2 h-9 px-3 rounded-full bg-white/5 border border-white/15 text-white/70 hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-pointer">
+                    <span class="material-symbols-outlined text-[17px]">search</span>
+                    <span class="hidden lg:inline font-mono text-[10px] tracking-wider uppercase">Search</span>
+                    <kbd class="hidden lg:inline-flex items-center rounded-md border border-white/10 bg-black/20 px-1.5 py-0.5 font-mono text-[9px] text-white/45">⌘K</kbd>
+                </button>
                 <!-- Custom Music Player Toggle -->
                 <div class="relative">
                     <button id="radio-toggle" aria-label="Open Music Player" class="w-10 h-10 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary/50 hover:bg-white/10 transition-all cursor-pointer">
                         <span class="material-symbols-outlined text-[20px] sm:text-[18px]">graphic_eq</span>
                     </button>
-                    
+
                     <!-- Glassmorphic Music Player Dropdown -->
                     <div id="custom-radio-widget" class="fixed left-0 right-0 bottom-0 sm:absolute sm:left-auto sm:right-0 sm:top-12 sm:bottom-auto w-full sm:w-96 sm:max-w-96 opacity-0 invisible transition-all duration-300 transform origin-top-right scale-95 z-50 pointer-events-none">
                         <div class="p-4 sm:p-5 liquid-glass-strong rounded-t-3xl sm:rounded-3xl shadow-2xl border border-white/15 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto flex flex-col">
-                            
+
                             <!-- Header & Visualizer -->
                             <div class="flex items-center justify-between mb-3 pb-3 border-b border-white/10 flex-shrink-0">
                                 <div class="flex items-center gap-2">
@@ -546,7 +595,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- User Song Search / Input -->
                             <div class="mb-3.5 flex-shrink-0">
                                 <div class="font-mono text-[10px] text-white/50 uppercase tracking-widest mb-1.5 flex items-center justify-between">
@@ -614,7 +663,7 @@
     <!-- SECTION 1: HERO SECTION -->
     <section id="hero" class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 z-20">
         <div class="max-w-5xl mx-auto text-center" data-parallax="0.12">
-            
+
             <div class="inline-flex items-center gap-2 liquid-glass rounded-full px-4 py-1.5 mb-8 reveal-element">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span class="font-mono text-xs tracking-wider text-white/90">Student & Coder · Class 12 Boards · 6+ Yrs Experience</span>
@@ -1000,7 +1049,7 @@
         <div class="max-w-5xl mx-auto">
             <div class="liquid-glass p-8 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden reveal-element">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    
+
                     <div>
                         <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-4">// LET'S CONNECT</span>
                         <h2 class="text-4xl sm:text-5xl font-fustat font-bold text-white mb-6 leading-tight">
@@ -1009,7 +1058,7 @@
                         <p class="text-sm text-white/70 leading-relaxed mb-8">
                             Open to collaborations, web projects, design consulting, and technical development engagements. Feel free to reach out directly!
                         </p>
-                        
+
                         <div class="space-y-4 font-mono text-xs">
                             <div class="flex items-center gap-3 text-white/80">
                                 <span class="material-symbols-outlined text-primary text-lg">mail</span>
@@ -1083,7 +1132,7 @@
     <!-- SCRIPT LOGIC -->
     <script>
         // ==========================================
-        // 1. VIDEO BACKGROUND CROSSFADE SYSTEM 
+        // 1. VIDEO BACKGROUND CROSSFADE SYSTEM
         // ==========================================
         const bgVideo = document.getElementById('bg-video');
         let fadingOut = false;
@@ -1200,7 +1249,7 @@
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = `${e.clientX}px`;
             cursor.style.top = `${e.clientY}px`;
-            
+
             setTimeout(() => {
                 follower.style.left = `${e.clientX}px`;
                 follower.style.top = `${e.clientY}px`;
@@ -1571,13 +1620,13 @@
         async function playTrack(track) {
             titleDisplay.innerText = track.name;
             statusDisplay.innerText = "Loading...";
-            
+
             const audio = initAudioElement();
-            
+
             if (track.type === "search" || track.type === "query") {
                 const query = track.query || track.name;
                 const result = await searchSong(query);
-                
+
                 if (result) {
                     currentMode = "audio";
                     ytFrameContainer.classList.add('hidden');
@@ -1663,7 +1712,7 @@
             if (!input) return;
 
             titleDisplay.innerText = `Searching: "${input}"`;
-            
+
             // Handle Spotify URLs
             if (input.includes('spotify.com')) {
                 let spotifyEmbedUrl = input;
@@ -1979,5 +2028,134 @@
     </script>
     <!-- Swiper JS CDN -->
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <div id="site-search-modal" class="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[12vh] sm:pt-[16vh]" role="dialog" aria-modal="true" aria-labelledby="site-search-title" aria-hidden="true">
+        <button id="site-search-backdrop" type="button" aria-label="Close search" class="absolute inset-0 bg-black/65 backdrop-blur-sm cursor-default"></button>
+        <div class="site-search-panel relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/15 bg-[#141118]/95 text-white shadow-2xl shadow-black/50">
+            <div class="flex items-center gap-3 border-b border-white/10 px-4 py-3.5">
+                <span class="material-symbols-outlined text-[20px] text-primary">search</span>
+                <div class="min-w-0 flex-1">
+                    <h2 id="site-search-title" class="sr-only">Search pages and sections</h2>
+                    <input id="site-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search pages and sections..." aria-label="Search pages and sections" class="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/35">
+                </div>
+                <kbd class="hidden sm:inline-flex rounded-md border border-white/10 bg-white/5 px-2 py-1 font-mono text-[10px] text-white/45">ESC</kbd>
+                <button id="site-search-close" type="button" aria-label="Close search" class="flex h-8 w-8 items-center justify-center rounded-full text-white/50 hover:bg-white/10 hover:text-primary transition-colors cursor-pointer">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+            <div class="max-h-[min(62vh, 30rem)] overflow-y-auto p-2 sm:p-3">
+                <div class="flex items-center justify-between px-2 py-2">
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-white/40">Pages & tabs</span>
+                    <span id="site-search-count" class="font-mono text-[10px] text-primary/75" aria-live="polite"></span>
+                </div>
+                <div id="site-search-results" role="listbox" aria-label="Search results"></div>
+                <div id="site-search-empty" class="hidden px-3 py-10 text-center font-mono text-xs text-white/45">No matching pages or sections.</div>
+            </div>
+            <div class="flex items-center justify-between border-t border-white/10 px-4 py-2.5 font-mono text-[10px] text-white/35">
+                <span>Navigate with search</span>
+                <span class="hidden sm:inline">Enter to open · Esc to close</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            const navs = Array.from(document.querySelectorAll('#navbar, #guestbook-navbar'));
+            const searchTrigger = document.getElementById('site-search-trigger');
+            const searchModal = document.getElementById('site-search-modal');
+            const searchBackdrop = document.getElementById('site-search-backdrop');
+            const searchClose = document.getElementById('site-search-close');
+            const searchInput = document.getElementById('site-search-input');
+            const searchResults = document.getElementById('site-search-results');
+            const searchEmpty = document.getElementById('site-search-empty');
+            const searchCount = document.getElementById('site-search-count');
+            if (!searchModal || !searchInput || !searchResults) return;
+
+            const isGuestbookPage = Boolean(document.getElementById('guestbook-navbar'));
+            const items = isGuestbookPage ? [
+                { name: 'Home', meta: 'Portfolio homepage', href: '/' },
+                { name: 'Journey', meta: 'Experience and education', href: '/#experience' },
+                { name: 'Expertise', meta: 'Toolkit and capabilities', href: '/#expertise' },
+                { name: 'Projects', meta: 'Case studies and GitHub repos', href: '/#work' },
+                { name: 'Gallery', meta: 'Design and works showcase', href: '/#showcase' },
+                { name: 'Beyond Screen', meta: 'Offline hobbies and creativity', href: '/#interests' },
+                { name: 'Stack', meta: 'Uses and toolkit', href: '/#stack' },
+                { name: 'Guestbook', meta: 'Words that echo', href: '/guestbook/' },
+                { name: 'Contact', meta: 'Build something remarkable', href: '/#contact' },
+            ] : [
+                { name: 'Home', meta: 'Hero and introduction', href: '#hero' },
+                { name: 'Journey', meta: 'Experience and education', href: '#experience' },
+                { name: 'Expertise', meta: 'Toolkit and capabilities', href: '#expertise' },
+                { name: 'Projects', meta: 'Case studies and GitHub repos', href: '#work' },
+                { name: 'Gallery', meta: 'Design and works showcase', href: '#showcase' },
+                { name: 'Beyond Screen', meta: 'Offline hobbies and creativity', href: '#interests' },
+                { name: 'Stack', meta: 'Uses and toolkit', href: '#stack' },
+                { name: 'Guestbook', meta: 'Words that echo', href: '/guestbook/' },
+                { name: 'Contact', meta: 'Build something remarkable', href: '#contact' },
+            ];
+
+            const escapeHtml = value => value.replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+            const highlight = (value, query) => {
+                const safe = escapeHtml(value);
+                if (!query) return safe;
+                const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                return safe.replace(new RegExp(`(${escapedQuery})`, 'ig'), '<mark>$1</mark>');
+            };
+
+            const renderResults = () => {
+                const query = searchInput.value.trim().toLowerCase();
+                const matches = items.filter(item => `${item.name} ${item.meta}`.toLowerCase().includes(query));
+                searchCount.textContent = `${matches.length} result${matches.length === 1 ? '' : 's'}`;
+                searchEmpty.classList.toggle('hidden', matches.length !== 0);
+                searchResults.innerHTML = matches.map((item, index) => `
+                    <a href="${item.href}" role="option" data-search-index="${index}" class="site-search-result group flex items-center gap-3 rounded-2xl px-3 py-3 text-left hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none transition-colors">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
+                            <span class="material-symbols-outlined text-[18px]">${item.name === 'Guestbook' ? 'edit_note' : item.name === 'Contact' ? 'mail' : 'arrow_forward'}</span>
+                        </span>
+                        <span class="min-w-0 flex-1">
+                            <span class="block truncate font-mono text-xs text-white/90">${highlight(item.name, query)}</span>
+                            <span class="block truncate text-xs text-white/45">${highlight(item.meta, query)}</span>
+                        </span>
+                        <span class="material-symbols-outlined text-[17px] text-white/25 group-hover:text-primary transition-colors">north_east</span>
+                    </a>
+                `).join('');
+            };
+
+            const closeSearch = () => {
+                searchModal.classList.remove('is-open');
+                searchModal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('overflow-hidden');
+                searchTrigger?.focus();
+            };
+            const openSearch = () => {
+                searchModal.classList.add('is-open');
+                searchModal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('overflow-hidden');
+                renderResults();
+                requestAnimationFrame(() => searchInput.focus());
+            };
+
+            searchTrigger?.addEventListener('click', openSearch);
+            searchClose?.addEventListener('click', closeSearch);
+            searchBackdrop?.addEventListener('click', closeSearch);
+            searchInput.addEventListener('input', renderResults);
+            searchResults.addEventListener('click', () => closeSearch());
+            document.addEventListener('keydown', event => {
+                if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+                    event.preventDefault();
+                    searchModal.classList.contains('is-open') ? closeSearch() : openSearch();
+                }
+                if (event.key === 'Escape' && searchModal.classList.contains('is-open')) closeSearch();
+            });
+
+            const updateDockedNav = () => {
+                navs.forEach(nav => nav.classList.toggle('is-docked', (window.scrollY || 0) > 22));
+            };
+            window.addEventListener('scroll', updateDockedNav, { passive: true });
+            updateDockedNav();
+            renderResults();
+        })();
+    </script>
+
 </body>
 </html>
