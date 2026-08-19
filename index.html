@@ -486,6 +486,102 @@
             }
         }
 
+
+        /* Lightweight link-preview card */
+        .link-preview-card {
+            position: fixed;
+            z-index: 120;
+            width: min(18rem, calc(100vw - 2rem));
+            padding: 0.9rem 1rem;
+            border: 1px solid rgba(181, 138, 215, 0.34);
+            border-radius: 1rem;
+            background: rgba(20, 18, 24, 0.94);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 18px 50px rgba(0,0,0,0.42), inset 0 1px 1px rgba(255,255,255,0.12);
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: opacity 160ms ease-out, transform 160ms ease-out;
+        }
+        .link-preview-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .link-preview-card__eyebrow {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: rgba(181, 138, 215, 0.9);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .link-preview-card__title {
+            display: block;
+            overflow: hidden;
+            color: rgba(255,255,255,0.92);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .link-preview-card__url {
+            display: block;
+            margin-top: 0.3rem;
+            overflow: hidden;
+            color: rgba(255,255,255,0.48);
+            font-size: 0.68rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .link-preview-card { transition: none; }
+        }
+
+
+        /* Stack tooltip cards */
+        .stack-tooltip-card {
+            position: fixed;
+            z-index: 121;
+            max-width: min(15rem, calc(100vw - 2rem));
+            padding: 0.8rem 0.9rem;
+            border: 1px solid rgba(181, 138, 215, 0.3);
+            border-radius: 0.9rem;
+            background: rgba(20, 18, 24, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 16px 42px rgba(0,0,0,0.38), inset 0 1px 1px rgba(255,255,255,0.1);
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 150ms ease-out, transform 150ms ease-out;
+        }
+        .stack-tooltip-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stack-tooltip-card__title {
+            display: block;
+            color: rgba(255,255,255,0.92);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .stack-tooltip-card__body {
+            display: block;
+            margin-top: 0.35rem;
+            color: rgba(255,255,255,0.55);
+            font-size: 0.68rem;
+            line-height: 1.45;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .stack-tooltip-card { transition: none; }
+        }
+
     </style>
 </head>
 
@@ -538,11 +634,7 @@
             <!-- Navigation Links -->
             <div class="hidden xl:flex items-center gap-1 bg-white/5 rounded-full px-3 py-1 border border-white/10">
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#hero">Home</a>
-                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#experience">Journey</a>
-                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#expertise">Expertise</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#work">Projects</a>
-                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#showcase">Gallery</a>
-                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#interests">Beyond Screen</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#stack">Stack</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="/guestbook">Guestbook</a>
             </div>
@@ -1304,6 +1396,137 @@
         document.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
 
         // ==========================================
+        // LINK PREVIEW CARDS
+        // ==========================================
+        function initLinkPreviews(scope = document) {
+            const links = scope.querySelectorAll('[data-preview-url]');
+            links.forEach(link => {
+                if (link.dataset.previewReady === 'true') return;
+                link.dataset.previewReady = 'true';
+                let card;
+                let hideTimer;
+
+                const getCard = () => {
+                    if (card) return card;
+                    card = document.createElement('div');
+                    card.className = 'link-preview-card';
+                    card.setAttribute('role', 'tooltip');
+                    card.innerHTML = '<span class="link-preview-card__eyebrow">LINK PREVIEW</span><strong class="link-preview-card__title"></strong><span class="link-preview-card__url"></span>';
+                    document.body.appendChild(card);
+                    return card;
+                };
+
+                const positionCard = (event) => {
+                    const preview = getCard();
+                    const url = link.dataset.previewUrl || link.href;
+                    let hostname = url;
+                    try { hostname = new URL(url, window.location.href).hostname.replace(/^www\\./, ''); } catch (_) {}
+                    preview.querySelector('.link-preview-card__title').textContent = link.dataset.previewLabel || link.textContent.trim() || 'Open link';
+                    preview.querySelector('.link-preview-card__url').textContent = hostname;
+                    const rect = link.getBoundingClientRect();
+                    const x = event?.clientX ?? rect.left + rect.width / 2;
+                    const y = event?.clientY ?? rect.top;
+                    const left = Math.max(16, Math.min(window.innerWidth - preview.offsetWidth - 16, x - preview.offsetWidth / 2));
+                    const top = y > window.innerHeight * 0.68 ? rect.top - preview.offsetHeight - 12 : rect.bottom + 12;
+                    preview.style.left = `${left}px`;
+                    preview.style.top = `${Math.max(12, top)}px`;
+                };
+
+                const show = event => {
+                    clearTimeout(hideTimer);
+                    positionCard(event);
+                    requestAnimationFrame(() => getCard().classList.add('is-visible'));
+                };
+                const hide = () => {
+                    hideTimer = setTimeout(() => card?.classList.remove('is-visible'), 90);
+                };
+                link.addEventListener('mouseenter', show);
+                link.addEventListener('mousemove', positionCard);
+                link.addEventListener('mouseleave', hide);
+                link.addEventListener('focus', show);
+                link.addEventListener('blur', hide);
+            });
+        }
+        initLinkPreviews();
+
+        // ==========================================
+        // STACK TOOLTIP CARDS
+        // ==========================================
+        function initStackTooltips() {
+            const descriptions = {
+                html: 'Semantic structure for accessible interfaces.',
+                css: 'Visual styling, layout, and responsive polish.',
+                javascript: 'Interaction logic and browser-side behavior.',
+                tailwind: 'Utility-first styling for fast UI iteration.',
+                python: 'Automation, scripting, and practical tooling.',
+                typescript: 'Safer JavaScript with expressive types.',
+                react: 'Composable interfaces and reusable UI systems.',
+                next: 'Production-ready React application foundations.',
+                sql: 'Structured data modeling and querying.',
+                supabase: 'Backend primitives and hosted Postgres workflows.',
+                firebase: 'Rapid app services and realtime experimentation.',
+                claude: 'AI-assisted thinking, debugging, and writing.',
+                chatgpt: 'Rapid exploration, prototyping, and iteration.',
+                gemini: 'Multimodal AI experiments and research.',
+                manus: 'Agentic workflows for building and shipping.',
+                canva: 'Fast visual composition and design exploration.',
+                vercel: 'Deployment and delivery for web projects.',
+                render: 'Simple hosting for services and experiments.',
+                netlify: 'Frontend deployment and static delivery.',
+                git: 'Version history and safe iteration.',
+                github: 'Open-source collaboration and project hosting.',
+                vscode: 'The editor where ideas become working code.',
+                spotify: 'A constant source of focus and sonic workflows.'
+            };
+
+            document.querySelectorAll('.tech-badge').forEach(badge => {
+                if (badge.dataset.tooltipReady === 'true') return;
+                const mark = badge.querySelector('.tech-badge-mark');
+                const label = badge.textContent.replace(mark?.textContent || '', '').trim();
+                const description = descriptions[label.toLowerCase()];
+                if (!description) return;
+                badge.dataset.tooltipReady = 'true';
+                badge.setAttribute('tabindex', '0');
+                badge.setAttribute('aria-label', `${label}: ${description}`);
+                let tooltip;
+                let hideTimer;
+
+                const getTooltip = () => {
+                    if (tooltip) return tooltip;
+                    tooltip = document.createElement('div');
+                    tooltip.className = 'stack-tooltip-card';
+                    tooltip.setAttribute('role', 'tooltip');
+                    tooltip.innerHTML = '<strong class="stack-tooltip-card__title"></strong><span class="stack-tooltip-card__body"></span>';
+                    tooltip.querySelector('.stack-tooltip-card__title').textContent = label;
+                    tooltip.querySelector('.stack-tooltip-card__body').textContent = description;
+                    document.body.appendChild(tooltip);
+                    return tooltip;
+                };
+                const position = () => {
+                    const card = getTooltip();
+                    const rect = badge.getBoundingClientRect();
+                    const left = Math.max(16, Math.min(window.innerWidth - card.offsetWidth - 16, rect.left + rect.width / 2 - card.offsetWidth / 2));
+                    const top = rect.top > window.innerHeight * 0.64 ? rect.top - card.offsetHeight - 10 : rect.bottom + 10;
+                    card.style.left = `${left}px`;
+                    card.style.top = `${Math.max(12, top)}px`;
+                };
+                const show = () => {
+                    clearTimeout(hideTimer);
+                    position();
+                    requestAnimationFrame(() => getTooltip().classList.add('is-visible'));
+                };
+                const hide = () => {
+                    hideTimer = setTimeout(() => tooltip?.classList.remove('is-visible'), 80);
+                };
+                badge.addEventListener('mouseenter', show);
+                badge.addEventListener('mouseleave', hide);
+                badge.addEventListener('focus', show);
+                badge.addEventListener('blur', hide);
+            });
+        }
+        initStackTooltips();
+
+        // ==========================================
         // 5. GITHUB REPOSITORIES FETCHING
         // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
@@ -1340,11 +1563,11 @@
                             </div>
 
                             <div class="flex items-center gap-4 pt-4 border-t border-white/10 z-20">
-                                <a href="${repo.html_url}" target="_blank" class="font-mono text-xs text-white/80 hover:text-primary flex items-center gap-1 uppercase tracking-wider">
+                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" data-preview-url="${repo.html_url}" data-preview-label="Open source repository" class="font-mono text-xs text-white/80 hover:text-primary flex items-center gap-1 uppercase tracking-wider">
                                     <span class="material-symbols-outlined text-sm">code</span> Code
                                 </a>
                                 ${homepage ? `
-                                <a href="${homepage}" target="_blank" class="font-mono text-xs text-cyan-400 hover:underline flex items-center gap-1 uppercase tracking-wider">
+                                <a href="${homepage}" target="_blank" rel="noopener noreferrer" data-preview-url="${homepage}" data-preview-label="Open live demo" class="font-mono text-xs text-cyan-400 hover:underline flex items-center gap-1 uppercase tracking-wider">
                                     <span class="material-symbols-outlined text-sm">open_in_new</span> Live Demo
                                 </a>
                                 ` : ''}
@@ -1355,6 +1578,7 @@
                 });
 
                 applyHoverEffects();
+                initLinkPreviews(container);
                 container.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
 
             } catch (err) {
