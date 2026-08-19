@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Leave a note on Ayush Bhattacharya’s guestbook wall." />
+
+    <meta property="og:title" content="Guestbook — Ayush Bhattacharya" />
+    <meta property="og:description" content="Leave a note on Ayush Bhattacharya’s guestbook wall." />
+    <meta property="og:url" content="https://itsjustayush.vercel.app/guestbook" />
+    <meta property="og:type" content="website" />
+    <title>Guestbook — Ayush Bhattacharya</title>
+    <link rel="icon" type="image/png" href="AB.png" />
+    <link rel="canonical" href="https://itsjustayush.vercel.app/guestbook" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,wght@0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Swiper CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Tailwind CSS CDN with plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-container": "#d7c0eb",
+              "tertiary": "#cbb7e9",
+              "outline": "#937e9a",
+              "surface-muted": "#1A1A1D",
+              "surface-variant": "#353437",
+              "surface-container-low": "#1c1b1d",
+              "surface-container-highest": "#353437",
+              "on-background": "#e5e1e4",
+              "surface-container-high": "#2a2a2c",
+              "on-primary": "#2d1639",
+              "on-surface-variant": "#d0c5b5",
+              "on-tertiary": "#312448",
+              "border-subtle": "#27272A",
+              "background": "#0c0c0e",
+              "surface": "#131315",
+              "on-surface": "#e5e1e4",
+              "primary": "#b58ad7",
+              "primary-glow": "#c084fc",
+              "cyan-glow": "#38bdf8",
+              "secondary": "#c6c6c7"
+            },
+            fontFamily: {
+              "mono": ["JetBrains Mono", "monospace"],
+              "serif-title": ["Literata", "serif"],
+              "playfair": ["Playfair Display", "serif"],
+              "sans": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+              "fustat": ["Fustat", "sans-serif"],
+              "schibsted": ["Schibsted Grotesk", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+    
+    <style>
+        :root {
+            --bg-color: #0c0c0e;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #e5e1e4;
+            cursor: none;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Noise filter overlay */
+        .grid-overlay {
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(181, 138, 215, 0.04) 0%, transparent 70%),
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 60px 60px, 60px 60px;
+            pointer-events: none;
+        }
+
+        /* Liquid Glass Design System */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.02);
+            background-blend-mode: luminosity;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: none;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.08), 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .liquid-glass::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.2px;
+            background: linear-gradient(180deg,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0.1) 25%,
+                rgba(181,138,215,0.15) 50%,
+                rgba(255,255,255,0.05) 75%,
+                rgba(255,255,255,0.25) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .liquid-glass:hover {
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 20px 40px -15px rgba(181, 138, 215, 0.2);
+            transform: translateY(-4px) scale(1.005);
+        }
+
+        .liquid-glass-strong {
+            background: rgba(20, 18, 24, 0.75);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.15);
+            position: relative;
+            overflow: visible;
+        }
+
+        .liquid-glass-strong::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.4px;
+            background: linear-gradient(180deg,
+                rgba(181,138,215,0.5) 0%,
+                rgba(255,255,255,0.2) 30%,
+                rgba(255,255,255,0.05) 70%,
+                rgba(181,138,215,0.4) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Shiny text animation */
+        .animate-shiny {
+            background-image: linear-gradient(
+                90deg, 
+                #ffffff 0%, 
+                #b58ad7 25%, 
+                #38bdf8 50%, 
+                #f472b6 75%, 
+                #ffffff 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shinyText 6s linear infinite;
+        }
+
+        @keyframes shinyText {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 10px;
+            height: 10px;
+            background-color: #b58ad7;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out, opacity 0.2s ease;
+            box-shadow: 0 0 10px #b58ad7;
+        }
+
+        .custom-cursor-follower {
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(181, 138, 215, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease-out, border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Reveal on scroll animations */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Card Tilt Support */
+        .tilt-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .tilt-card-inner {
+            transition: transform 0.15s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        /* Audio Visualizer */
+        .visualizer-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 20px;
+        }
+        .visualizer-bar {
+            width: 3px;
+            background-color: #b58ad7;
+            border-radius: 2px;
+            transform-origin: bottom;
+            transition: height 0.1s ease;
+            height: 4px;
+        }
+        .visualizer-bar.active {
+            animation: bounce 0.8s infinite ease-in-out alternate;
+        }
+        .visualizer-bar.active:nth-child(1) { animation-delay: 0.1s; }
+        .visualizer-bar.active:nth-child(2) { animation-delay: 0.3s; }
+        .visualizer-bar.active:nth-child(3) { animation-delay: 0.15s; }
+        .visualizer-bar.active:nth-child(4) { animation-delay: 0.4s; }
+        .visualizer-bar.active:nth-child(5) { animation-delay: 0.25s; }
+
+        @keyframes bounce {
+            0% { height: 4px; }
+            100% { height: 20px; }
+        }
+
+        /* Volume Slider */
+        input[type=range].volume-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            height: 4px;
+            border-radius: 2px;
+            outline: none;
+        }
+        input[type=range].volume-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 2px;
+        }
+        input[type=range].volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: #b58ad7;
+            margin-top: -5px;
+            cursor: pointer;
+            box-shadow: 0 0 8px #b58ad7;
+        }
+        
+        input[type=range].volume-slider::-moz-range-thumb {
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: #b58ad7;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 8px #b58ad7;
+        }
+
+        /* Scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #27272a #0c0c0e;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c0c0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(39, 39, 42, 0.95);
+            border-radius: 9999px;
+            border: 2px solid #0c0c0e;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b58ad7;
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        .custom-heatmap-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(181,138,215,0.35) rgba(255,255,255,0.05);
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 9999px;
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar-thumb {
+            background: rgba(181,138,215,0.35);
+            border-radius: 9999px;
+        }
+        .custom-heatmap-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(181,138,215,0.75);
+        }
+
+        .spotlight-mask {
+            mask-repeat: no-repeat;
+            -webkit-mask-repeat: no-repeat;
+        }
+
+        /* Hide scrollbars for gallery container */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Swiper Carousel 005 Creative Effect Styles - Landscape Expansive */
+        .Carousal_005 {
+            width: 100%;
+            height: 520px;
+            padding-bottom: 50px !important;
+        }
+
+        .Carousal_005 .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            border-radius: 25px;
+            width: 820px;
+            height: 450px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 1024px) {
+            .Carousal_005 {
+                height: 420px;
+            }
+            .Carousal_005 .swiper-slide {
+                width: 640px;
+                height: 360px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .Carousal_005 {
+                height: 300px;
+            }
+            .Carousal_005 .swiper-slide {
+                width: 88vw;
+                height: 240px;
+                border-radius: 18px;
+            }
+        }
+
+        .Carousal_005 .swiper-pagination-bullet {
+            background-color: #b58ad7 !important;
+            opacity: 0.4;
+            width: 10px;
+            height: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .Carousal_005 .swiper-pagination-bullet-active {
+            opacity: 1;
+            width: 24px;
+            border-radius: 5px;
+        }
+
+        /* Mobile Music Player Specific */
+        @media (max-width: 640px) {
+            #custom-radio-widget {
+                bottom: 0;
+                max-height: 90vh;
+            }
+        }
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-height: 2.35rem;
+            padding: 0.42rem 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 0.75rem;
+            background: rgba(10, 10, 14, 0.58);
+            color: rgba(255, 255, 255, 0.82);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: transform 180ms ease-out, border-color 180ms ease-out, background 180ms ease-out;
+        }
+        .tech-badge:hover {
+            transform: translateY(-2px);
+            border-color: rgba(181, 138, 215, 0.7);
+            background: rgba(181, 138, 215, 0.12);
+        }
+        .tech-badge-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.35rem;
+            height: 1.35rem;
+            padding: 0 0.2rem;
+            border: 1px solid rgba(181, 138, 215, 0.5);
+            border-radius: 0.35rem;
+            color: #b58ad7;
+            font-size: 0.58rem;
+            letter-spacing: 0.02em;
+        }
+        [data-parallax] { will-change: transform; }
+        @media (prefers-reduced-motion: reduce) {
+            [data-parallax] { transform: none !important; }
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-surface min-h-screen selection:bg-primary/30 selection:text-white"><body>
+    <!-- Background Layer 1: Looping Video -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <video 
+            id="bg-video" 
+            playsinline 
+            muted 
+            preload="metadata"
+            class="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top w-[120%] h-[120%] opacity-0 transition-none"
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
+        ></video>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0c0c0e]/80 via-[#0c0c0e]/60 to-[#0c0c0e] pointer-events-none z-10"></div>
+    </div>
+
+    <!-- Background Layer 2: Interactive Spotlight -->
+    <div id="spotlight-layer" class="fixed inset-0 z-10 pointer-events-none overflow-hidden opacity-40">
+        <canvas id="spotlight-canvas" class="hidden"></canvas>
+        <div 
+            id="reveal-div" 
+            data-parallax="-0.08"
+            class="absolute inset-0 bg-cover bg-center pointer-events-none spotlight-mask"
+            style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');"
+        ></div>
+    </div>
+
+    <div class="fixed inset-0 grid-overlay z-10"></div>
+
+    <nav class="fixed top-4 left-0 right-0 z-50 px-4 md:px-8 transition-all duration-500" id="guestbook-navbar">
+        <div class="max-w-7xl mx-auto liquid-glass-strong rounded-full px-6 py-3 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-xs font-bold text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary transition-all">AB</div>
+                <span class="font-mono text-xs tracking-widest text-white uppercase font-semibold group-hover:text-primary transition-colors">ITSJUSTAYUSH</span>
+            </a>
+            <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full px-3 py-1 border border-white/10">
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="/">Home</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="/#stack">Stack</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-primary hover:text-white hover:bg-white/10 transition-all" href="/guestbook">Guestbook</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/#contact" class="hidden sm:inline-flex bg-white text-black font-mono text-xs font-semibold px-5 py-2 rounded-full hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10">Hire Me ↗</a>
+                <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu" aria-label="Open navigation menu" class="md:hidden w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white/80 hover:text-primary hover:border-primary/50 transition-all cursor-pointer">
+                    <span id="mobile-menu-icon" class="material-symbols-outlined text-[19px]">menu</span>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-nav-menu" class="hidden md:hidden fixed left-4 right-4 top-20 liquid-glass-strong rounded-3xl p-3 shadow-2xl border border-white/15">
+            <div class="grid grid-cols-2 gap-1.5">
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="/">Home</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="/#stack">Stack</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-primary hover:text-white hover:bg-white/10 transition-all" href="/guestbook">Guestbook</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="/#contact">Contact ↗</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-20 min-h-screen pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-6 pb-8">
+            <a href="/" class="inline-flex items-center gap-2 font-mono text-xs text-white/55 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">arrow_back</span><span>Back to portfolio</span></a>
+        </div>
+    <section id="guestbook" class="py-28 px-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8 items-start">
+                <div class="liquid-glass-strong rounded-3xl p-7 md:p-10 reveal-element">
+                    <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-4">// THE WALL REMEMBERS</span>
+                    <h2 class="text-4xl sm:text-5xl font-fustat font-bold text-white leading-tight mb-5">Words That <span class="italic font-serif-title text-primary">Echo.</span></h2>
+                    <p class="text-sm text-white/70 leading-relaxed mb-8">Leave a small note for the next person who wanders through. Your message stays in this browser, so the wall remains personal and private.</p>
+                    <div class="flex items-center gap-3 font-mono text-[11px] text-white/45 uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        Join the wall...
+                    </div>
+                </div>
+
+                <div class="space-y-5">
+                    <form id="guestbook-form" class="liquid-glass p-6 md:p-8 rounded-3xl reveal-element">
+                        <div class="grid grid-cols-1 sm:grid-cols-[0.7fr_1.3fr] gap-4">
+                            <div>
+                                <label for="guestbook-name" class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NAME</label>
+                                <input id="guestbook-name" name="guestbook-name" required maxlength="32" type="text" placeholder="e.g. Alex" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label for="guestbook-message" class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NOTE</label>
+                                <textarea id="guestbook-message" name="guestbook-message" required maxlength="220" rows="3" placeholder="Write a message..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors resize-none"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <p id="guestbook-status" class="font-mono text-[10px] text-white/45" role="status" aria-live="polite">Your note will appear at the top of the wall.</p>
+                            <button type="submit" class="bg-white text-black font-mono text-xs font-semibold uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10 whitespace-nowrap">Sign Guestbook ↗</button>
+                        </div>
+                    </form>
+
+                    <div id="guestbook-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    </main>
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-white/10 px-6 relative z-20 bg-black/60 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-xs font-bold text-primary">
+                    AB
+                </div>
+                <span class="font-mono text-xs text-white/60 uppercase tracking-widest">
+                    © 2026 Ayush Bhattacharya. Developer & Designer.
+                </span>
+            </div>
+
+            <div class="flex items-center gap-6 font-mono text-xs text-white/60">
+                <a href="https://github.com/itsjustayush" target="_blank" class="hover:text-primary transition-colors cursor-pointer">GitHub</a>
+                <a href="mailto:info.cometlabs@gmail.com" class="hover:text-primary transition-colors cursor-pointer">Email</a>
+                <a href="#hero" class="hover:text-primary transition-colors cursor-pointer">Back to Top ↑</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.reveal-element').forEach(el => el.classList.add('is-visible'));
+        // 7. LOCAL GUESTBOOK
+        // ==========================================
+        const guestbookForm = document.getElementById('guestbook-form');
+        const guestbookList = document.getElementById('guestbook-list');
+        const guestbookStatus = document.getElementById('guestbook-status');
+        const guestbookStorageKey = 'itsjustayush-guestbook';
+
+        function getGuestbookEntries() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(guestbookStorageKey) || '[]');
+                return Array.isArray(saved) ? saved.slice(0, 24) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function guestbookInitials(name) {
+            return name.trim().split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase() || 'G';
+        }
+
+        function renderGuestbook() {
+            if (!guestbookList) return;
+            const entries = getGuestbookEntries();
+            guestbookList.replaceChildren();
+            if (!entries.length) {
+                const empty = document.createElement('div');
+                empty.className = 'sm:col-span-2 liquid-glass p-6 rounded-3xl text-center font-mono text-xs text-white/50';
+                empty.textContent = 'The wall is waiting for its first note.';
+                guestbookList.appendChild(empty);
+                return;
+            }
+
+            entries.forEach(entry => {
+                const card = document.createElement('article');
+                card.className = 'liquid-glass p-5 rounded-3xl reveal-element';
+                const meta = document.createElement('div');
+                meta.className = 'flex items-center justify-between gap-3 mb-4';
+                const identity = document.createElement('div');
+                identity.className = 'flex items-center gap-2.5 min-w-0';
+                const avatar = document.createElement('span');
+                avatar.className = 'w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-[10px] font-bold text-primary flex-shrink-0';
+                avatar.textContent = guestbookInitials(entry.name);
+                const name = document.createElement('span');
+                name.className = 'font-mono text-xs text-white/85 truncate';
+                name.textContent = entry.name;
+                identity.append(avatar, name);
+                const date = document.createElement('time');
+                date.className = 'font-mono text-[10px] text-white/40 flex-shrink-0';
+                date.dateTime = entry.createdAt;
+                date.textContent = new Date(entry.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+                meta.append(identity, date);
+                const message = document.createElement('p');
+                message.className = 'text-sm text-white/70 leading-relaxed break-words';
+                message.textContent = entry.message;
+                card.append(meta, message);
+                guestbookList.appendChild(card);
+            });
+        }
+
+        if (guestbookForm) {
+            guestbookForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const nameInput = document.getElementById('guestbook-name');
+                const messageInput = document.getElementById('guestbook-message');
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+                if (!name || !message) return;
+                const entries = getGuestbookEntries();
+                entries.unshift({ name, message, createdAt: new Date().toISOString() });
+                try { localStorage.setItem(guestbookStorageKey, JSON.stringify(entries.slice(0, 24))); } catch (error) { /* private fallback */ }
+                guestbookForm.reset();
+                guestbookStatus.textContent = 'Note added to the wall.';
+                renderGuestbook();
+            });
+            renderGuestbook();
+        }
+
+        // ==========================================
+        // 8. RESPONSIVE NAVIGATION & PARALLAX
+        // ==========================================
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+
+        function closeMobileMenu() {
+            if (!mobileNavMenu || !mobileMenuToggle) return;
+            mobileNavMenu.classList.add('hidden');
+            mobileNavMenu.classList.remove('flex');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.setAttribute('aria-label', 'Open navigation menu');
+            if (mobileMenuIcon) mobileMenuIcon.textContent = 'menu';
+        }
+
+        if (mobileMenuToggle && mobileNavMenu) {
+            mobileMenuToggle.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const isOpen = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                if (isOpen) {
+                    closeMobileMenu();
+                } else {
+                    mobileNavMenu.classList.remove('hidden');
+                    mobileNavMenu.classList.add('flex');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                    mobileMenuToggle.setAttribute('aria-label', 'Close navigation menu');
+                    if (mobileMenuIcon) mobileMenuIcon.textContent = 'close';
+                }
+            });
+            mobileNavMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
+            document.addEventListener('click', (event) => {
+                if (!mobileNavMenu.contains(event.target) && !mobileMenuToggle.contains(event.target)) closeMobileMenu();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') closeMobileMenu();
+            });
+        }
+
+        const parallaxTargets = Array.from(document.querySelectorAll('[data-parallax]'));
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let parallaxFrame = null;
+        function updateParallax() {
+            parallaxFrame = null;
+            const reduced = prefersReducedMotion.matches;
+            const scrollY = window.scrollY || 0;
+            parallaxTargets.forEach(target => {
+                if (reduced) {
+                    target.style.transform = '';
+                    return;
+                }
+                const speed = Number.parseFloat(target.dataset.parallax || '0');
+                const offset = Math.max(-56, Math.min(56, scrollY * speed));
+                target.style.transform = `translate3d(0, ${offset}px, 0)`;
+            });
+        }
+        function requestParallaxUpdate() {
+            if (parallaxFrame === null) parallaxFrame = requestAnimationFrame(updateParallax);
+        }
+        window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
+        window.addEventListener('resize', requestParallaxUpdate, { passive: true });
+        prefersReducedMotion.addEventListener?.('change', requestParallaxUpdate);
+        updateParallax();
+
+    </script>
+</body>
+</html>

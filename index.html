@@ -501,7 +501,7 @@
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#showcase">Gallery</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#interests">Beyond Screen</a>
                 <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#stack">Stack</a>
-                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="#guestbook">Guestbook</a>
+                <a class="px-4 py-1.5 rounded-full text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all cursor-pointer" href="/guestbook">Guestbook</a>
             </div>
             
             <!-- Action Controls -->
@@ -605,7 +605,7 @@
                 <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#work">Projects</a>
                 <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#showcase">Gallery</a>
                 <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#interests">Beyond Screen</a>
-                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="#guestbook">Guestbook</a>
+                <a class="px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-white/80 hover:text-white hover:bg-white/10 transition-all" href="/guestbook">Guestbook</a>
                 <a class="col-span-2 px-3 py-3 rounded-2xl text-xs font-mono tracking-wider text-primary hover:text-white hover:bg-white/10 transition-all" href="#contact">Contact ↗</a>
             </div>
         </div>
@@ -990,44 +990,6 @@
                     <p class="text-xs text-white/70 leading-relaxed">
                         Debugging Python or studying with constant music: Harry Styles, Benson Boone, Chainsmokers & ambient lofi frequencies keeping focus high.
                     </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 8: GUESTBOOK -->
-    <section id="guestbook" class="py-28 px-6 relative z-20">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8 items-start">
-                <div class="liquid-glass-strong rounded-3xl p-7 md:p-10 reveal-element">
-                    <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-4">// THE WALL REMEMBERS</span>
-                    <h2 class="text-4xl sm:text-5xl font-fustat font-bold text-white leading-tight mb-5">Words That <span class="italic font-serif-title text-primary">Echo.</span></h2>
-                    <p class="text-sm text-white/70 leading-relaxed mb-8">Leave a small note for the next person who wanders through. Your message stays in this browser, so the wall remains personal and private.</p>
-                    <div class="flex items-center gap-3 font-mono text-[11px] text-white/45 uppercase tracking-widest">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        Join the wall...
-                    </div>
-                </div>
-
-                <div class="space-y-5">
-                    <form id="guestbook-form" class="liquid-glass p-6 md:p-8 rounded-3xl reveal-element">
-                        <div class="grid grid-cols-1 sm:grid-cols-[0.7fr_1.3fr] gap-4">
-                            <div>
-                                <label for="guestbook-name" class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NAME</label>
-                                <input id="guestbook-name" name="guestbook-name" required maxlength="32" type="text" placeholder="e.g. Alex" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors">
-                            </div>
-                            <div>
-                                <label for="guestbook-message" class="font-mono text-[11px] text-white/50 uppercase tracking-widest block mb-2">YOUR NOTE</label>
-                                <textarea id="guestbook-message" name="guestbook-message" required maxlength="220" rows="3" placeholder="Write a message..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-primary transition-colors resize-none"></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <p id="guestbook-status" class="font-mono text-[10px] text-white/45" role="status" aria-live="polite">Your note will appear at the top of the wall.</p>
-                            <button type="submit" class="bg-white text-black font-mono text-xs font-semibold uppercase tracking-widest px-5 py-3 rounded-xl hover:bg-primary hover:text-on-primary active:scale-95 transition-all cursor-pointer shadow-lg shadow-white/10 whitespace-nowrap">Sign Guestbook ↗</button>
-                        </div>
-                    </form>
-
-                    <div id="guestbook-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4" aria-live="polite"></div>
                 </div>
             </div>
         </div>
@@ -1802,85 +1764,7 @@
         }, { passive: true });
 
         // ==========================================
-        // 7. LOCAL GUESTBOOK
-        // ==========================================
-        const guestbookForm = document.getElementById('guestbook-form');
-        const guestbookList = document.getElementById('guestbook-list');
-        const guestbookStatus = document.getElementById('guestbook-status');
-        const guestbookStorageKey = 'itsjustayush-guestbook';
-
-        function getGuestbookEntries() {
-            try {
-                const saved = JSON.parse(localStorage.getItem(guestbookStorageKey) || '[]');
-                return Array.isArray(saved) ? saved.slice(0, 24) : [];
-            } catch (error) {
-                return [];
-            }
-        }
-
-        function guestbookInitials(name) {
-            return name.trim().split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase() || 'G';
-        }
-
-        function renderGuestbook() {
-            if (!guestbookList) return;
-            const entries = getGuestbookEntries();
-            guestbookList.replaceChildren();
-            if (!entries.length) {
-                const empty = document.createElement('div');
-                empty.className = 'sm:col-span-2 liquid-glass p-6 rounded-3xl text-center font-mono text-xs text-white/50';
-                empty.textContent = 'The wall is waiting for its first note.';
-                guestbookList.appendChild(empty);
-                return;
-            }
-
-            entries.forEach(entry => {
-                const card = document.createElement('article');
-                card.className = 'liquid-glass p-5 rounded-3xl reveal-element';
-                const meta = document.createElement('div');
-                meta.className = 'flex items-center justify-between gap-3 mb-4';
-                const identity = document.createElement('div');
-                identity.className = 'flex items-center gap-2.5 min-w-0';
-                const avatar = document.createElement('span');
-                avatar.className = 'w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-[10px] font-bold text-primary flex-shrink-0';
-                avatar.textContent = guestbookInitials(entry.name);
-                const name = document.createElement('span');
-                name.className = 'font-mono text-xs text-white/85 truncate';
-                name.textContent = entry.name;
-                identity.append(avatar, name);
-                const date = document.createElement('time');
-                date.className = 'font-mono text-[10px] text-white/40 flex-shrink-0';
-                date.dateTime = entry.createdAt;
-                date.textContent = new Date(entry.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-                meta.append(identity, date);
-                const message = document.createElement('p');
-                message.className = 'text-sm text-white/70 leading-relaxed break-words';
-                message.textContent = entry.message;
-                card.append(meta, message);
-                guestbookList.appendChild(card);
-            });
-        }
-
-        if (guestbookForm) {
-            guestbookForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const nameInput = document.getElementById('guestbook-name');
-                const messageInput = document.getElementById('guestbook-message');
-                const name = nameInput.value.trim();
-                const message = messageInput.value.trim();
-                if (!name || !message) return;
-                const entries = getGuestbookEntries();
-                entries.unshift({ name, message, createdAt: new Date().toISOString() });
-                try { localStorage.setItem(guestbookStorageKey, JSON.stringify(entries.slice(0, 24))); } catch (error) { /* private fallback */ }
-                guestbookForm.reset();
-                guestbookStatus.textContent = 'Note added to the wall.';
-                renderGuestbook();
-            });
-            renderGuestbook();
-        }
-
-        // ==========================================
-        // 8. RESPONSIVE NAVIGATION & PARALLAX
+        // 7. RESPONSIVE NAVIGATION & PARALLAX
         // ==========================================
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileNavMenu = document.getElementById('mobile-nav-menu');
@@ -1943,7 +1827,7 @@
         prefersReducedMotion.addEventListener?.('change', requestParallaxUpdate);
         updateParallax();
 
-        // 9. CONTACT FORM FORMSPREE
+        // 8. CONTACT FORM FORMSPREE
         // ==========================================
         const contactForm = document.getElementById('contact-form');
         const formSuccess = document.getElementById('form-success');
