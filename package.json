@@ -7,6 +7,6 @@
   "scripts": {
     "dev": "python3 -m http.server ${PORT:-8080} --bind 0.0.0.0",
     "preview": "npm run dev",
-    "build": "rm -rf dist && mkdir -p dist && cp index.html AB.png dist/ && cp -r images guestbook dist/"
+    "build": "rm -rf dist && mkdir -p dist && cp index.html favicon.png dist/ && cp -r images guestbook dist/"
   }
 }
